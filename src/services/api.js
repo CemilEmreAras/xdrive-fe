@@ -41,11 +41,18 @@ export const getGroups = async () => {
 // Araçları getir
 export const getCars = async (params) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/cars`, { params })
-    return response.data
+    const url = `${API_BASE_URL}/cars`;
+    console.log('🚗 Araç API isteği:', url, params);
+    const response = await axios.get(url, { params })
+    console.log('✅ Araç API yanıtı:', response.data?.length || 0, 'araç');
+    return response.data || []
   } catch (error) {
-    console.error('Araç getirme hatası:', error)
-    return []
+    console.error('❌ Araç getirme hatası:', error)
+    console.error('❌ Hata URL:', error.config?.url)
+    console.error('❌ Hata status:', error.response?.status)
+    console.error('❌ Hata data:', error.response?.data)
+    // Error'u throw et ki CarList.jsx'te handle edilebilsin
+    throw error
   }
 }
 

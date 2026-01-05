@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams, Link } from 'react-router-dom'
-import axios from 'axios'
+import { getCars } from '../services/api'
 import './CarList.css'
 
 function CarList() {
@@ -33,8 +33,8 @@ function CarList() {
         ...filters
       }
       
-      const response = await axios.get('/api/cars', { params })
-      const carsData = response.data
+      // API service'i kullan (production'da doğru URL'i kullanır)
+      const carsData = await getCars(params)
       
       // Debug: İlk araç verisini kontrol et - rezervasyon için gerekli alanlar
       if (carsData && carsData.length > 0) {
@@ -61,13 +61,15 @@ function CarList() {
         }
       }
       
-      setCars(carsData)
+      setCars(carsData || [])
     } catch (error) {
       console.error('Araçlar yüklenirken hata:', error)
       setCars([])
       
       // API hatasını kullanıcıya göster
-      if (error.response) {
+      // getCars fonksiyonu error'u throw etmiyor, boş array döndürüyor
+      // Ama yine de hata mesajı göstermek için kontrol edelim
+      if (error && error.response) {
         const status = error.response.status
         const errorData = error.response.data || {}
         const errorMsg = String(errorData.error || errorData.message || 'Bilinmeyen hata')
@@ -103,14 +105,14 @@ function CarList() {
         } else {
           alert(errorMsg + (details ? '\n\n' + details : ''))
         }
-      } else if (error.request) {
+      } else if (error && error.request) {
         // İstek gönderildi ama yanıt alınamadı
         alert('⚠️ Bağlantı Hatası\n\n' +
               'Sunucuya bağlanılamadı. Lütfen:\n' +
               '• İnternet bağlantınızı kontrol edin\n' +
               '• Backend sunucusunun çalıştığından emin olun\n' +
               '• Sayfayı yenileyin')
-      } else {
+      } else if (error) {
         // İstek hazırlanırken hata oluştu
         alert('⚠️ Hata\n\n' +
               'Araçlar yüklenirken bir hata oluştu: ' + (error.message || 'Bilinmeyen hata') + '\n\n' +
