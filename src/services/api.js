@@ -2,14 +2,13 @@ import axios from 'axios'
 
 // Production'da Vercel backend URL'i, development'ta localhost
 const API_BASE_URL = import.meta.env.PROD 
-  ? 'https://xdrive-e04d1acw9-cemil-emre-aras-projects.vercel.app/api'
+  ? 'https://xdrive-be.vercel.app/api'
   : import.meta.env.VITE_API_URL || '/api'
 
 // Debug: API base URL'i logla
-if (import.meta.env.DEV) {
-  console.log('🔗 API Base URL:', API_BASE_URL);
-  console.log('🔗 Environment:', import.meta.env.MODE);
-}
+console.log('🔗 API Base URL:', API_BASE_URL);
+console.log('🔗 Environment:', import.meta.env.MODE);
+console.log('🔗 Is Production:', import.meta.env.PROD);
 
 // Lokasyonları getir
 export const getLocations = async () => {
