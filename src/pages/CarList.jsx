@@ -70,11 +70,19 @@ function CarList() {
       if (error.response) {
         const status = error.response.status
         const errorData = error.response.data || {}
-        const errorMsg = errorData.error || 'Bilinmeyen hata'
-        const details = errorData.details || ''
+        const errorMsg = String(errorData.error || errorData.message || 'Bilinmeyen hata')
+        const details = String(errorData.details || '')
         
+        // 404 Not Found
+        if (status === 404) {
+          alert('⚠️ Endpoint Bulunamadı\n\n' +
+                'Backend endpoint\'i bulunamadı. Lütfen:\n' +
+                '• Backend\'in deploy edildiğinden emin olun\n' +
+                '• Sayfayı yenileyin\n' +
+                '• Sorun devam ederse backend\'i kontrol edin')
+        }
         // 500 Internal Server Error
-        if (status === 500) {
+        else if (status === 500) {
           alert('⚠️ Sunucu Hatası\n\n' +
                 'Sunucuda bir hata oluştu. Lütfen:\n' +
                 '• Sayfayı yenileyin\n' +
@@ -83,7 +91,7 @@ function CarList() {
                 'Hata: ' + errorMsg)
         }
         // 400 Bad Request veya diğer hatalar
-        else if (errorMsg.includes('Man Süresi')) {
+        else if (typeof errorMsg === 'string' && errorMsg.includes('Man Süresi')) {
           alert('⚠️ Minimum Kiralama Süresi Hatası\n\n' +
                 'Seçtiğiniz tarih aralığı için araç bulunamadı.\n\n' +
                 'Bu durumun nedenleri:\n' +
