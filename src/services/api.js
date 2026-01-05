@@ -93,6 +93,19 @@ export const createReservation = async (reservationData) => {
     console.error('❌ Hata URL:', error.config?.url)
     console.error('❌ Hata status:', error.response?.status)
     console.error('❌ Hata data:', error.response?.data)
+    console.error('❌ Hata data (stringified):', JSON.stringify(error.response?.data, null, 2))
+    console.error('❌ Hata message:', error.message)
+    
+    // Error'u daha açıklayıcı hale getir
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      if (errorData.error) {
+        error.message = String(errorData.error);
+      } else if (typeof errorData === 'string') {
+        error.message = errorData;
+      }
+    }
+    
     throw error
   }
 }

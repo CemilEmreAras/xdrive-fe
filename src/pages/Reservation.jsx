@@ -397,7 +397,11 @@ function Reservation() {
         state: { reservation: reservationInfo }
       })
     } catch (error) {
-      console.error('Rezervasyon hatası:', error);
+      console.error('❌ Rezervasyon hatası:', error);
+      console.error('❌ Error response:', error.response);
+      console.error('❌ Error response data:', error.response?.data);
+      console.error('❌ Error message:', error.message);
+      console.error('❌ Error stack:', error.stack);
       
       // Detaylı hata mesajı göster
       let errorMessage = 'Rezervasyon yapılırken bir hata oluştu.';
@@ -405,10 +409,18 @@ function Reservation() {
       if (error.response) {
         // Backend'den gelen hata mesajı
         const errorData = error.response.data;
-        if (errorData.details) {
-          errorMessage = `${errorData.error || 'Hata'}\n\n${errorData.details}`;
-        } else if (errorData.error) {
-          errorMessage = errorData.error;
+        console.error('❌ Backend hata data:', errorData);
+        
+        if (errorData && typeof errorData === 'object') {
+          if (errorData.details) {
+            errorMessage = `${errorData.error || 'Hata'}\n\n${errorData.details}`;
+          } else if (errorData.error) {
+            errorMessage = String(errorData.error);
+          } else if (errorData.message) {
+            errorMessage = String(errorData.message);
+          }
+        } else if (errorData && typeof errorData === 'string') {
+          errorMessage = errorData;
         }
         
         // Eksik parametreler varsa detaylı bilgi göster
