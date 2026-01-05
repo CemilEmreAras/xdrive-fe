@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useLocation } from 'react-router-dom'
-import axios from 'axios'
+import { getReservation } from '../services/api'
 import './ReservationConfirmation.css'
 
 function ReservationConfirmation() {
@@ -35,10 +35,11 @@ function ReservationConfirmation() {
 
   const fetchReservation = async () => {
     try {
-      const response = await axios.get(`/api/reservations/${reservationNumber}`)
-      setReservation(response.data)
+      // API service fonksiyonunu kullan (production'da doğru URL'i kullanır)
+      const reservationData = await getReservation(reservationNumber)
+      setReservation(reservationData)
       // API'den geldiyse localStorage'a kaydet
-      localStorage.setItem(`reservation_${reservationNumber}`, JSON.stringify(response.data))
+      localStorage.setItem(`reservation_${reservationNumber}`, JSON.stringify(reservationData))
     } catch (error) {
       console.error('Rezervasyon bilgileri yüklenirken hata:', error)
       // API hatası varsa, localStorage'dan tekrar dene

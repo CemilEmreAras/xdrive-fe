@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import axios from 'axios'
+import { createReservation } from '../services/api'
 import './Reservation.css'
 
 function Reservation() {
@@ -382,7 +382,8 @@ function Reservation() {
         groupId
       });
 
-      const response = await axios.post('/api/reservations', reservationData)
+      // API service fonksiyonunu kullan (production'da doğru URL'i kullanır)
+      const response = await createReservation(reservationData)
       
       // Rezervasyon bilgilerini localStorage'a kaydet (MongoDB olmadığında kullanmak için)
       const reservationInfo = {
