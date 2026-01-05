@@ -383,16 +383,17 @@ function Reservation() {
       });
 
       // API service fonksiyonunu kullan (production'da doğru URL'i kullanır)
-      const response = await createReservation(reservationData)
+      // createReservation zaten response.data döndürüyor
+      const reservationResponse = await createReservation(reservationData)
       
       // Rezervasyon bilgilerini localStorage'a kaydet (MongoDB olmadığında kullanmak için)
       const reservationInfo = {
-        ...response.data,
+        ...reservationResponse,
         car: car // Araç bilgilerini de ekle
       }
-      localStorage.setItem(`reservation_${response.data.reservationNumber}`, JSON.stringify(reservationInfo))
+      localStorage.setItem(`reservation_${reservationResponse.reservationNumber}`, JSON.stringify(reservationInfo))
       
-      navigate(`/reservation-confirmation/${response.data.reservationNumber}`, {
+      navigate(`/reservation-confirmation/${reservationResponse.reservationNumber}`, {
         state: { reservation: reservationInfo }
       })
     } catch (error) {
