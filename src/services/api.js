@@ -5,13 +5,25 @@ const API_BASE_URL = import.meta.env.PROD
   ? 'https://xdrive-e04d1acw9-cemil-emre-aras-projects.vercel.app/api'
   : import.meta.env.VITE_API_URL || '/api'
 
+// Debug: API base URL'i logla
+if (import.meta.env.DEV) {
+  console.log('🔗 API Base URL:', API_BASE_URL);
+  console.log('🔗 Environment:', import.meta.env.MODE);
+}
+
 // Lokasyonları getir
 export const getLocations = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/cars/meta/locations`)
-    return response.data
+    const url = `${API_BASE_URL}/cars/meta/locations`;
+    console.log('🌐 Lokasyon API isteği:', url);
+    const response = await axios.get(url)
+    console.log('✅ Lokasyon API yanıtı:', response.data?.length || 0, 'lokasyon');
+    return response.data || []
   } catch (error) {
-    console.error('Lokasyon getirme hatası:', error)
+    console.error('❌ Lokasyon getirme hatası:', error)
+    console.error('❌ Hata URL:', error.config?.url)
+    console.error('❌ Hata status:', error.response?.status)
+    console.error('❌ Hata data:', error.response?.data)
     return []
   }
 }

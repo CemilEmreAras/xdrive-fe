@@ -21,10 +21,14 @@ function Home() {
 
   const loadLocations = async () => {
     try {
+      console.log('📍 Lokasyonlar yükleniyor...');
       const locs = await getLocations()
-      setLocations(locs)
+      console.log('📍 Lokasyonlar yüklendi:', locs?.length || 0, 'lokasyon');
+      setLocations(locs || [])
     } catch (error) {
-      console.error('Lokasyon yükleme hatası:', error)
+      console.error('❌ Lokasyon yükleme hatası:', error)
+      console.error('❌ Hata detayları:', error.response?.data || error.message)
+      setLocations([])
     } finally {
       setLoading(false)
     }
