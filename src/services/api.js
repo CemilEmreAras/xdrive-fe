@@ -59,9 +59,23 @@ export const getCars = async (params) => {
 // Rezervasyon oluştur
 export const createReservation = async (reservationData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/reservations`, reservationData)
+    const url = `${API_BASE_URL}/reservations`;
+    console.log('📝 Rezervasyon API isteği:', url);
+    console.log('📝 Rezervasyon verisi:', {
+      pickupId: reservationData.pickupId,
+      dropoffId: reservationData.dropoffId,
+      rezId: reservationData.rezId,
+      carsParkId: reservationData.carsParkId,
+      groupId: reservationData.groupId
+    });
+    const response = await axios.post(url, reservationData)
+    console.log('✅ Rezervasyon API yanıtı:', response.data);
     return response.data
   } catch (error) {
+    console.error('❌ Rezervasyon oluşturma hatası:', error)
+    console.error('❌ Hata URL:', error.config?.url)
+    console.error('❌ Hata status:', error.response?.status)
+    console.error('❌ Hata data:', error.response?.data)
     throw error
   }
 }
@@ -69,9 +83,16 @@ export const createReservation = async (reservationData) => {
 // Rezervasyon getir
 export const getReservation = async (reservationNumber) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/reservations/${reservationNumber}`)
+    const url = `${API_BASE_URL}/reservations/${reservationNumber}`;
+    console.log('📋 Rezervasyon getirme API isteği:', url);
+    const response = await axios.get(url)
+    console.log('✅ Rezervasyon getirme API yanıtı:', response.data);
     return response.data
   } catch (error) {
+    console.error('❌ Rezervasyon getirme hatası:', error)
+    console.error('❌ Hata URL:', error.config?.url)
+    console.error('❌ Hata status:', error.response?.status)
+    console.error('❌ Hata data:', error.response?.data)
     throw error
   }
 }
