@@ -87,6 +87,15 @@ export const createReservation = async (reservationData) => {
     });
     const response = await axios.post(url, reservationData)
     console.log('✅ Rezervasyon API yanıtı:', response.data);
+    console.log('✅ Rezervasyon API status:', response.status);
+    console.log('✅ Rezervasyon API headers:', response.headers);
+    
+    // Response data kontrolü
+    if (!response.data) {
+      console.warn('⚠️ API yanıtı boş, response objesi döndürülüyor');
+      return response;
+    }
+    
     return response.data
   } catch (error) {
     console.error('❌ Rezervasyon oluşturma hatası:', error)
