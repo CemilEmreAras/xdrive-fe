@@ -1,0 +1,110 @@
+.reservation-page {
+  padding: 40px 0;
+}
+
+.reservation-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 40px;
+}
+
+.reservation-form-container {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+}
+
+.form-section h2 {
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.car-summary {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.car-summary img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.car-summary h3 {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.car-summary p {
+  color: #666;
+  font-size: 14px;
+}
+
+.reservation-summary {
+  position: sticky;
+  top: 20px;
+  height: fit-content;
+}
+
+.summary-box {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.summary-box h3 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item.total {
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 2px solid #667eea;
+  font-size: 18px;
+}
+
+.summary-item.total strong {
+  color: #667eea;
+  font-size: 24px;
+}
+
+@media (max-width: 968px) {
+  .reservation-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .reservation-summary {
+    position: static;
+  }
+}
+

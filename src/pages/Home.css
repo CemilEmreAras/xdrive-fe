@@ -1,0 +1,96 @@
+.home {
+  padding-bottom: 60px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: 24px;
+  margin-bottom: 10px;
+  opacity: 0.95;
+}
+
+.hero-tagline {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.search-section {
+  margin-top: -40px;
+  position: relative;
+  z-index: 10;
+}
+
+.search-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.search-form {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.search-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.features {
+  margin-top: 80px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.feature-card {
+  text-align: center;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+  color: #667eea;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.feature-card p {
+  color: #666;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 32px;
+  }
+  
+  .hero-subtitle {
+    font-size: 20px;
+  }
+  
+  .search-card {
+    padding: 25px;
+  }
+}
+
