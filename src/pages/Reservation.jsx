@@ -410,6 +410,13 @@ function Reservation() {
       console.log('💾 Rezervasyon bilgileri localStorage\'a kaydediliyor...');
       localStorage.setItem(`reservation_${reservationNumber}`, JSON.stringify(reservationInfo))
       
+      // External API hatası varsa uyarı göster ama rezervasyonu tamamla
+      if (reservationResponse.externalApiError) {
+        console.warn('⚠️ External API hatası:', reservationResponse.externalApiError);
+        // Uyarı mesajı göster ama rezervasyonu tamamla
+        alert(`⚠️ Rezervasyon kaydedildi ancak external API'ye gönderilemedi.\n\n${reservationResponse.externalApiError}\n\nRezervasyon numaranız: ${reservationNumber}\n\nLütfen API sağlayıcısı ile iletişime geçin: 0312 870 10 35`);
+      }
+      
       console.log('🚀 Rezervasyon onay sayfasına yönlendiriliyor...');
       navigate(`/reservation-confirmation/${reservationNumber}`, {
         state: { reservation: reservationInfo }
