@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link, useSearchParams, useLocation } from 'react-router-dom'
-import axios from 'axios'
+import { getCar } from '../services/api'
 import './CarDetail.css'
 
 function CarDetail() {
@@ -79,8 +79,9 @@ function CarDetail() {
     }
     
     try {
-      const response = await axios.get(`/api/cars/${id}`)
-      setCar(response.data)
+      // API service fonksiyonunu kullan (production'da doğru URL'i kullanır)
+      const carData = await getCar(id)
+      setCar(carData)
     } catch (error) {
       console.error('Araç detayları yüklenirken hata:', error)
       // Eğer API'den bulunamazsa, state'den gelen car'ı kullan

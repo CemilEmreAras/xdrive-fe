@@ -56,6 +56,23 @@ export const getCars = async (params) => {
   }
 }
 
+// Belirli bir araç getir
+export const getCar = async (carId) => {
+  try {
+    const url = `${API_BASE_URL}/cars/${carId}`;
+    console.log('🚗 Araç detay API isteği:', url);
+    const response = await axios.get(url)
+    console.log('✅ Araç detay API yanıtı:', response.data);
+    return response.data
+  } catch (error) {
+    console.error('❌ Araç detay getirme hatası:', error)
+    console.error('❌ Hata URL:', error.config?.url)
+    console.error('❌ Hata status:', error.response?.status)
+    console.error('❌ Hata data:', error.response?.data)
+    throw error
+  }
+}
+
 // Rezervasyon oluştur
 export const createReservation = async (reservationData) => {
   try {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { createReservation } from '../services/api'
+import { createReservation, getCar } from '../services/api'
 import './Reservation.css'
 
 function Reservation() {
@@ -142,8 +142,8 @@ function Reservation() {
       if (!car && carId) {
         console.warn('⚠️ Reservation: Car objesi state\'den gelmedi, API\'den çekmeyi deniyoruz...');
         try {
-          const response = await axios.get(`/api/cars/${carId}`)
-          const fetchedCar = response.data;
+          // API service fonksiyonunu kullan (production'da doğru URL'i kullanır)
+          const fetchedCar = await getCar(carId);
           setCar(fetchedCar);
           
           // Debug: API'den gelen car objesini kontrol et
