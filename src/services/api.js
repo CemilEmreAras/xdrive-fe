@@ -3,7 +3,7 @@ import axios from 'axios'
 // Production'da Vercel backend URL'i, development'ta localhost
 const API_BASE_URL = import.meta.env.PROD 
   ? 'https://xdrive-e04d1acw9-cemil-emre-aras-projects.vercel.app/api'
-  : '/api'
+  : import.meta.env.VITE_API_URL || '/api'
 
 // Lokasyonları getir
 export const getLocations = async () => {
