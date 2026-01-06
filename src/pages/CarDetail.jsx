@@ -149,8 +149,48 @@ function CarDetail() {
               onError={(e) => {
                 // Resim yüklenemezse placeholder göster
                 console.warn('🖼️ CarDetail: Resim yüklenemedi:', e.target.src);
+                
+                // Eğer hata sayısı 3'ten azsa, alternatif URL'leri dene
+                const errorCount = parseInt(e.target.dataset.errorCount || '0');
+                if (errorCount < 3 && !e.target.src.includes('data:image/svg+xml')) {
+                  const currentSrc = e.target.src;
+                  const baseUrl = 'https://xdrivejson.turevsistem.com';
+                  const carWebId = car.car_web_id || car.Car_Web_ID || '4';
+                  const groupId = car.groupId || car.group_id || '395';
+                  const rezId = (car.rezId || car.rez_id || '').replace(/^XML-/, '').replace(/^xml-/i, '');
+                  
+                  // Alternatif URL'leri sırayla dene
+                  const alternatives = [
+                    `${baseUrl}/images/car_${carWebId}.png`,
+                    `${baseUrl}/cars/${carWebId}.jpg`,
+                    `${baseUrl}/arac/${carWebId}.jpg`,
+                    `${baseUrl}/images/group_${groupId}.jpg`,
+                    `${baseUrl}/groups/${groupId}.jpg`,
+                    `${baseUrl}/images/rez_${rezId}.jpg`,
+                    `${baseUrl}/cars/${rezId}.jpg`
+                  ];
+                  
+                  // Şu anki URL alternatiflerden biri mi kontrol et
+                  const currentIndex = alternatives.indexOf(currentSrc);
+                  if (currentIndex >= 0 && currentIndex < alternatives.length - 1) {
+                    // Bir sonraki alternatifi dene
+                    e.target.src = alternatives[currentIndex + 1];
+                    e.target.dataset.errorCount = String(errorCount + 1);
+                    console.log(`🔄 Alternatif resim URL'si deneniyor (${currentIndex + 2}/${alternatives.length}):`, e.target.src);
+                    return;
+                  } else if (currentIndex === -1 && alternatives.length > 0) {
+                    // İlk alternatifi dene
+                    e.target.src = alternatives[0];
+                    e.target.dataset.errorCount = '1';
+                    console.log('🔄 İlk alternatif resim URL\'si deneniyor:', e.target.src);
+                    return;
+                  }
+                }
+                
+                // Tüm alternatifler denendi, placeholder göster
                 if (!e.target.src.includes('data:image/svg+xml')) {
                   e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BcmHDpyBSZXNtaTwvdGV4dD48L3N2Zz4=';
+                  console.log('⚠️ Tüm alternatif URL\'ler denendi, placeholder gösteriliyor');
                 }
               }}
               onLoad={() => {
