@@ -29,12 +29,15 @@ function Home() {
 
   useEffect(() => {
     loadLocations()
+  }, [])
+
+  useEffect(() => {
     // Carousel otomatik geçiş
     const interval = setInterval(() => {
       setCurrentCarIndex((prev) => (prev + 1) % carImages.length)
     }, 5000)
     return () => clearInterval(interval)
-  }, [])
+  }, [carImages.length])
 
   useEffect(() => {
     loadLocations()
