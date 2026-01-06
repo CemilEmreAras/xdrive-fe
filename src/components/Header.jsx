@@ -15,6 +15,13 @@ function Header() {
               src="/images/logo.svg" 
               alt="XDrive rent a car" 
               className="logo-image"
+              onError={(e) => {
+                console.error('Logo yüklenemedi:', e.target.src);
+                e.target.style.display = 'none';
+              }}
+              onLoad={() => {
+                console.log('Logo başarıyla yüklendi');
+              }}
             />
           </Link>
           <nav className="nav">
