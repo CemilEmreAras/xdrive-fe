@@ -1,6 +1,6 @@
 .header {
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.96); /* siyaha yakın header */
+  backdrop-filter: blur(12px);
   color: white;
   padding: 15px 0;
   position: fixed;
@@ -8,7 +8,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.8);
 }
 
 .header-content {
@@ -52,7 +52,7 @@
 }
 
 .nav a:hover {
-  color: #ff6b35;
+  color: #ef4444; /* kırmızı accent */
 }
 
 .nav-dropdown {
@@ -62,7 +62,7 @@
 .dropdown-arrow {
   font-size: 8px;
   margin-left: 4px;
-  color: #ff6b35;
+  color: #ef4444;
   display: inline-block;
 }
 
@@ -90,7 +90,7 @@
 
 .dropdown-menu a:hover {
   background: #f1f5f9;
-  color: #ff6b35;
+  color: #ef4444;
 }
 
 .language-selector {

@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  background: linear-gradient(135deg, #000000 0%, #111827 40%, #1f2933 100%);
 }
 
 .hero-background {
@@ -55,7 +55,7 @@
 
 .hero-slogan {
   font-size: 24px;
-  color: #ff6b35;
+  color: #ef4444; /* kırmızı slogan */
   font-weight: 600;
   margin-top: 20px;
 }
@@ -102,8 +102,8 @@
 }
 
 .indicator.active {
-  background: #ff6b35;
-  border-color: #ff6b35;
+  background: #ef4444;
+  border-color: #ef4444;
   transform: scale(1.2);
 }
 
@@ -142,7 +142,7 @@
 .form-group label {
   font-size: 13px;
   font-weight: 600;
-  color: #334155;
+  color: #e5e7eb;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -169,14 +169,14 @@
   border-radius: 8px;
   font-size: 14px;
   transition: all 0.3s ease;
-  background: white;
-  color: #1e293b;
+  background: rgba(15, 23, 42, 0.9);
+  color: #f9fafb;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: #ff6b35;
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.35);
 }
 
 .form-input.date-input,
@@ -213,7 +213,7 @@
   width: 80px;
   height: 80px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+  background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #ef4444 100%);
   border: none;
   cursor: pointer;
   display: flex;
@@ -228,7 +228,7 @@
 
 .search-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.5);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.7);
 }
 
 .search-button:active {

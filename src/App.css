@@ -21,14 +21,14 @@
 }
 
 .btn-primary {
-  background-color: #007bff;
+  background-color: #b91c1c;
   color: white;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: #7f1d1d;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(185, 28, 28, 0.6);
 }
 
 .btn-secondary {
@@ -88,7 +88,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #b91c1c;
 }
 
 .form-row {
