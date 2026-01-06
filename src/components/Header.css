@@ -22,21 +22,16 @@
   text-decoration: none;
   color: white;
   display: flex;
-  flex-direction: column;
-  line-height: 1.2;
+  align-items: center;
+  height: 60px;
 }
 
-.logo-main {
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.logo-sub {
-  font-size: 12px;
-  font-weight: 400;
-  opacity: 0.9;
-  margin-top: -2px;
+.logo-image {
+  height: 100%;
+  max-height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* Beyaz logo için */
 }
 
 .nav {

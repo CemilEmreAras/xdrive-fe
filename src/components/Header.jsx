@@ -11,8 +11,11 @@ function Header() {
       <div className="container">
         <div className="header-content">
           <Link to="/" className="logo">
-            <span className="logo-main">XDrive</span>
-            <span className="logo-sub">rent a car®</span>
+            <img 
+              src="/images/logo.svg" 
+              alt="XDrive rent a car" 
+              className="logo-image"
+            />
           </Link>
           <nav className="nav">
             <Link to="/">Home</Link>
