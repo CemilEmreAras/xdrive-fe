@@ -5,11 +5,13 @@
 .hero {
   position: relative;
   min-height: 100vh;
+  max-height: 100vh;
   display: flex;
   align-items: flex-start;
   color: white;
   overflow: hidden;
-  padding-top: 80px;
+  padding-top: 70px;
+  padding-bottom: 20px;
 }
 
 .hero-background {
@@ -50,18 +52,18 @@
 }
 
 .hero-save-text {
-  font-size: 42px;
+  font-size: 38px;
   font-weight: 700;
   color: #FFD700;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   line-height: 1.2;
 }
 
 .hero-title {
-  font-size: 42px;
+  font-size: 38px;
   font-weight: 700;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   line-height: 1.2;
 }
 
@@ -104,7 +106,7 @@
 .search-card {
   background: #7f1d1d;
   border-radius: 8px;
-  padding: 24px;
+  padding: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   max-width: 1000px;
