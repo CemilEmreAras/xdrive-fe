@@ -15,7 +15,9 @@ function Home() {
     pickupTime: '11:00',
     dropoffDate: '',
     dropoffTime: '11:00',
-    sameLocation: true
+    sameLocation: true,
+    driverCountry: 'Turkey',
+    driverAge: '30-65'
   })
   const [pickupSearch, setPickupSearch] = useState('')
   const [dropoffSearch, setDropoffSearch] = useState('')
@@ -143,6 +145,24 @@ function Home() {
     setShowPickupSuggestions(false)
   }
 
+  const handleClearPickup = () => {
+    setPickupSearch('')
+    setSearchData({ ...searchData, pickupId: '' })
+    setShowPickupSuggestions(false)
+  }
+
+  // Tarih formatı: "Fri, Jan 09" formatında
+  const formatDateShort = (date) => {
+    if (!date) return ''
+    const d = new Date(date)
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    const day = days[d.getDay()]
+    const month = months[d.getMonth()]
+    const dateNum = String(d.getDate()).padStart(2, '0')
+    return `${day}, ${month} ${dateNum}`
+  }
+
   const handleDropoffSearchChange = (e) => {
     const value = e.target.value
     setDropoffSearch(value)
@@ -197,37 +217,35 @@ function Home() {
   return (
     <div className="home">
       <section className="hero">
-        <div className="hero-background"></div>
+        <div className="hero-background">
+          <img 
+            src={carImages[currentCarIndex]} 
+            alt="Car" 
+            className="hero-bg-image"
+            onError={(e) => {
+              e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0iI2U1ZTdlYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DYXIgSW1hZ2U8L3RleHQ+PC9zdmc+'
+            }}
+          />
+          <div className="hero-overlay"></div>
+        </div>
         <div className="container">
           <div className="hero-content">
             <div className="hero-text">
-              <h1 className="hero-title">
-                <span className="hero-title-line">DRIVE GLOBAL</span>
-                <span className="hero-title-line">RENT EASILY IN OVER 100</span>
-                <span className="hero-title-line">LOCATIONS</span>
-              </h1>
-              <p className="hero-slogan">Simply, Rent a Car.</p>
-            </div>
-            <div className="hero-car">
-              <div className="car-image-container">
-                <img 
-                  src={carImages[currentCarIndex]} 
-                  alt="Premium Car" 
-                  className="car-image"
-                  onError={(e) => {
-                    e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0iI2U1ZTdlYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DYXIgSW1hZ2U8L3RleHQ+PC9zdmc+'
-                  }}
-                />
-              </div>
-              <div className="carousel-indicators">
-                {carImages.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`indicator ${index === currentCarIndex ? 'active' : ''}`}
-                    onClick={() => setCurrentCarIndex(index)}
-                    aria-label={`Go to car ${index + 1}`}
-                  />
-                ))}
+              <h2 className="hero-save-text">Save up to 70% on car rentals</h2>
+              <h1 className="hero-title">Clear prices, no surprises</h1>
+              <div className="hero-features">
+                <div className="hero-feature">
+                  <span className="checkmark">✓</span>
+                  <span>Trusted by 7M travelers</span>
+                </div>
+                <div className="hero-feature">
+                  <span className="checkmark">✓</span>
+                  <span>24/7 Support</span>
+                </div>
+                <div className="hero-feature">
+                  <span className="checkmark">✓</span>
+                  <span>Free Cancellation</span>
+                </div>
               </div>
             </div>
           </div>
@@ -238,52 +256,73 @@ function Home() {
         <div className="container">
           <div className="search-card">
             <form onSubmit={handleSubmit} className="search-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Location of pickup</label>
-                  <div className="autocomplete-wrapper" ref={pickupInputRef}>
-                    <div className="input-with-icon">
-                      <span className="input-icon">📍</span>
-                      {loading ? (
-                        <input
-                          type="text"
-                          className="form-input"
-                          placeholder="Loading..."
-                          disabled
-                        />
-                      ) : (
-                        <input
-                          type="text"
-                          className="form-input"
-                          placeholder="Pickup location..."
-                          value={pickupSearch}
-                          onChange={handlePickupSearchChange}
-                          onFocus={() => setShowPickupSuggestions(true)}
-                          required
-                        />
-                      )}
-                      <span className="input-arrow">▼</span>
-                    </div>
-                    {showPickupSuggestions && !loading && filterLocations(pickupSearch).length > 0 && (
-                      <div className="autocomplete-suggestions" ref={pickupSuggestionsRef}>
-                        {filterLocations(pickupSearch).map((loc) => (
-                          <div
-                            key={loc.location_id || loc.Location_ID}
-                            className="suggestion-item"
-                            onClick={() => handlePickupSelect(loc)}
-                          >
-                            <div className="suggestion-name">{loc.location_name || loc.Location_Name}</div>
-                            <div className="suggestion-address">{loc.address || loc.Address || ''}</div>
-                          </div>
-                        ))}
-                      </div>
+              <div className="form-group">
+                <label>Pick-up location</label>
+                <div className="autocomplete-wrapper" ref={pickupInputRef}>
+                  <div className="input-with-icon">
+                    <span className="input-icon">📍</span>
+                    {loading ? (
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Loading..."
+                        disabled
+                      />
+                    ) : (
+                      <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Pick-up location..."
+                        value={pickupSearch}
+                        onChange={handlePickupSearchChange}
+                        onFocus={() => setShowPickupSuggestions(true)}
+                        required
+                      />
+                    )}
+                    {pickupSearch && (
+                      <button
+                        type="button"
+                        className="input-clear"
+                        onClick={handleClearPickup}
+                        aria-label="Clear"
+                      >
+                        ✕
+                      </button>
                     )}
                   </div>
+                  {showPickupSuggestions && !loading && filterLocations(pickupSearch).length > 0 && (
+                    <div className="autocomplete-suggestions" ref={pickupSuggestionsRef}>
+                      {filterLocations(pickupSearch).map((loc) => (
+                        <div
+                          key={loc.location_id || loc.Location_ID}
+                          className="suggestion-item"
+                          onClick={() => handlePickupSelect(loc)}
+                        >
+                          <div className="suggestion-name">{loc.location_name || loc.Location_Name}</div>
+                          <div className="suggestion-address">{loc.address || loc.Address || ''}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className="form-group">
-                  <label>Pickup time</label>
-                  <div className="input-with-icon">
-                    <span className="input-icon">📅</span>
+              </div>
+
+              <div className="form-group checkbox-group">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={searchData.sameLocation}
+                    onChange={(e) => setSearchData({ ...searchData, sameLocation: e.target.checked })}
+                  />
+                  <span>Return car in same location</span>
+                </label>
+              </div>
+
+              <div className="form-row dates-row">
+                <div className="form-group date-group">
+                  <label>Pick-up date</label>
+                  <div className="date-input-wrapper">
+                    <span className="date-arrow-left">◄</span>
                     <input
                       type="date"
                       value={searchData.pickupDate}
@@ -292,6 +331,12 @@ function Home() {
                       className="form-input date-input"
                       required
                     />
+                    {searchData.pickupDate && (
+                      <span className="date-display">{formatDateShort(searchData.pickupDate)}</span>
+                    )}
+                  </div>
+                  <label className="time-label">Time</label>
+                  <div className="input-with-icon">
                     <input
                       type="time"
                       value={searchData.pickupTime}
@@ -301,16 +346,12 @@ function Home() {
                     />
                     <span className="input-arrow">▼</span>
                   </div>
-                  {searchData.pickupDate && (
-                    <div className="formatted-date">
-                      {formatDateTime(searchData.pickupDate, searchData.pickupTime)}
-                    </div>
-                  )}
                 </div>
-                <div className="form-group">
-                  <label>Return time</label>
-                  <div className="input-with-icon">
-                    <span className="input-icon">📅</span>
+
+                <div className="form-group date-group">
+                  <label>Drop-off date</label>
+                  <div className="date-input-wrapper">
+                    <span className="date-arrow-right">►</span>
                     <input
                       type="date"
                       value={searchData.dropoffDate}
@@ -319,6 +360,12 @@ function Home() {
                       className="form-input date-input"
                       required
                     />
+                    {searchData.dropoffDate && (
+                      <span className="date-display">{formatDateShort(searchData.dropoffDate)}</span>
+                    )}
+                  </div>
+                  <label className="time-label">Time</label>
+                  <div className="input-with-icon">
                     <input
                       type="time"
                       value={searchData.dropoffTime}
@@ -328,18 +375,42 @@ function Home() {
                     />
                     <span className="input-arrow">▼</span>
                   </div>
-                  {searchData.dropoffDate && (
-                    <div className="formatted-date">
-                      {formatDateTime(searchData.dropoffDate, searchData.dropoffTime)}
-                    </div>
-                  )}
                 </div>
-                <div className="form-group search-button-group">
-                  <button type="submit" className="search-button">
-                    <span className="search-icon">🔍</span>
-                    <span className="search-icon-plane">✈️</span>
-                  </button>
-                </div>
+              </div>
+
+              <div className="form-group driver-details">
+                <span>Driver's country of residence is </span>
+                <select
+                  value={searchData.driverCountry}
+                  onChange={(e) => setSearchData({ ...searchData, driverCountry: e.target.value })}
+                  className="driver-select"
+                >
+                  <option value="Turkey">Turkey</option>
+                  <option value="USA">USA</option>
+                  <option value="UK">UK</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                </select>
+                <span className="select-arrow">▼</span>
+                <span> and age is </span>
+                <select
+                  value={searchData.driverAge}
+                  onChange={(e) => setSearchData({ ...searchData, driverAge: e.target.value })}
+                  className="driver-select"
+                >
+                  <option value="18-25">18-25</option>
+                  <option value="26-29">26-29</option>
+                  <option value="30-65">30-65</option>
+                  <option value="66+">66+</option>
+                </select>
+                <span className="select-arrow">▼</span>
+                <span className="info-icon" title="Age information">ⓘ</span>
+              </div>
+
+              <div className="form-group search-button-group">
+                <button type="submit" className="search-button">
+                  Search now
+                </button>
               </div>
             </form>
           </div>
