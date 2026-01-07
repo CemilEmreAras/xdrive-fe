@@ -397,10 +397,22 @@
   color: #666;
 }
 
-@media (max-width: 768px) {
-  .hero-save-text,
+/* Tablet (481px - 768px) */
+@media (max-width: 1024px) {
+  .hero {
+    min-height: 60vh;
+  }
+
+  .hero-content {
+    padding: 60px 0;
+  }
+
+  .hero-save-text {
+    font-size: 40px;
+  }
+
   .hero-title {
-    font-size: 32px;
+    font-size: 40px;
   }
 
   .hero-feature {
@@ -408,22 +420,115 @@
   }
 
   .search-card {
+    padding: 28px;
+  }
+
+  .dates-row {
+    gap: 20px;
+  }
+}
+
+/* Tablet Portrait (481px - 768px) */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 50vh;
+  }
+
+  .hero-content {
+    padding: 40px 0;
+  }
+
+  .hero-text {
+    max-width: 100%;
+  }
+
+  .hero-save-text {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
+  .hero-features {
+    gap: 12px;
+  }
+
+  .hero-feature {
+    font-size: 15px;
+    gap: 10px;
+  }
+
+  .checkmark {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .search-section {
+    margin-top: -60px;
+  }
+
+  .search-card {
     padding: 24px;
     margin: 0 16px;
+    border-radius: 8px;
+  }
+
+  .search-form {
+    max-width: 100%;
+  }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+
+  .form-group label {
+    font-size: 13px;
   }
 
   .dates-row {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
+  }
+
+  .date-group {
+    gap: 10px;
+  }
+
+  .date-display {
+    font-size: 14px;
+    left: 35px;
+  }
+
+  .time-label {
+    font-size: 13px;
+    margin-top: 6px;
   }
 
   .driver-details {
     flex-direction: column;
     align-items: flex-start;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  .driver-select {
+    font-size: 13px;
+    padding: 5px 28px 5px 10px;
+  }
+
+  .search-button-group {
+    justify-content: center;
   }
 
   .search-button {
     width: 100%;
+    padding: 14px 32px;
+    font-size: 16px;
+    min-width: auto;
   }
 
   .autocomplete-suggestions {
@@ -433,5 +538,369 @@
   .form-input {
     padding: 10px 35px 10px 35px;
     font-size: 14px;
+  }
+
+  .time-input {
+    padding: 10px 35px 10px 12px;
+  }
+
+  .input-icon {
+    font-size: 16px;
+    left: 10px;
+  }
+
+  .input-clear {
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+  }
+
+  .checkbox-label {
+    font-size: 13px;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Mobile (320px - 480px) */
+@media (max-width: 480px) {
+  .hero {
+    min-height: 45vh;
+  }
+
+  .hero-content {
+    padding: 30px 0;
+  }
+
+  .hero-save-text {
+    font-size: 24px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .hero-title {
+    font-size: 24px;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  .hero-features {
+    gap: 10px;
+  }
+
+  .hero-feature {
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  .checkmark {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+
+  .search-section {
+    margin-top: -50px;
+  }
+
+  .search-card {
+    padding: 20px 16px;
+    margin: 0 12px;
+    border-radius: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .dates-row {
+    gap: 16px;
+  }
+
+  .date-group {
+    gap: 8px;
+  }
+
+  .date-input-wrapper {
+    position: relative;
+  }
+
+  .date-arrow-left,
+  .date-arrow-right {
+    font-size: 12px;
+    left: 10px;
+  }
+
+  .date-arrow-right {
+    right: 10px;
+    left: auto;
+  }
+
+  .date-input {
+    padding: 10px 35px 10px 35px;
+  }
+
+  .date-display {
+    font-size: 13px;
+    left: 32px;
+  }
+
+  .time-label {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .time-input {
+    padding: 10px 32px 10px 12px;
+    font-size: 14px;
+  }
+
+  .driver-details {
+    font-size: 12px;
+    gap: 4px;
+    line-height: 1.6;
+  }
+
+  .driver-select {
+    font-size: 12px;
+    padding: 4px 26px 4px 8px;
+  }
+
+  .select-arrow {
+    left: -22px;
+    font-size: 9px;
+  }
+
+  .info-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+  }
+
+  .search-button {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+
+  .form-input {
+    padding: 10px 32px 10px 32px;
+    font-size: 14px;
+  }
+
+  .input-icon {
+    font-size: 14px;
+    left: 8px;
+  }
+
+  .input-clear {
+    right: 8px;
+    width: 18px;
+    height: 18px;
+    font-size: 14px;
+  }
+
+  .input-arrow {
+    right: 8px;
+    font-size: 10px;
+  }
+
+  .checkbox-label {
+    font-size: 12px;
+    gap: 8px;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .autocomplete-suggestions {
+    max-height: 180px;
+    border-radius: 6px;
+  }
+
+  .suggestion-item {
+    padding: 10px 12px;
+  }
+
+  .suggestion-name {
+    font-size: 13px;
+  }
+
+  .suggestion-address {
+    font-size: 11px;
+  }
+}
+
+/* Small Mobile (max-width: 360px) */
+@media (max-width: 360px) {
+  .hero-save-text {
+    font-size: 20px;
+  }
+
+  .hero-title {
+    font-size: 20px;
+  }
+
+  .hero-feature {
+    font-size: 12px;
+  }
+
+  .search-card {
+    padding: 16px 12px;
+    margin: 0 8px;
+  }
+
+  .form-group label {
+    font-size: 11px;
+  }
+
+  .form-input {
+    padding: 8px 28px 8px 28px;
+    font-size: 13px;
+  }
+
+  .date-display {
+    font-size: 12px;
+    left: 28px;
+  }
+
+  .driver-details {
+    font-size: 11px;
+  }
+
+  .search-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Landscape orientation for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: 40vh;
+  }
+
+  .hero-content {
+    padding: 30px 0;
+  }
+
+  .hero-save-text {
+    font-size: 28px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-features {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-feature {
+    font-size: 14px;
+  }
+
+  .search-section {
+    margin-top: -40px;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .search-button {
+    min-height: 48px; /* Minimum touch target size */
+  }
+
+  .input-clear {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    min-width: 20px;
+    min-height: 20px;
+  }
+
+  .suggestion-item {
+    min-height: 48px;
+    padding: 14px 16px;
+  }
+}
+
+/* Large Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .hero {
+    min-height: 75vh;
+  }
+
+  .hero-content {
+    padding: 100px 0;
+  }
+
+  .hero-save-text {
+    font-size: 56px;
+  }
+
+  .hero-title {
+    font-size: 56px;
+  }
+
+  .hero-feature {
+    font-size: 20px;
+  }
+
+  .search-card {
+    padding: 40px;
+  }
+
+  .search-form {
+    max-width: 1100px;
+  }
+}
+
+/* Extra Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  .hero-save-text {
+    font-size: 64px;
+  }
+
+  .hero-title {
+    font-size: 64px;
+  }
+
+  .search-card {
+    padding: 48px;
+  }
+}
+
+/* Container responsive adjustments for Home page */
+.home .container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (max-width: 768px) {
+  .home .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home .container {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }
