@@ -207,8 +207,10 @@
   transition: all 0.3s ease;
   box-sizing: border-box;
   flex: 1;
-  background: white;
-  color: #1a1a1a;
+  background: white !important;
+  color: #1a1a1a !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .form-input:focus {
