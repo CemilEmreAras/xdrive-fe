@@ -4,11 +4,12 @@
 
 .hero {
   position: relative;
-  min-height: 70vh;
+  min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   color: white;
   overflow: hidden;
+  padding-top: 100px;
 }
 
 .hero-background {
@@ -40,7 +41,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 80px 0;
+  padding: 20px 0 0 0;
 }
 
 .hero-text {
@@ -49,32 +50,33 @@
 }
 
 .hero-save-text {
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 700;
   color: #FFD700;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   line-height: 1.2;
 }
 
 .hero-title {
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 700;
   color: white;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
   line-height: 1.2;
 }
 
 .hero-features {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
 .hero-feature {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 18px;
+  gap: 10px;
+  font-size: 16px;
   color: white;
 }
 
@@ -93,18 +95,20 @@
 }
 
 .search-section {
-  margin-top: 60px;
+  margin-top: 30px;
   position: relative;
   z-index: 10;
   width: 100%;
 }
 
 .search-card {
-  background: #FFD700;
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  background: #7f1d1d;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .search-form {
@@ -115,17 +119,17 @@
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   min-width: 0;
   width: 100%;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-weight: 600;
-  color: #1a1a1a;
-  font-size: 14px;
+  color: white;
+  font-size: 13px;
 }
 
 .input-with-icon {
@@ -240,8 +244,8 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  font-size: 14px;
-  color: #1a1a1a;
+  font-size: 13px;
+  color: white;
   font-weight: 500;
 }
 
@@ -255,14 +259,14 @@
 .dates-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .date-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .date-input-wrapper {
@@ -316,10 +320,10 @@
 }
 
 .time-label {
-  margin-top: 8px;
-  font-size: 14px;
+  margin-top: 6px;
+  font-size: 13px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: white;
 }
 
 .time-input {
@@ -330,10 +334,10 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  font-size: 14px;
-  color: #1a1a1a;
-  margin-bottom: 24px;
+  gap: 6px;
+  font-size: 13px;
+  color: white;
+  margin-bottom: 16px;
 }
 
 .driver-select {
@@ -374,20 +378,20 @@
 .search-button-group {
   display: flex;
   justify-content: flex-end;
-  margin-top: 8px;
+  margin-top: 0;
 }
 
 .search-button {
-  padding: 16px 48px;
+  padding: 14px 40px;
   background: #22c55e;
   color: white;
   border: none;
   border-radius: 6px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  min-width: 180px;
+  min-width: 160px;
 }
 
 .search-button:hover {
