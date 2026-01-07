@@ -27,26 +27,9 @@ function Home() {
   const pickupSuggestionsRef = useRef(null)
   const dropoffSuggestionsRef = useRef(null)
 
-  // Carousel için örnek araç resimleri (gerçek uygulamada API'den gelecek)
-  const carImages = [
-    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&h=600&fit=crop',
-    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&h=600&fit=crop',
-    'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop',
-    'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&h=600&fit=crop',
-    'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&h=600&fit=crop'
-  ]
-
   useEffect(() => {
     loadLocations()
   }, [])
-
-  useEffect(() => {
-    // Carousel otomatik geçiş
-    const interval = setInterval(() => {
-      setCurrentCarIndex((prev) => (prev + 1) % carImages.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [carImages.length])
 
   // Dışarı tıklandığında dropdown'ları kapat
   useEffect(() => {
