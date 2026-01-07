@@ -991,6 +991,16 @@
     padding-left: 16px;
     padding-right: 16px;
   }
+
+  .hero .container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero .container {
+    padding: 0 12px;
+  }
 }
 
 @media (max-width: 480px) {
