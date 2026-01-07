@@ -93,9 +93,11 @@
 }
 
 .search-section {
-  margin-top: -80px;
+  margin-top: 0;
+  padding: 40px 0;
   position: relative;
   z-index: 10;
+  background: transparent;
 }
 
 .search-card {
@@ -649,7 +651,8 @@
   }
 
   .search-section {
-    margin-top: -50px;
+    margin-top: 0;
+    padding: 20px 0;
   }
 
   .search-card {
