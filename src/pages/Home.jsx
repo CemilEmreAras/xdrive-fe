@@ -239,7 +239,7 @@ function Home() {
             <div className="search-card">
             <form onSubmit={handleSubmit} className="search-form">
               <div className="form-group">
-                <label>Pick-up location</label>
+                <label>Pick-up Location</label>
                 <div className="autocomplete-wrapper" ref={pickupInputRef}>
                   <div className="input-with-icon">
                     {loading ? (
