@@ -7,7 +7,6 @@ function Home() {
   const navigate = useNavigate()
   const [locations, setLocations] = useState([])
   const [loading, setLoading] = useState(true)
-  const [currentCarIndex, setCurrentCarIndex] = useState(0)
   const [searchData, setSearchData] = useState({
     pickupId: '',
     dropoffId: '',
