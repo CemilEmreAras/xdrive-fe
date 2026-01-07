@@ -181,7 +181,7 @@
 .form-input {
   width: 100%;
   min-width: 0;
-  padding: 12px 40px 12px 40px;
+  padding: 12px 40px 12px 12px;
   border: none;
   border-radius: 6px;
   font-size: 16px;
@@ -296,7 +296,7 @@
 
 .date-display {
   position: absolute;
-  left: 40px;
+  left: 12px;
   pointer-events: none;
   color: #1a1a1a;
   font-size: 16px;
@@ -306,7 +306,7 @@
 
 .date-placeholder {
   position: absolute;
-  left: 40px;
+  left: 12px;
   pointer-events: none;
   color: #999;
   font-size: 16px;
@@ -322,7 +322,7 @@
 }
 
 .time-input {
-  padding: 12px 40px 12px 40px;
+  padding: 12px 40px 12px 12px;
 }
 
 .driver-details {
@@ -545,7 +545,7 @@
 
   .date-display {
     font-size: 14px;
-    left: 35px;
+    left: 12px;
   }
 
   .time-label {
@@ -581,7 +581,7 @@
   }
 
   .form-input {
-    padding: 10px 35px 10px 35px;
+    padding: 10px 35px 10px 12px;
     font-size: 14px;
   }
 
@@ -705,14 +705,8 @@
   }
 
   .time-input {
-    padding: 10px 32px 10px 32px;
+    padding: 10px 32px 10px 12px;
     font-size: 14px;
-  }
-
-  .time-icon {
-    width: 14px;
-    height: 14px;
-    left: 8px;
   }
 
   .driver-details {
@@ -743,7 +737,7 @@
   }
 
   .form-input {
-    padding: 10px 32px 10px 32px;
+    padding: 10px 32px 10px 12px;
     font-size: 14px;
   }
 
@@ -822,7 +816,7 @@
 
   .date-display {
     font-size: 12px;
-    left: 28px;
+    left: 12px;
   }
 
   .driver-details {
