@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getLocations } from '../services/api'
 import './Home.css'
@@ -17,6 +17,14 @@ function Home() {
     dropoffTime: '11:00',
     sameLocation: true
   })
+  const [pickupSearch, setPickupSearch] = useState('')
+  const [dropoffSearch, setDropoffSearch] = useState('')
+  const [showPickupSuggestions, setShowPickupSuggestions] = useState(false)
+  const [showDropoffSuggestions, setShowDropoffSuggestions] = useState(false)
+  const pickupInputRef = useRef(null)
+  const dropoffInputRef = useRef(null)
+  const pickupSuggestionsRef = useRef(null)
+  const dropoffSuggestionsRef = useRef(null)
 
   // Carousel için örnek araç resimleri (gerçek uygulamada API'den gelecek)
   const carImages = [
@@ -39,8 +47,20 @@ function Home() {
     return () => clearInterval(interval)
   }, [carImages.length])
 
+  // Dışarı tıklandığında dropdown'ları kapat
   useEffect(() => {
-    loadLocations()
+    const handleClickOutside = (event) => {
+      if (pickupInputRef.current && !pickupInputRef.current.contains(event.target) && 
+          pickupSuggestionsRef.current && !pickupSuggestionsRef.current.contains(event.target)) {
+        setShowPickupSuggestions(false)
+      }
+      if (dropoffInputRef.current && !dropoffInputRef.current.contains(event.target) && 
+          dropoffSuggestionsRef.current && !dropoffSuggestionsRef.current.contains(event.target)) {
+        setShowDropoffSuggestions(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   const loadLocations = async () => {
@@ -85,6 +105,94 @@ function Home() {
     const year = d.getFullYear()
     return `${day}/${month}/${year} @ ${time || '11:00'}`
   }
+
+  // Lokasyon filtreleme
+  const filterLocations = (searchTerm) => {
+    if (!searchTerm.trim()) return []
+    const term = searchTerm.toLowerCase()
+    return locations.filter(loc => {
+      const name = (loc.location_name || loc.Location_Name || '').toLowerCase()
+      const address = (loc.address || loc.Address || '').toLowerCase()
+      return name.includes(term) || address.includes(term)
+    })
+  }
+
+  const handlePickupSearchChange = (e) => {
+    const value = e.target.value
+    setPickupSearch(value)
+    setShowPickupSuggestions(true)
+    
+    // Eğer tam eşleşme varsa otomatik seç
+    const exactMatch = locations.find(loc => {
+      const fullName = `${loc.location_name || loc.Location_Name} - ${loc.address || loc.Address || ''}`
+      return fullName.toLowerCase() === value.toLowerCase()
+    })
+    
+    if (exactMatch) {
+      setSearchData({ ...searchData, pickupId: exactMatch.location_id || exactMatch.Location_ID })
+    } else {
+      setSearchData({ ...searchData, pickupId: '' })
+    }
+  }
+
+  const handlePickupSelect = (location) => {
+    const locationId = location.location_id || location.Location_ID
+    const locationName = `${location.location_name || location.Location_Name} - ${location.address || location.Address || ''}`
+    setPickupSearch(locationName)
+    setSearchData({ ...searchData, pickupId: locationId })
+    setShowPickupSuggestions(false)
+  }
+
+  const handleDropoffSearchChange = (e) => {
+    const value = e.target.value
+    setDropoffSearch(value)
+    setShowDropoffSuggestions(true)
+    
+    // Eğer tam eşleşme varsa otomatik seç
+    const exactMatch = locations.find(loc => {
+      const fullName = `${loc.location_name || loc.Location_Name} - ${loc.address || loc.Address || ''}`
+      return fullName.toLowerCase() === value.toLowerCase()
+    })
+    
+    if (exactMatch) {
+      setSearchData({ ...searchData, dropoffId: exactMatch.location_id || exactMatch.Location_ID })
+    } else {
+      setSearchData({ ...searchData, dropoffId: '' })
+    }
+  }
+
+  const handleDropoffSelect = (location) => {
+    const locationId = location.location_id || location.Location_ID
+    const locationName = `${location.location_name || location.Location_Name} - ${location.address || location.Address || ''}`
+    setDropoffSearch(locationName)
+    setSearchData({ ...searchData, dropoffId: locationId })
+    setShowDropoffSuggestions(false)
+  }
+
+  // Seçili lokasyonun adını göster
+  useEffect(() => {
+    if (searchData.pickupId) {
+      const selected = locations.find(loc => 
+        (loc.location_id || loc.Location_ID) === searchData.pickupId
+      )
+      if (selected) {
+        const locationName = `${selected.location_name || selected.Location_Name} - ${selected.address || selected.Address || ''}`
+        setPickupSearch(locationName)
+      }
+    }
+  }, [searchData.pickupId, locations])
+
+  useEffect(() => {
+    if (searchData.dropoffId) {
+      const selected = locations.find(loc => 
+        (loc.location_id || loc.Location_ID) === searchData.dropoffId
+      )
+      if (selected) {
+        const locationName = `${selected.location_name || selected.Location_Name} - ${selected.address || selected.Address || ''}`
+        setDropoffSearch(locationName)
+      }
+    }
+  }, [searchData.dropoffId, locations])
 
   return (
     <div className="home">
@@ -133,28 +241,43 @@ function Home() {
               <div className="form-row">
                 <div className="form-group">
                   <label>Location of pickup</label>
-                  <div className="input-with-icon">
-                    <span className="input-icon">📍</span>
-                    {loading ? (
-                      <select disabled className="form-input">
-                        <option>Loading...</option>
-                      </select>
-                    ) : (
-                      <select
-                        value={searchData.pickupId}
-                        onChange={(e) => setSearchData({ ...searchData, pickupId: e.target.value })}
-                        className="form-input"
-                        required
-                      >
-                        <option value="">Pickup location...</option>
-                        {locations.map((loc) => (
-                          <option key={loc.location_id || loc.Location_ID} value={loc.location_id || loc.Location_ID}>
-                            {loc.location_name || loc.Location_Name} - {loc.address || loc.Address || ''}
-                          </option>
+                  <div className="autocomplete-wrapper" ref={pickupInputRef}>
+                    <div className="input-with-icon">
+                      <span className="input-icon">📍</span>
+                      {loading ? (
+                        <input
+                          type="text"
+                          className="form-input"
+                          placeholder="Loading..."
+                          disabled
+                        />
+                      ) : (
+                        <input
+                          type="text"
+                          className="form-input"
+                          placeholder="Pickup location..."
+                          value={pickupSearch}
+                          onChange={handlePickupSearchChange}
+                          onFocus={() => setShowPickupSuggestions(true)}
+                          required
+                        />
+                      )}
+                      <span className="input-arrow">▼</span>
+                    </div>
+                    {showPickupSuggestions && !loading && filterLocations(pickupSearch).length > 0 && (
+                      <div className="autocomplete-suggestions" ref={pickupSuggestionsRef}>
+                        {filterLocations(pickupSearch).map((loc) => (
+                          <div
+                            key={loc.location_id || loc.Location_ID}
+                            className="suggestion-item"
+                            onClick={() => handlePickupSelect(loc)}
+                          >
+                            <div className="suggestion-name">{loc.location_name || loc.Location_Name}</div>
+                            <div className="suggestion-address">{loc.address || loc.Address || ''}</div>
+                          </div>
                         ))}
-                      </select>
+                      </div>
                     )}
-                    <span className="input-arrow">▼</span>
                   </div>
                 </div>
                 <div className="form-group">
