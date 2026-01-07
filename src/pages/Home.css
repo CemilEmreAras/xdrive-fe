@@ -37,11 +37,14 @@
   border-radius: 16px;
   padding: 40px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden; /* Taşmayı önler */
 }
 
 .search-form {
   max-width: 900px;
   margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .search-btn {
@@ -80,10 +83,110 @@
   line-height: 1.6;
 }
 
+/* Form Input Styles */
+.form-group {
+  min-width: 0; /* Grid item'ların taşmasını önler */
+  width: 100%;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  z-index: 1;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 40px 12px 40px; /* Sol: icon için, Sağ: arrow için */
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #b91c1c;
+}
+
+.date-input,
+.time-input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 40px 12px 40px;
+}
+
+.input-arrow {
+  position: absolute;
+  right: 12px;
+  z-index: 1;
+  font-size: 12px;
+  color: #666;
+  pointer-events: none;
+}
+
+.formatted-date {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.search-form .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.search-form .form-group {
+  min-width: 0;
+}
+
+.search-button-group {
+  display: flex;
+  align-items: flex-end;
+}
+
+.search-button {
+  width: 100%;
+  padding: 16px;
+  background: #b91c1c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.search-button:hover {
+  background: #7f1d1d;
+}
+
 /* Autocomplete Styles */
 .autocomplete-wrapper {
   position: relative;
   width: 100%;
+  min-width: 0;
 }
 
 .autocomplete-suggestions {
@@ -143,6 +246,20 @@
 
   .autocomplete-suggestions {
     max-height: 200px;
+  }
+
+  .search-form .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-input {
+    padding: 10px 35px 10px 35px;
+    font-size: 14px;
+  }
+
+  .date-input,
+  .time-input {
+    padding: 10px 35px 10px 35px;
   }
 }
 
