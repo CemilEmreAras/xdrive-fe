@@ -141,6 +141,23 @@
   z-index: 1;
   font-size: 18px;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pin-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.time-icon {
+  position: absolute;
+  left: 12px;
+  z-index: 1;
+  pointer-events: none;
+  width: 18px;
+  height: 18px;
 }
 
 .form-input {
@@ -269,6 +286,16 @@
   z-index: 1;
 }
 
+.date-placeholder {
+  position: absolute;
+  left: 40px;
+  pointer-events: none;
+  color: #999;
+  font-size: 16px;
+  font-weight: 400;
+  z-index: 1;
+}
+
 .time-label {
   margin-top: 8px;
   font-size: 14px;
@@ -277,7 +304,7 @@
 }
 
 .time-input {
-  padding: 12px 40px 12px 12px;
+  padding: 12px 40px 12px 40px;
 }
 
 .driver-details {
@@ -660,8 +687,14 @@
   }
 
   .time-input {
-    padding: 10px 32px 10px 12px;
+    padding: 10px 32px 10px 32px;
     font-size: 14px;
+  }
+
+  .time-icon {
+    width: 14px;
+    height: 14px;
+    left: 8px;
   }
 
   .driver-details {
