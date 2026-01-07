@@ -401,6 +401,7 @@ function Home() {
                 </button>
               </div>
             </form>
+            </div>
           </div>
         </div>
       </section>
