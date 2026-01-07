@@ -306,7 +306,7 @@
 
 .date-display {
   position: absolute;
-  left: 30px;
+  left: 24px;
   pointer-events: none;
   color: #1a1a1a;
   font-size: 15px;
@@ -316,7 +316,7 @@
 
 .date-placeholder {
   position: absolute;
-  left: 30px;
+  left: 24px;
   pointer-events: none;
   color: #999;
   font-size: 15px;
