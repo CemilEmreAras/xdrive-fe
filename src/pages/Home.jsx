@@ -231,10 +231,6 @@ function Home() {
                   <span className="checkmark">✓</span>
                   <span>24/7 Support</span>
                 </div>
-                <div className="hero-feature">
-                  <span className="checkmark">✓</span>
-                  <span>Free Cancellation</span>
-                </div>
               </div>
             </div>
           </div>
