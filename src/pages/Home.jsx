@@ -336,7 +336,6 @@ function Home() {
                       className="form-input time-input"
                       required
                     />
-                    <span className="input-arrow">▼</span>
                   </div>
                 </div>
 
@@ -368,7 +367,6 @@ function Home() {
                       className="form-input time-input"
                       required
                     />
-                    <span className="input-arrow">▼</span>
                   </div>
                 </div>
               </div>
@@ -386,7 +384,6 @@ function Home() {
                   <option value="Germany">Germany</option>
                   <option value="France">France</option>
                 </select>
-                <span className="select-arrow">▼</span>
                 <span> and age is </span>
                 <select
                   value={searchData.driverAge}
@@ -398,7 +395,6 @@ function Home() {
                   <option value="30-65">30-65</option>
                   <option value="66+">66+</option>
                 </select>
-                <span className="select-arrow">▼</span>
                 <span className="info-icon" title="Age information">ⓘ</span>
               </div>
 
