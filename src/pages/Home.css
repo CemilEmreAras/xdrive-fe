@@ -138,12 +138,15 @@
 .input-icon {
   position: absolute;
   left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 1;
   font-size: 18px;
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity 0.2s ease;
 }
 
 .pin-icon {
@@ -154,10 +157,25 @@
 .time-icon {
   position: absolute;
   left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 1;
   pointer-events: none;
   width: 18px;
   height: 18px;
+  transition: opacity 0.2s ease;
+}
+
+/* Input focus olduğunda icon'ları gizle */
+.form-input:focus ~ .input-icon,
+.form-input:focus ~ .time-icon {
+  opacity: 0;
+}
+
+/* Input dolu olduğunda da icon'ları gizle (placeholder görünmüyorsa) */
+.form-input:not(:placeholder-shown) ~ .input-icon,
+.form-input:not(:placeholder-shown) ~ .time-icon {
+  opacity: 0;
 }
 
 .form-input {

@@ -260,26 +260,33 @@ function Home() {
                 <label>Pick-up location</label>
                 <div className="autocomplete-wrapper" ref={pickupInputRef}>
                   <div className="input-with-icon">
-                    <svg className="input-icon pin-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#ef4444"/>
-                    </svg>
                     {loading ? (
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="Loading..."
-                        disabled
-                      />
+                      <>
+                        <input
+                          type="text"
+                          className="form-input"
+                          placeholder="Loading..."
+                          disabled
+                        />
+                        <svg className="input-icon pin-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#ef4444"/>
+                        </svg>
+                      </>
                     ) : (
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="Pick-up location..."
-                        value={pickupSearch}
-                        onChange={handlePickupSearchChange}
-                        onFocus={() => setShowPickupSuggestions(true)}
-                        required
-                      />
+                      <>
+                        <input
+                          type="text"
+                          className="form-input"
+                          placeholder="Pick-up location..."
+                          value={pickupSearch}
+                          onChange={handlePickupSearchChange}
+                          onFocus={() => setShowPickupSuggestions(true)}
+                          required
+                        />
+                        <svg className="input-icon pin-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#ef4444"/>
+                        </svg>
+                      </>
                     )}
                     {pickupSearch && (
                       <button
@@ -342,10 +349,6 @@ function Home() {
                   </div>
                   <label className="time-label">Time</label>
                   <div className="input-with-icon">
-                    <svg className="time-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="12" cy="12" r="10" stroke="#1a1a1a" strokeWidth="2" fill="none"/>
-                      <path d="M12 6v6l4 2" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
                     <input
                       type="time"
                       value={searchData.pickupTime}
@@ -353,6 +356,10 @@ function Home() {
                       className="form-input time-input"
                       required
                     />
+                    <svg className="time-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" stroke="#1a1a1a" strokeWidth="2" fill="none"/>
+                      <path d="M12 6v6l4 2" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
                     <span className="input-arrow">▼</span>
                   </div>
                 </div>
@@ -378,10 +385,6 @@ function Home() {
                   </div>
                   <label className="time-label">Time</label>
                   <div className="input-with-icon">
-                    <svg className="time-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="12" cy="12" r="10" stroke="#1a1a1a" strokeWidth="2" fill="none"/>
-                      <path d="M12 6v6l4 2" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
                     <input
                       type="time"
                       value={searchData.dropoffTime}
@@ -389,6 +392,10 @@ function Home() {
                       className="form-input time-input"
                       required
                     />
+                    <svg className="time-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" stroke="#1a1a1a" strokeWidth="2" fill="none"/>
+                      <path d="M12 6v6l4 2" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
                     <span className="input-arrow">▼</span>
                   </div>
                 </div>
