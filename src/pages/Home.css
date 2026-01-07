@@ -127,10 +127,8 @@
 }
 
 .search-card {
-  background: #7f1d1d;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   overflow: visible;
   max-width: 1000px;
   margin: 0 auto;
@@ -313,7 +311,6 @@
 
 .date-input-wrapper {
   position: relative;
-  display: flex;
   align-items: center;
 }
 
