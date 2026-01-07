@@ -1,0 +1,11 @@
+{
+  "//": "Vite + React SPA için tüm yolları index.html'e yönlendir",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+
+
