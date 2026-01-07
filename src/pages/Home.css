@@ -4,7 +4,7 @@
 
 .hero {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: flex-start;
   color: white;
@@ -480,7 +480,7 @@
 /* Tablet (481px - 768px) */
 @media (max-width: 1024px) {
   .hero {
-    min-height: 60vh;
+    height: 100vh;
   }
 
   .hero-content {
@@ -511,7 +511,7 @@
 /* Tablet Portrait (481px - 768px) */
 @media (max-width: 768px) {
   .hero {
-    min-height: 50vh;
+    height: 100vh;
   }
 
   .hero-content {
@@ -650,7 +650,7 @@
 /* Mobile (320px - 480px) */
 @media (max-width: 480px) {
   .hero {
-    min-height: 45vh;
+    height: 100vh;
   }
 
   .hero-content {
@@ -869,7 +869,7 @@
 /* Landscape orientation for mobile */
 @media (max-width: 768px) and (orientation: landscape) {
   .hero {
-    min-height: 40vh;
+    height: 100vh;
   }
 
   .hero-content {
@@ -925,7 +925,7 @@
 /* Large Desktop (1025px+) */
 @media (min-width: 1025px) {
   .hero {
-    min-height: 75vh;
+    height: 100vh;
   }
 
   .hero-content {
