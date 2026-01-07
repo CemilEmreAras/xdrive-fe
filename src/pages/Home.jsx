@@ -110,7 +110,10 @@ function Home() {
 
   // Lokasyon filtreleme
   const filterLocations = (searchTerm) => {
-    if (!searchTerm.trim()) return []
+    if (!searchTerm || !searchTerm.trim()) {
+      // Boş arama terimi için tüm lokasyonları döndür
+      return locations
+    }
     const term = searchTerm.toLowerCase()
     return locations.filter(loc => {
       const name = (loc.location_name || loc.Location_Name || '').toLowerCase()
@@ -135,6 +138,10 @@ function Home() {
     } else {
       setSearchData({ ...searchData, pickupId: '' })
     }
+  }
+
+  const handlePickupInputClick = () => {
+    setShowPickupSuggestions(true)
   }
 
   const handlePickupSelect = (location) => {
@@ -275,6 +282,7 @@ function Home() {
                         value={pickupSearch}
                         onChange={handlePickupSearchChange}
                         onFocus={() => setShowPickupSuggestions(true)}
+                        onClick={handlePickupInputClick}
                         required
                       />
                     )}
@@ -289,7 +297,7 @@ function Home() {
                       </button>
                     )}
                   </div>
-                  {showPickupSuggestions && !loading && filterLocations(pickupSearch).length > 0 && (
+                  {showPickupSuggestions && !loading && locations.length > 0 && (
                     <div className="autocomplete-suggestions" ref={pickupSuggestionsRef}>
                       {filterLocations(pickupSearch).map((loc) => (
                         <div
