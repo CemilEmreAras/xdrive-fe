@@ -238,12 +238,9 @@ function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="search-section">
-        <div className="container">
-          <div className="search-card">
+          
+          <div className="search-section">
+            <div className="search-card">
             <form onSubmit={handleSubmit} className="search-form">
               <div className="form-group">
                 <label>Pick-up location</label>
@@ -395,7 +392,7 @@ function Home() {
                   <option value="30-65">30-65</option>
                   <option value="66+">66+</option>
                 </select>
-                <span className="info-icon" title="Age information">ⓘ</span>
+              
               </div>
 
               <div className="form-group search-button-group">
