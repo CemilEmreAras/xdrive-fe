@@ -304,7 +304,7 @@ function Home() {
                 <div className="form-group date-group">
                   <label>Pick-up date</label>
                   <div className="date-input-wrapper">
-                    <span className="date-arrow-left">◄</span>
+                    <span className="date-dot"></span>
                     <input
                       type="date"
                       value={searchData.pickupDate}
@@ -318,7 +318,6 @@ function Home() {
                     ) : (
                       <span className="date-placeholder">Select date</span>
                     )}
-                    <span className="date-arrow-right">►</span>
                   </div>
                   <label className="time-label">Time</label>
                   <div className="input-with-icon">
@@ -335,7 +334,7 @@ function Home() {
                 <div className="form-group date-group">
                   <label>Drop-off date</label>
                   <div className="date-input-wrapper">
-                    <span className="date-arrow-left">◄</span>
+                    <span className="date-dot"></span>
                     <input
                       type="date"
                       value={searchData.dropoffDate}
@@ -349,7 +348,6 @@ function Home() {
                     ) : (
                       <span className="date-placeholder">Select date</span>
                     )}
-                    <span className="date-arrow-right">►</span>
                   </div>
                   <label className="time-label">Time</label>
                   <div className="input-with-icon">
