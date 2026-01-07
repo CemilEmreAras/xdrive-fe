@@ -5,6 +5,7 @@ import CarList from './pages/CarList'
 import CarDetail from './pages/CarDetail'
 import Reservation from './pages/Reservation'
 import ReservationConfirmation from './pages/ReservationConfirmation'
+import Locations from './pages/Locations'
 import './App.css'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/cars/:id" element={<CarDetail />} />
           <Route path="/reservation/:carId" element={<Reservation />} />
           <Route path="/reservation-confirmation/:reservationNumber" element={<ReservationConfirmation />} />
+          <Route path="/locations" element={<Locations />} />
         </Routes>
       </div>
     </Router>
