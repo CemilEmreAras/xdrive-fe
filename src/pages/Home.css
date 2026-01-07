@@ -515,7 +515,8 @@
   }
 
   .search-section {
-    margin-top: -60px;
+    margin-top: 0;
+    padding: 30px 0;
   }
 
   .search-card {
@@ -861,7 +862,8 @@
   }
 
   .search-section {
-    margin-top: -40px;
+    margin-top: 0;
+    padding: 20px 0;
   }
 }
 
