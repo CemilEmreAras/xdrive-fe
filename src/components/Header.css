@@ -3,10 +3,7 @@
   backdrop-filter: blur(12px);
   color: white;
   padding: 15px 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 1000;
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.8);
 }

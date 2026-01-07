@@ -5,12 +5,9 @@
 .hero {
   position: relative;
   height: 100vh;
-  display: flex;
-  align-items: flex-start;
+  display: block;
   color: white;
   overflow: visible;
-  padding-top: 70px;
-  padding-bottom: 20px;
 }
 
 .hero-background {
@@ -41,11 +38,23 @@
   pointer-events: none;
 }
 
+.hero .container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .hero-content {
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 10px 0 20px 0;
+  padding: 30px 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -58,7 +67,7 @@
 }
 
 .hero-save-text {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
   color: #FFD700;
   margin-bottom: 6px;
@@ -112,6 +121,9 @@
   margin-left: auto;
   margin-right: auto;
   padding-bottom: 20px;
+  background: rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  padding: 20px;
 }
 
 .search-card {
@@ -484,11 +496,11 @@
   }
 
   .hero-content {
-    padding: 60px 0;
+    padding: 30px 0;
   }
 
   .hero-save-text {
-    font-size: 40px;
+    font-size: 32px;
   }
 
   .hero-title {
@@ -515,7 +527,7 @@
   }
 
   .hero-content {
-    padding: 40px 0;
+    padding: 30px 0;
   }
 
   .hero-text {
@@ -658,7 +670,7 @@
   }
 
   .hero-save-text {
-    font-size: 24px;
+    font-size: 32px;
     line-height: 1.3;
     margin-bottom: 10px;
   }
@@ -826,7 +838,7 @@
 /* Small Mobile (max-width: 360px) */
 @media (max-width: 360px) {
   .hero-save-text {
-    font-size: 20px;
+    font-size: 32px;
   }
 
   .hero-title {
@@ -877,7 +889,7 @@
   }
 
   .hero-save-text {
-    font-size: 28px;
+    font-size: 32px;
   }
 
   .hero-title {
@@ -929,11 +941,11 @@
   }
 
   .hero-content {
-    padding: 100px 0;
+    padding: 30px 0;
   }
 
   .hero-save-text {
-    font-size: 56px;
+    font-size: 32px;
   }
 
   .hero-title {
@@ -956,7 +968,7 @@
 /* Extra Large Desktop (1440px+) */
 @media (min-width: 1440px) {
   .hero-save-text {
-    font-size: 64px;
+    font-size: 32px;
   }
 
   .hero-title {
