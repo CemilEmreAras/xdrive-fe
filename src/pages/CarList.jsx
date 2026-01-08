@@ -18,46 +18,20 @@ function CarList() {
   })
 
   useEffect(() => {
-    const fetchCarsWithCache = async () => {
-      // localStorage'dan cars listesini yükle (eğer searchParams aynıysa)
-      const savedCars = localStorage.getItem('xdrive_cars')
-      const savedSearchParams = localStorage.getItem('xdrive_searchParams')
-      const currentParams = searchParams.toString()
-      
-      if (savedCars && savedSearchParams === currentParams) {
-        try {
-          const parsed = JSON.parse(savedCars)
-          setCars(parsed)
-          setLoading(false)
-          console.log('✅ CarList: localStorage\'dan cars yüklendi:', parsed.length, 'araç')
-          // Yine de arka planda güncel veriyi çek
-          await fetchCars()
-        } catch (error) {
-          console.error('Error loading saved cars:', error)
-          await fetchCars()
+    const fetchCars = async () => {
+      try {
+        setLoading(true)
+        const params = {
+          pickupId: searchParams.get('pickupId') || '',
+          dropoffId: searchParams.get('dropoffId') || '',
+          pickupDate: searchParams.get('pickupDate') || '',
+          dropoffDate: searchParams.get('dropoffDate') || '',
+          currency: 'EURO',
+          ...filters
         }
-      } else {
-        await fetchCars()
-      }
-    }
-    
-    fetchCarsWithCache()
-  }, [searchParams, filters])
-
-  const fetchCars = async () => {
-    try {
-      setLoading(true)
-      const params = {
-        pickupId: searchParams.get('pickupId') || '',
-        dropoffId: searchParams.get('dropoffId') || '',
-        pickupDate: searchParams.get('pickupDate') || '',
-        dropoffDate: searchParams.get('dropoffDate') || '',
-        currency: 'EURO',
-        ...filters
-      }
-      
-      // API service'i kullan (production'da doğru URL'i kullanır)
-      const carsData = await getCars(params)
+        
+        // API service'i kullan (production'da doğru URL'i kullanır)
+        const carsData = await getCars(params)
       
       // Debug: İlk araç verisini kontrol et - rezervasyon için gerekli alanlar
       if (carsData && carsData.length > 0) {
@@ -146,10 +120,36 @@ function CarList() {
               'Araçlar yüklenirken bir hata oluştu: ' + (error.message || 'Bilinmeyen hata') + '\n\n' +
               'Lütfen tekrar deneyin.')
       }
-    } finally {
-      setLoading(false)
+      } finally {
+        setLoading(false)
+      }
     }
-  }
+    
+    const fetchCarsWithCache = async () => {
+      // localStorage'dan cars listesini yükle (eğer searchParams aynıysa)
+      const savedCars = localStorage.getItem('xdrive_cars')
+      const savedSearchParams = localStorage.getItem('xdrive_searchParams')
+      const currentParams = searchParams.toString()
+      
+      if (savedCars && savedSearchParams === currentParams) {
+        try {
+          const parsed = JSON.parse(savedCars)
+          setCars(parsed)
+          setLoading(false)
+          console.log('✅ CarList: localStorage\'dan cars yüklendi:', parsed.length, 'araç')
+          // Yine de arka planda güncel veriyi çek
+          await fetchCars()
+        } catch (error) {
+          console.error('Error loading saved cars:', error)
+          await fetchCars()
+        }
+      } else {
+        await fetchCars()
+      }
+    }
+    
+    fetchCarsWithCache()
+  }, [searchParams, filters])
 
   const handleFilterChange = (key, value) => {
     setFilters({ ...filters, [key]: value })
