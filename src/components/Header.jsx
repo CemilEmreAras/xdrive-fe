@@ -3,7 +3,6 @@ import { useState } from 'react'
 import './Header.css'
 
 function Header() {
-  const [showVehiclesMenu, setShowVehiclesMenu] = useState(false)
   const [showLanguageMenu, setShowLanguageMenu] = useState(false)
 
   return (
@@ -26,27 +25,9 @@ function Header() {
           </Link>
           <nav className="nav">
             <Link to="/">Home</Link>
-            <Link to="/offers">Offers</Link>
-            <div 
-              className="nav-dropdown"
-              onMouseEnter={() => setShowVehiclesMenu(true)}
-              onMouseLeave={() => setShowVehiclesMenu(false)}
-            >
-              <Link to="/cars">
-                Vehicles <span className="dropdown-arrow">▼</span>
-              </Link>
-              {showVehiclesMenu && (
-                <div className="dropdown-menu">
-                  <Link to="/cars?category=economy">Economy</Link>
-                  <Link to="/cars?category=standard">Standard</Link>
-                  <Link to="/cars?category=luxury">Luxury</Link>
-                  <Link to="/cars?category=suv">SUV</Link>
-                </div>
-              )}
-            </div>
+            <Link to="/cars">Cars</Link>
             <Link to="/locations">Locations</Link>
             <Link to="/faq">FAQ</Link>
-            <Link to="/news">News</Link>
             <Link to="/contact">Contact</Link>
             <Link to="/franchise">Franchise</Link>
           </nav>
