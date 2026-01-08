@@ -18,26 +18,30 @@ function CarList() {
   })
 
   useEffect(() => {
-    // localStorage'dan cars listesini yükle (eğer searchParams aynıysa)
-    const savedCars = localStorage.getItem('xdrive_cars')
-    const savedSearchParams = localStorage.getItem('xdrive_searchParams')
-    const currentParams = searchParams.toString()
-    
-    if (savedCars && savedSearchParams === currentParams) {
-      try {
-        const parsed = JSON.parse(savedCars)
-        setCars(parsed)
-        setLoading(false)
-        console.log('✅ CarList: localStorage\'dan cars yüklendi:', parsed.length, 'araç')
-        // Yine de arka planda güncel veriyi çek
-        fetchCars()
-      } catch (error) {
-        console.error('Error loading saved cars:', error)
-        fetchCars()
+    const fetchCarsWithCache = async () => {
+      // localStorage'dan cars listesini yükle (eğer searchParams aynıysa)
+      const savedCars = localStorage.getItem('xdrive_cars')
+      const savedSearchParams = localStorage.getItem('xdrive_searchParams')
+      const currentParams = searchParams.toString()
+      
+      if (savedCars && savedSearchParams === currentParams) {
+        try {
+          const parsed = JSON.parse(savedCars)
+          setCars(parsed)
+          setLoading(false)
+          console.log('✅ CarList: localStorage\'dan cars yüklendi:', parsed.length, 'araç')
+          // Yine de arka planda güncel veriyi çek
+          await fetchCars()
+        } catch (error) {
+          console.error('Error loading saved cars:', error)
+          await fetchCars()
+        }
+      } else {
+        await fetchCars()
       }
-    } else {
-      fetchCars()
     }
+    
+    fetchCarsWithCache()
   }, [searchParams, filters])
 
   const fetchCars = async () => {
