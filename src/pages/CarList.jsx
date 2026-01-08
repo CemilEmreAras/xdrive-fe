@@ -242,12 +242,14 @@ function CarList() {
                       for (const img of possibleImages) {
                         if (img && img.trim() !== '' && img !== 'null' && img !== 'undefined' && !img.includes('data:image/svg+xml')) {
                           // Eğer tam URL değilse ve base64 değilse, base URL ekle
-                          if (img.startsWith('data:') || img.startsWith('http://') || img.startsWith('https://')) {
+                          if (img.startsWith('data:') || img.startsWith('https://')) {
                             return img;
+                          } else if (img.startsWith('http://')) {
+                            return img.replace('http://', 'https://');
                           } else if (img.startsWith('/')) {
-                            return `http://xdrivejson.turevsistem.com${img}`;
+                            return `https://xdrivejson.turevsistem.com${img}`;
                           } else {
-                            return `http://xdrivejson.turevsistem.com/${img}`;
+                            return `https://xdrivejson.turevsistem.com/${img}`;
                           }
                         }
                       }
