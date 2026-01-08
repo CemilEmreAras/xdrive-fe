@@ -367,12 +367,14 @@
 
 .driver-details {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 6px;
   font-size: 13px;
   color: white;
   margin-bottom: 16px;
+  white-space: nowrap;
 }
 
 .driver-select {
