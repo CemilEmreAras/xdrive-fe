@@ -223,35 +223,15 @@ function CarList() {
                     src={(() => {
                       // Backend'den gelen image field'ını öncelikle kullan
                       if (car.image && car.image.trim() !== '' && !car.image.includes('data:image/svg+xml')) {
-                        // Backend zaten normalize etmiş, direkt kullan
-                        return car.image;
-                      }
-                      
-                      // Eğer backend'den image gelmediyse, diğer alanları kontrol et
-                      const possibleImages = [
-                        car.Image_Path,
-                        car.image_Path,
-                        car.image_path,
-                        car.IMAGE_PATH,
-                        car.Image,
-                        car.image,
-                        car.IMG,
-                        car.img
-                      ];
-                      
-                      for (const img of possibleImages) {
-                        if (img && img.trim() !== '' && img !== 'null' && img !== 'undefined' && !img.includes('data:image/svg+xml')) {
-                          // Eğer tam URL değilse ve base64 değilse, base URL ekle
-                          if (img.startsWith('data:') || img.startsWith('https://')) {
-                            return img;
-                          } else if (img.startsWith('http://')) {
-                            return img.replace('http://', 'https://');
-                          } else if (img.startsWith('/')) {
-                            return `https://xdrivejson.turevsistem.com${img}`;
-                          } else {
-                            return `https://xdrivejson.turevsistem.com/${img}`;
-                          }
+                        // Backend proxy URL döndürüyor, direkt kullan
+                        // Eğer relative path ise (proxy URL), API base URL ekle
+                        if (car.image.startsWith('/api/images/proxy')) {
+                          const apiBaseUrl = import.meta.env.PROD 
+                            ? 'https://xdrive-be.vercel.app'
+                            : import.meta.env.VITE_API_URL || 'http://localhost:5001';
+                          return `${apiBaseUrl}${car.image}`;
                         }
+                        return car.image;
                       }
                       
                       // Hiç resim yoksa placeholder
