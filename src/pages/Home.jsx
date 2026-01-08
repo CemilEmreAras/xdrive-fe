@@ -249,23 +249,6 @@ function Home() {
           <div className="hero-overlay"></div>
         </div>
         <div className="container">
-          <div className="hero-content">
-            <div className="hero-text">
-              <h2 className="hero-save-text">Save up to 70% on car rentals</h2>
-              <h1 className="hero-title">Clear prices, no surprises</h1>
-              <div className="hero-features">
-                <div className="hero-feature">
-                  <span className="checkmark">✓</span>
-                  <span>Trusted by 7M travelers</span>
-                </div>
-                <div className="hero-feature">
-                  <span className="checkmark">✓</span>
-                  <span>24/7 Support</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
           <div className="search-section">
             <div className="search-card">
             <form onSubmit={handleSubmit} className="search-form">
