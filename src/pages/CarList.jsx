@@ -18,7 +18,26 @@ function CarList() {
   })
 
   useEffect(() => {
-    fetchCars()
+    // localStorage'dan cars listesini yükle (eğer searchParams aynıysa)
+    const savedCars = localStorage.getItem('xdrive_cars')
+    const savedSearchParams = localStorage.getItem('xdrive_searchParams')
+    const currentParams = searchParams.toString()
+    
+    if (savedCars && savedSearchParams === currentParams) {
+      try {
+        const parsed = JSON.parse(savedCars)
+        setCars(parsed)
+        setLoading(false)
+        console.log('✅ CarList: localStorage\'dan cars yüklendi:', parsed.length, 'araç')
+        // Yine de arka planda güncel veriyi çek
+        fetchCars()
+      } catch (error) {
+        console.error('Error loading saved cars:', error)
+        fetchCars()
+      }
+    } else {
+      fetchCars()
+    }
   }, [searchParams, filters])
 
   const fetchCars = async () => {
@@ -61,7 +80,12 @@ function CarList() {
         }
       }
       
-      setCars(carsData || [])
+      const carsArray = carsData || []
+      setCars(carsArray)
+      // localStorage'a kaydet
+      localStorage.setItem('xdrive_cars', JSON.stringify(carsArray))
+      localStorage.setItem('xdrive_searchParams', searchParams.toString())
+      console.log('✅ CarList: Cars localStorage\'a kaydedildi:', carsArray.length, 'araç')
     } catch (error) {
       console.error('Araçlar yüklenirken hata:', error)
       setCars([])

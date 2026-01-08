@@ -12,7 +12,11 @@ function CarDetail() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Eğer state'den car geldiyse, API'ye gerek yok
+    // Önce localStorage'dan car'ı yükle
+    const savedCar = localStorage.getItem('xdrive_carDetail')
+    const savedCarId = localStorage.getItem('xdrive_carDetailId')
+    
+    // Eğer state'den car geldiyse, onu kullan ve localStorage'a kaydet
     if (location.state?.car) {
       const stateCar = location.state.car;
       // Car objesinin tüm alanlarını kontrol et
@@ -60,8 +64,30 @@ function CarDetail() {
       }
       
       setCar(stateCar)
+      // localStorage'a kaydet
+      localStorage.setItem('xdrive_carDetail', JSON.stringify(stateCar))
+      if (id) {
+        localStorage.setItem('xdrive_carDetailId', id)
+      }
       setLoading(false)
       return
+    }
+    
+    // Eğer state'den car gelmediyse, localStorage'dan yükle
+    if (savedCar && savedCarId === id) {
+      try {
+        const parsed = JSON.parse(savedCar)
+        setCar(parsed)
+        setLoading(false)
+        console.log('✅ CarDetail: localStorage\'dan car yüklendi')
+        // Yine de arka planda güncel veriyi çek
+        if (id && id !== 'undefined') {
+          fetchCar()
+        }
+        return
+      } catch (error) {
+        console.error('Error loading saved car:', error)
+      }
     }
     
     if (id && id !== 'undefined') {
@@ -82,11 +108,17 @@ function CarDetail() {
       // API service fonksiyonunu kullan (production'da doğru URL'i kullanır)
       const carData = await getCar(id)
       setCar(carData)
+      // localStorage'a kaydet
+      localStorage.setItem('xdrive_carDetail', JSON.stringify(carData))
+      localStorage.setItem('xdrive_carDetailId', id)
+      console.log('✅ CarDetail: Car localStorage\'a kaydedildi')
     } catch (error) {
       console.error('Araç detayları yüklenirken hata:', error)
       // Eğer API'den bulunamazsa, state'den gelen car'ı kullan
       if (location.state?.car) {
         setCar(location.state.car)
+        localStorage.setItem('xdrive_carDetail', JSON.stringify(location.state.car))
+        localStorage.setItem('xdrive_carDetailId', id)
       }
     } finally {
       setLoading(false)
