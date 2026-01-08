@@ -53,6 +53,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   box-sizing: border-box;
 }
 
@@ -66,6 +67,7 @@
   justify-content: flex-start;
   min-height: auto;
   flex-shrink: 0;
+  margin-bottom: 20px;
 }
 
 .hero-text {
@@ -120,13 +122,11 @@
 }
 
 .search-section {
-  margin-top: 20px;
   position: relative;
   z-index: 100;
   width: 100%;
   max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   padding-bottom: 20px;
   background: rgba(220, 38, 38, 0.3);
   border-radius: 8px;
