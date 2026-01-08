@@ -237,17 +237,7 @@ function Home() {
   return (
     <div className="home">
       <section className="hero">
-        <div className="hero-background">
-          <img 
-            src="/images/hero-background.svg" 
-            alt="Hero Background" 
-            className="hero-bg-image"
-            onError={(e) => {
-              e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgZmlsbD0iI2U1ZTdlYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DYXIgSW1hZ2U8L3RleHQ+PC9zdmc+'
-            }}
-          />
-          <div className="hero-overlay"></div>
-        </div>
+        <div className="hero-overlay"></div>
         <div className="container">
           <div className="search-section">
             <div className="search-card">
