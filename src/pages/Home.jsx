@@ -563,7 +563,7 @@ function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="faq-section">
+      <section id="faq" className="faq-section">
         <div className="container">
           <h2 className="faq-title">Frequently Asked Questions (FAQ)</h2>
           

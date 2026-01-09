@@ -26,7 +26,7 @@ function Header() {
           <nav className="nav">
             <Link to="/">Home</Link>
             <Link to="/locations">Locations</Link>
-            <Link to="/faq">FAQ</Link>
+            <Link to="/#faq">FAQ</Link>
             <Link to="/contact">Contact</Link>
             <Link to="/franchise">Franchise</Link>
           </nav>
