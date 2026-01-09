@@ -86,23 +86,20 @@ function ReservationConfirmation() {
               <div className="car-info-confirm">
                 <img 
                   src={(() => {
-                    const possibleImages = [
-                      car.image,
-                      car.Image_Path,
-                      car.image_Path,
-                      car.image_path
-                    ];
-                    for (const img of possibleImages) {
-                      if (img && img.trim() !== '' && img !== 'data:image/svg+xml') {
-                        if (img.startsWith('data:') || img.startsWith('http://') || img.startsWith('https://')) {
-                          return img;
-                        } else if (img.startsWith('/')) {
-                          return `http://xdrivejson.turevsistem.com${img}`;
-                        } else {
-                          return `http://xdrivejson.turevsistem.com/${img}`;
-                        }
-                      }
+                    // Backend'den gelen image field'ını direkt kullan (artık direkt https://t1.trvcar.com/XDriveDzn/ formatında)
+                    if (car.image && car.image.trim() !== '' && !car.image.includes('data:image/svg+xml')) {
+                      // Backend artık direkt https://t1.trvcar.com/XDriveDzn/{image_path} formatında URL döndürüyor
+                      const imageUrl = car.image;
+                      
+                      // Resim URL'ini logla
+                      console.log(`🖼️ ReservationConfirmation: ${car.brand || car.Brand} ${car.model || car.Car_Name}`);
+                      console.log(`  🔗 Image URL:`, imageUrl);
+                      
+                      return imageUrl;
                     }
+                    
+                    // Hiç resim yoksa placeholder
+                    console.warn(`⚠️ ReservationConfirmation: ${car.brand || car.Brand} ${car.model || car.Car_Name} - Resim yok, placeholder kullanılıyor`);
                     return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BcmHDpyBSZXNtaTwvdGV4dD48L3N2Zz4=';
                   })()}
                   alt={`${car.brand || car.Brand} ${car.model || car.Car_Name}`}
