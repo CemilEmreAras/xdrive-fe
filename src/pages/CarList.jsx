@@ -9,14 +9,37 @@ function CarList() {
   const [allCars, setAllCars] = useState([]) // Tüm araçlar (API'den gelen)
   const [cars, setCars] = useState([]) // Filtrelenmiş araçlar
   const [loading, setLoading] = useState(true)
-  const [filters, setFilters] = useState({
-    category: '',
-    transmission: '',
-    minPrice: '',
-    maxPrice: '',
-    sortBy: 'price',
-    order: 'asc'
-  })
+  
+  // localStorage'dan filtreleri yükle
+  const loadFiltersFromStorage = () => {
+    try {
+      const savedFilters = localStorage.getItem('xdrive_filters')
+      if (savedFilters) {
+        return JSON.parse(savedFilters)
+      }
+    } catch (error) {
+      console.error('Error loading filters from localStorage:', error)
+    }
+    return {
+      category: '',
+      transmission: '',
+      minPrice: '',
+      maxPrice: '',
+      sortBy: 'price',
+      order: 'asc'
+    }
+  }
+  
+  const [filters, setFilters] = useState(loadFiltersFromStorage())
+  
+  // Filtreleri localStorage'a kaydet
+  useEffect(() => {
+    try {
+      localStorage.setItem('xdrive_filters', JSON.stringify(filters))
+    } catch (error) {
+      console.error('Error saving filters to localStorage:', error)
+    }
+  }, [filters])
 
   // Filtreleri uygula
   useEffect(() => {
@@ -38,11 +61,19 @@ function CarList() {
     // Vites filtresi
     if (filters.transmission) {
       filtered = filtered.filter(car => {
-        const carTransmission = car.transmission || car.Transmission || ''
+        const carTransmission = (car.transmission || car.Transmission || '').toLowerCase()
         if (filters.transmission === 'Manual') {
-          return carTransmission.toLowerCase().includes('manuel') || carTransmission.toLowerCase().includes('manual')
+          // Manuel vites: "manuel", "manual", "man" içeren değerler
+          return carTransmission.includes('manuel') || 
+                 carTransmission.includes('manual') || 
+                 carTransmission.includes('man') ||
+                 carTransmission === 'm'
         } else if (filters.transmission === 'Automatic') {
-          return carTransmission.toLowerCase().includes('otomatik') || carTransmission.toLowerCase().includes('automatic')
+          // Otomatik vites: "otomatik", "automatic", "auto" içeren değerler
+          return carTransmission.includes('otomatik') || 
+                 carTransmission.includes('automatic') || 
+                 carTransmission.includes('auto') ||
+                 carTransmission === 'o'
         }
         return true
       })
