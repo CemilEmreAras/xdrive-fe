@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { useParams, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { createReservation, getCar, getLocations } from '../services/api'
 import './Reservation.css'
 
@@ -7,12 +7,17 @@ function Reservation() {
   const { carId } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
+  const [urlSearchParams] = useSearchParams() // URL'den direkt parametreleri al
   const [car, setCar] = useState(location.state?.car || null)
   const [searchParams] = useState(location.state?.searchParams || {})
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   
-  // Initial state'i searchParams'tan al
+  // URL'den direkt tarihleri al (öncelikli)
+  const urlPickupDate = urlSearchParams.get('pickupDate')
+  const urlDropoffDate = urlSearchParams.get('dropoffDate')
+  
+  // Initial state'i URL'den veya searchParams'tan al
   const initialSearchParams = location.state?.searchParams || {}
   const [formData, setFormData] = useState({
     firstName: '',
@@ -22,8 +27,8 @@ function Reservation() {
     licenseNumber: '',
     age: '',
     country: '',
-    pickupDate: initialSearchParams.pickupDate || '',
-    dropoffDate: initialSearchParams.dropoffDate || '',
+    pickupDate: urlPickupDate || initialSearchParams.pickupDate || '',
+    dropoffDate: urlDropoffDate || initialSearchParams.dropoffDate || '',
     pickupLocation: {
       city: '',
       address: ''
@@ -42,13 +47,13 @@ function Reservation() {
 
   const loadLocationData = async () => {
     try {
-      // searchParams'tan pickupId ve dropoffId al
-      const pickupId = searchParams.pickupId || location.state?.searchParams?.pickupId
-      const dropoffId = searchParams.dropoffId || location.state?.searchParams?.dropoffId
-      const pickupDate = searchParams.pickupDate || location.state?.searchParams?.pickupDate
-      const dropoffDate = searchParams.dropoffDate || location.state?.searchParams?.dropoffDate
+      // URL'den direkt parametreleri al (öncelikli)
+      const pickupId = urlSearchParams.get('pickupId') || searchParams.pickupId || location.state?.searchParams?.pickupId
+      const dropoffId = urlSearchParams.get('dropoffId') || searchParams.dropoffId || location.state?.searchParams?.dropoffId
+      const pickupDate = urlPickupDate || searchParams.pickupDate || location.state?.searchParams?.pickupDate
+      const dropoffDate = urlDropoffDate || searchParams.dropoffDate || location.state?.searchParams?.dropoffDate
 
-      // Tarihleri set et
+      // Tarihleri set et (URL'den gelen değerler öncelikli)
       if (pickupDate || dropoffDate) {
         setFormData(prev => ({
           ...prev,
@@ -207,9 +212,9 @@ function Reservation() {
         
         setFormData(prev => ({
           ...prev,
-          // searchParams'tan gelen tarihler öncelikli, yoksa mevcut değerleri koru
-          pickupDate: searchParams.pickupDate || prev.pickupDate || initialSearchParams.pickupDate || '',
-          dropoffDate: searchParams.dropoffDate || prev.dropoffDate || initialSearchParams.dropoffDate || '',
+          // URL'den gelen tarihler öncelikli, sonra searchParams, sonra mevcut değerler
+          pickupDate: urlPickupDate || searchParams.pickupDate || prev.pickupDate || initialSearchParams.pickupDate || '',
+          dropoffDate: urlDropoffDate || searchParams.dropoffDate || prev.dropoffDate || initialSearchParams.dropoffDate || '',
           pickupLocation: {
             city: normalizedCar.location?.city || '',
             address: normalizedCar.location?.address || ''
@@ -260,9 +265,9 @@ function Reservation() {
       if (car) {
         setFormData(prev => ({
           ...prev,
-          // searchParams'tan gelen tarihler öncelikli, yoksa mevcut değerleri koru
-          pickupDate: searchParams.pickupDate || prev.pickupDate || initialSearchParams.pickupDate || '',
-          dropoffDate: searchParams.dropoffDate || prev.dropoffDate || initialSearchParams.dropoffDate || '',
+          // URL'den gelen tarihler öncelikli, sonra searchParams, sonra mevcut değerler
+          pickupDate: urlPickupDate || searchParams.pickupDate || prev.pickupDate || initialSearchParams.pickupDate || '',
+          dropoffDate: urlDropoffDate || searchParams.dropoffDate || prev.dropoffDate || initialSearchParams.dropoffDate || '',
           pickupLocation: {
             city: car.location?.city || '',
             address: car.location?.address || ''
