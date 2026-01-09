@@ -6,24 +6,40 @@ function Header() {
   const [showLanguageMenu, setShowLanguageMenu] = useState(false)
   const location = useLocation()
 
+  // FAQ bölümüne scroll et
+  const scrollToFaq = () => {
+    setTimeout(() => {
+      const faqElement = document.getElementById('faq')
+      if (faqElement) {
+        const headerHeight = 80
+        const elementPosition = faqElement.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    }, 100)
+  }
+
   // Hash değişikliğini dinle ve scroll et
   useEffect(() => {
     if (location.hash === '#faq') {
-      setTimeout(() => {
-        const faqElement = document.getElementById('faq')
-        if (faqElement) {
-          const headerHeight = 80
-          const elementPosition = faqElement.getBoundingClientRect().top
-          const offsetPosition = elementPosition + window.pageYOffset - headerHeight
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          })
-        }
-      }, 300)
+      scrollToFaq()
     }
   }, [location.hash])
+
+  // FAQ linkine tıklandığında
+  const handleFaqClick = (e) => {
+    // Eğer zaten home sayfasındaysak, sadece scroll et
+    if (location.pathname === '/') {
+      e.preventDefault()
+      window.location.hash = '#faq'
+      scrollToFaq()
+    }
+    // Değilse, normal link davranışı (Home'a gidip sonra scroll edecek)
+  }
 
   return (
     <header className="header">
@@ -46,7 +62,7 @@ function Header() {
           <nav className="nav">
             <Link to="/">Home</Link>
             <Link to="/locations">Locations</Link>
-            <Link to="/#faq">FAQ</Link>
+            <Link to="/#faq" onClick={handleFaqClick}>FAQ</Link>
             <Link to="/contact">Contact</Link>
             <Link to="/franchise">Franchise</Link>
           </nav>
