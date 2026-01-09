@@ -180,6 +180,7 @@ function CarList() {
       console.log('✅ CarList: Cars localStorage\'a kaydedildi:', carsArray.length, 'araç')
     } catch (error) {
       console.error('Araçlar yüklenirken hata:', error)
+      setAllCars([]) // allCars'ı da temizle
       setCars([])
       
       // API hatasını kullanıcıya göster
