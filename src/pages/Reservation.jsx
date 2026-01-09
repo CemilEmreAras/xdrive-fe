@@ -54,11 +54,12 @@ function Reservation() {
       const dropoffDate = urlDropoffDate || searchParams.dropoffDate || location.state?.searchParams?.dropoffDate
 
       // Tarihleri set et (URL'den gelen değerler öncelikli)
-      if (pickupDate || dropoffDate) {
+      // URL'den gelen tarihler varsa mutlaka set et
+      if (urlPickupDate || urlDropoffDate || pickupDate || dropoffDate) {
         setFormData(prev => ({
           ...prev,
-          pickupDate: pickupDate || prev.pickupDate,
-          dropoffDate: dropoffDate || prev.dropoffDate
+          pickupDate: urlPickupDate || pickupDate || prev.pickupDate,
+          dropoffDate: urlDropoffDate || dropoffDate || prev.dropoffDate
         }))
       }
 
