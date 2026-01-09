@@ -136,12 +136,100 @@ function Home() {
     }
   }
 
-  // Ülke adına göre bayrak emoji döndür
+  // Ülke kısaltmasına göre bayrak emoji döndür (ISO 3166-1 alpha-2)
   const getCountryFlag = (location) => {
+    // Önce country alanından kısaltmayı al
+    const countryCode = (location.country || location.Country || '').toUpperCase().trim()
+    
+    // Eğer country alanı varsa, direkt kullan
+    if (countryCode && countryCode.length === 2) {
+      // ISO 3166-1 alpha-2 kodlarına göre bayrak eşleştirmesi
+      const countryFlags = {
+        'US': '🇺🇸', 'USA': '🇺🇸', // USA -> US
+        'TR': '🇹🇷', 'TUR': '🇹🇷', // Turkey
+        'DE': '🇩🇪', 'DEU': '🇩🇪', // Germany
+        'FR': '🇫🇷', 'FRA': '🇫🇷', // France
+        'ES': '🇪🇸', 'ESP': '🇪🇸', // Spain
+        'IT': '🇮🇹', 'ITA': '🇮🇹', // Italy
+        'GB': '🇬🇧', 'UK': '🇬🇧', 'GBR': '🇬🇧', // United Kingdom
+        'NL': '🇳🇱', 'NLD': '🇳🇱', // Netherlands
+        'GR': '🇬🇷', 'GRC': '🇬🇷', // Greece
+        'PT': '🇵🇹', 'PRT': '🇵🇹', // Portugal
+        'BE': '🇧🇪', 'BEL': '🇧🇪', // Belgium
+        'CH': '🇨🇭', 'CHE': '🇨🇭', // Switzerland
+        'AT': '🇦🇹', 'AUT': '🇦🇹', // Austria
+        'ZM': '🇿🇲', // Zambia
+        'AG': '🇦🇬', // Antigua and Barbuda
+        'CY': '🇨🇾', // Cyprus
+        'AE': '🇦🇪', // UAE
+        'SA': '🇸🇦', // Saudi Arabia
+        'EG': '🇪🇬', // Egypt
+        'MA': '🇲🇦', // Morocco
+        'ZA': '🇿🇦', // South Africa
+        'KE': '🇰🇪', // Kenya
+        'NG': '🇳🇬', // Nigeria
+        'BR': '🇧🇷', // Brazil
+        'AR': '🇦🇷', // Argentina
+        'MX': '🇲🇽', // Mexico
+        'CA': '🇨🇦', // Canada
+        'AU': '🇦🇺', // Australia
+        'NZ': '🇳🇿', // New Zealand
+        'JP': '🇯🇵', // Japan
+        'CN': '🇨🇳', // China
+        'IN': '🇮🇳', // India
+        'KR': '🇰🇷', // South Korea
+        'TH': '🇹🇭', // Thailand
+        'SG': '🇸🇬', // Singapore
+        'MY': '🇲🇾', // Malaysia
+        'ID': '🇮🇩', // Indonesia
+        'PH': '🇵🇭', // Philippines
+        'VN': '🇻🇳', // Vietnam
+        'RU': '🇷🇺', // Russia
+        'PL': '🇵🇱', // Poland
+        'CZ': '🇨🇿', // Czech Republic
+        'HU': '🇭🇺', // Hungary
+        'RO': '🇷🇴', // Romania
+        'BG': '🇧🇬', // Bulgaria
+        'HR': '🇭🇷', // Croatia
+        'SI': '🇸🇮', // Slovenia
+        'SK': '🇸🇰', // Slovakia
+        'SE': '🇸🇪', // Sweden
+        'NO': '🇳🇴', // Norway
+        'DK': '🇩🇰', // Denmark
+        'FI': '🇫🇮', // Finland
+        'IE': '🇮🇪', // Ireland
+        'IS': '🇮🇸', // Iceland
+        'LU': '🇱🇺', // Luxembourg
+        'MT': '🇲🇹', // Malta
+        'EE': '🇪🇪', // Estonia
+        'LV': '🇱🇻', // Latvia
+        'LT': '🇱🇹', // Lithuania
+      }
+      
+      // Eğer direkt eşleşme varsa döndür
+      if (countryFlags[countryCode]) {
+        return countryFlags[countryCode]
+      }
+      
+      // 3 harfli kodları 2 harfliye çevir (USA -> US gibi)
+      if (countryCode.length === 3) {
+        const twoLetterMap = {
+          'USA': 'US', 'TUR': 'TR', 'DEU': 'DE', 'FRA': 'FR', 'ESP': 'ES',
+          'ITA': 'IT', 'GBR': 'GB', 'NLD': 'NL', 'GRC': 'GR', 'PRT': 'PT',
+          'BEL': 'BE', 'CHE': 'CH', 'AUT': 'AT'
+        }
+        const twoLetter = twoLetterMap[countryCode]
+        if (twoLetter && countryFlags[twoLetter]) {
+          return countryFlags[twoLetter]
+        }
+      }
+    }
+    
+    // Eğer country alanı yoksa, eski yöntemle name ve address'ten çıkar
     const name = (location.location_name || location.Location_Name || '').toLowerCase()
     const address = (location.address || location.Address || '').toLowerCase()
     
-    // Ülke eşleştirmeleri
+    // Ülke eşleştirmeleri (fallback)
     if (name.includes('turkey') || name.includes('türkiye') || name.includes('istanbul') || 
         name.includes('ankara') || name.includes('izmir') || address.includes('turkey') || 
         address.includes('türkiye')) {
@@ -171,29 +259,8 @@ function Home() {
         name.includes('los angeles') || address.includes('usa') || address.includes('united states')) {
       return '🇺🇸'
     }
-    if (name.includes('netherlands') || name.includes('hollanda') || name.includes('amsterdam') || 
-        address.includes('netherlands') || address.includes('hollanda')) {
-      return '🇳🇱'
-    }
-    if (name.includes('greece') || name.includes('yunanistan') || name.includes('athens') || 
-        address.includes('greece') || address.includes('yunanistan')) {
-      return '🇬🇷'
-    }
-    if (name.includes('portugal') || name.includes('portekiz') || name.includes('lisbon') || 
-        address.includes('portugal') || address.includes('portekiz')) {
-      return '🇵🇹'
-    }
-    if (name.includes('belgium') || name.includes('belçika') || name.includes('brussels') || 
-        address.includes('belgium') || address.includes('belçika')) {
-      return '🇧🇪'
-    }
-    if (name.includes('switzerland') || name.includes('isviçre') || name.includes('zurich') || 
-        address.includes('switzerland') || address.includes('isviçre')) {
-      return '🇨🇭'
-    }
-    if (name.includes('austria') || name.includes('avusturya') || name.includes('vienna') || 
-        address.includes('austria') || address.includes('avusturya')) {
-      return '🇦🇹'
+    if (name.includes('zambia') || address.includes('zambia')) {
+      return '🇿🇲'
     }
     
     // Varsayılan bayrak
@@ -203,9 +270,9 @@ function Home() {
   const handleAirportClick = (airport) => {
     const locationId = airport.location_id || airport.Location_ID
     const today = new Date()
-    // Minimum 3 gün kiralama süresi (bugün + 3 gün sonra)
+    // Bugünden itibaren araçları göster (pickup bugün, dropoff bugün + 1 gün)
     const dropoffDateObj = new Date(today)
-    dropoffDateObj.setDate(dropoffDateObj.getDate() + 3)
+    dropoffDateObj.setDate(dropoffDateObj.getDate() + 1)
     
     const pickupDate = today.toISOString().split('T')[0]
     const dropoffDate = dropoffDateObj.toISOString().split('T')[0]
