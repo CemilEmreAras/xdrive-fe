@@ -123,14 +123,8 @@ function Home() {
   const loadAirports = async () => {
     try {
       const data = await getLocations()
-      // Airport içeren lokasyonları filtrele
-      const airportLocations = (data || []).filter(loc => {
-        const name = (loc.location_name || loc.Location_Name || '').toLowerCase()
-        const address = (loc.address || loc.Address || '').toLowerCase()
-        return name.includes('airport') || name.includes('havaalanı') || 
-               address.includes('airport') || address.includes('havaalanı')
-      })
-      setAirports(airportLocations)
+      // Tüm lokasyonları göster (filtreleme yok)
+      setAirports(data || [])
     } catch (error) {
       console.error('Airport lokasyonları yüklenirken hata:', error)
       setAirports([])
