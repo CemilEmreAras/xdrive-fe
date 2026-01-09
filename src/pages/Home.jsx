@@ -7,10 +7,17 @@ function Home() {
   const navigate = useNavigate()
   const [locations, setLocations] = useState([])
   const [loading, setLoading] = useState(true)
+  // Yarının tarihini hesapla (YYYY-MM-DD formatında)
+  const getTomorrowDate = () => {
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    return tomorrow.toISOString().split('T')[0]
+  }
+
   const [searchData, setSearchData] = useState({
     pickupId: '',
     dropoffId: '',
-    pickupDate: '',
+    pickupDate: getTomorrowDate(), // Yarın
     pickupTime: '11:00',
     dropoffDate: '',
     dropoffTime: '11:00',
@@ -32,16 +39,20 @@ function Home() {
   useEffect(() => {
     loadLocations()
     loadAirports()
-    // localStorage'dan searchData'yı yükle
-    const savedSearchData = localStorage.getItem('xdrive_searchData')
-    if (savedSearchData) {
-      try {
-        const parsed = JSON.parse(savedSearchData)
-        setSearchData(parsed)
-      } catch (error) {
-        console.error('Error loading saved search data:', error)
-      }
-    }
+    // Sayfa her yüklendiğinde default değerlere dön
+    setSearchData({
+      pickupId: '',
+      dropoffId: '',
+      pickupDate: getTomorrowDate(), // Yarın
+      pickupTime: '11:00',
+      dropoffDate: '',
+      dropoffTime: '11:00',
+      sameLocation: true,
+      driverCountry: 'Turkey',
+      driverAge: '30-65'
+    })
+    setPickupSearch('')
+    setDropoffSearch('')
 
     // Hash kontrolü - FAQ bölümüne scroll et
     const scrollToFaq = () => {
@@ -560,7 +571,6 @@ function Home() {
                     onChange={(e) => {
                       const newData = { ...searchData, sameLocation: e.target.checked }
                       setSearchData(newData)
-                      localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                     }}
                   />
                   <span>Return car in same location</span>
@@ -583,7 +593,6 @@ function Home() {
                       onChange={(e) => {
                         const newData = { ...searchData, pickupDate: e.target.value }
                         setSearchData(newData)
-                        localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                       }}
                       min={new Date().toISOString().split('T')[0]}
                       className="form-input date-input"
@@ -617,7 +626,6 @@ function Home() {
                       onChange={(e) => {
                         const newData = { ...searchData, pickupTime: e.target.value }
                         setSearchData(newData)
-                        localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                       }}
                       className="form-input time-input"
                       onClick={(e) => {
@@ -645,7 +653,6 @@ function Home() {
                       onChange={(e) => {
                         const newData = { ...searchData, dropoffDate: e.target.value }
                         setSearchData(newData)
-                        localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                       }}
                       min={searchData.pickupDate || new Date().toISOString().split('T')[0]}
                       className="form-input date-input"
@@ -679,7 +686,6 @@ function Home() {
                       onChange={(e) => {
                         const newData = { ...searchData, dropoffTime: e.target.value }
                         setSearchData(newData)
-                        localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                       }}
                       className="form-input time-input"
                       onClick={(e) => {
@@ -700,7 +706,6 @@ function Home() {
                   onChange={(e) => {
                     const newData = { ...searchData, driverCountry: e.target.value }
                     setSearchData(newData)
-                    localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                   }}
                   className="driver-select"
                 >
@@ -716,7 +721,6 @@ function Home() {
                   onChange={(e) => {
                     const newData = { ...searchData, driverAge: e.target.value }
                     setSearchData(newData)
-                    localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                   }}
                   className="driver-select"
                 >
