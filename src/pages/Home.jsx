@@ -31,6 +31,7 @@ function Home() {
 
   useEffect(() => {
     loadLocations()
+    loadAirports()
     // localStorage'dan searchData'yı yükle
     const savedSearchData = localStorage.getItem('xdrive_searchData')
     if (savedSearchData) {
