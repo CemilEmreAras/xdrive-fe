@@ -22,6 +22,7 @@ function Home() {
   const [dropoffSearch, setDropoffSearch] = useState('')
   const [showPickupSuggestions, setShowPickupSuggestions] = useState(false)
   const [showDropoffSuggestions, setShowDropoffSuggestions] = useState(false)
+  const [activeFaq, setActiveFaq] = useState(null)
   const pickupInputRef = useRef(null)
   const dropoffInputRef = useRef(null)
   const pickupSuggestionsRef = useRef(null)
@@ -556,6 +557,228 @@ function Home() {
               <p className="feature-description">
                 We work with local rental partners to provide availability and pricing through a single, centralized platform.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="faq-section">
+        <div className="container">
+          <h2 className="faq-title">Frequently Asked Questions (FAQ)</h2>
+          
+          <div className="faq-category">
+            <h3 className="faq-category-title">Booking & Payment</h3>
+            <div className="faq-items">
+              <div className={`faq-item ${activeFaq === 'payment-process' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'payment-process' ? null : 'payment-process')}>
+                  <span>How does the payment process work?</span>
+                  <span className="faq-icon">{activeFaq === 'payment-process' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Depending on the selected payment option, you may pay either a partial amount or the full rental cost online via the Xdrive Mobility platform. If applicable, the remaining balance is paid directly to the Rental Provider at vehicle pickup.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'pay-part' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'pay-part' ? null : 'pay-part')}>
+                  <span>What does "Pay Part" mean?</span>
+                  <span className="faq-icon">{activeFaq === 'pay-part' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  "Pay Part" means you make a partial advance payment online to confirm your booking. The remaining balance is paid directly to the Rental Provider at vehicle pickup.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'pay-full' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'pay-full' ? null : 'pay-full')}>
+                  <span>What does "Pay Full" mean?</span>
+                  <span className="faq-icon">{activeFaq === 'pay-full' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  "Pay Full" means you pay the total rental amount online in advance via the Xdrive Mobility platform.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'payment-methods' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'payment-methods' ? null : 'payment-methods')}>
+                  <span>Which payment methods are accepted?</span>
+                  <span className="faq-icon">{activeFaq === 'payment-methods' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Only credit cards are accepted for online payments made via the Xdrive Mobility platform.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="faq-category">
+            <h3 className="faq-category-title">Prices & Fees</h3>
+            <div className="faq-items">
+              <div className={`faq-item ${activeFaq === 'rental-price' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'rental-price' ? null : 'rental-price')}>
+                  <span>What is included in the rental price?</span>
+                  <span className="faq-icon">{activeFaq === 'rental-price' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Included services are shown during the booking process and may vary depending on the Rental Provider. Please review the price details before confirming your reservation.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'additional-fees' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'additional-fees' ? null : 'additional-fees')}>
+                  <span>Are there any additional fees?</span>
+                  <span className="faq-icon">{activeFaq === 'additional-fees' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Certain charges such as optional extras, local taxes, or young driver fees may be payable directly to the Rental Provider at pickup.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'security-deposit' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'security-deposit' ? null : 'security-deposit')}>
+                  <span>Is a security deposit required?</span>
+                  <span className="faq-icon">{activeFaq === 'security-deposit' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Most Rental Providers require a refundable security deposit at pickup. Deposits are typically refunded within up to 30 business days after the rental ends, depending on the Rental Provider and the issuing bank.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="faq-category">
+            <h3 className="faq-category-title">Booking Management</h3>
+            <div className="faq-items">
+              <div className={`faq-item ${activeFaq === 'modify-booking' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'modify-booking' ? null : 'modify-booking')}>
+                  <span>Can I modify my booking?</span>
+                  <span className="faq-icon">{activeFaq === 'modify-booking' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Booking modifications depend on the Rental Provider's terms. Please contact our support team for assistance.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'cancel-booking' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'cancel-booking' ? null : 'cancel-booking')}>
+                  <span>Can I cancel my booking?</span>
+                  <span className="faq-icon">{activeFaq === 'cancel-booking' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Free cancellation is available up to 72 hours before the scheduled pickup time. For cancellations made within 72 hours of pickup, cancellation protection may be available for purchase during booking, subject to the applicable terms. Detailed cancellation, refund, and liability terms are governed by the Pre-Sale & Advance Booking Agreement.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'flight-delayed' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'flight-delayed' ? null : 'flight-delayed')}>
+                  <span>What happens if my flight is delayed?</span>
+                  <span className="faq-icon">{activeFaq === 'flight-delayed' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  If you have provided your flight details, some Rental Providers may monitor delays. However, we recommend contacting the Rental Provider directly in case of significant delays.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="faq-category">
+            <h3 className="faq-category-title">Vehicle Pickup & Return</h3>
+            <div className="faq-items">
+              <div className={`faq-item ${activeFaq === 'documents-required' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'documents-required' ? null : 'documents-required')}>
+                  <span>What documents are required at pickup?</span>
+                  <span className="faq-icon">{activeFaq === 'documents-required' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  You typically need a valid driver's license, a credit card in the main driver's name, and your booking confirmation. Additional documents may be required depending on the location.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'cash-payment' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'cash-payment' ? null : 'cash-payment')}>
+                  <span>Can I pay the remaining balance in cash?</span>
+                  <span className="faq-icon">{activeFaq === 'cash-payment' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Accepted payment methods at pickup depend on the Rental Provider's policy. Please review the Rental Provider's terms before arrival.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'additional-driver' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'additional-driver' ? null : 'additional-driver')}>
+                  <span>Can someone else drive the car?</span>
+                  <span className="faq-icon">{activeFaq === 'additional-driver' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Additional drivers may be allowed depending on the Rental Provider's policy and may be subject to an extra charge.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="faq-category">
+            <h3 className="faq-category-title">Xdrive Mobility & Rental Providers</h3>
+            <div className="faq-items">
+              <div className={`faq-item ${activeFaq === 'rental-service' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'rental-service' ? null : 'rental-service')}>
+                  <span>Who provides the rental service?</span>
+                  <span className="faq-icon">{activeFaq === 'rental-service' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Xdrive Mobility operates as a booking and distribution platform. The car rental service is provided by local rental companies.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'contact-issue' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'contact-issue' ? null : 'contact-issue')}>
+                  <span>Who should I contact if I have an issue?</span>
+                  <span className="faq-icon">{activeFaq === 'contact-issue' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  For booking or online payment-related questions, please contact Xdrive Mobility support. For vehicle-related or on-site issues, please contact the Rental Provider directly.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="faq-category">
+            <h3 className="faq-category-title">Insurance</h3>
+            <div className="faq-items">
+              <div className={`faq-item ${activeFaq === 'insurance' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'insurance' ? null : 'insurance')}>
+                  <span>Does Xdrive Mobility sell insurance?</span>
+                  <span className="faq-icon">{activeFaq === 'insurance' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  No. Xdrive Mobility does not sell insurance products. Any insurance or protection options are offered solely by the Rental Provider under their own terms.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="faq-category">
+            <h3 className="faq-category-title">General</h3>
+            <div className="faq-items">
+              <div className={`faq-item ${activeFaq === 'payment-secure' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'payment-secure' ? null : 'payment-secure')}>
+                  <span>Is my payment secure?</span>
+                  <span className="faq-icon">{activeFaq === 'payment-secure' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  Yes. All online payments made through the Xdrive Mobility platform are processed using secure payment systems.
+                </div>
+              </div>
+
+              <div className={`faq-item ${activeFaq === 'rental-terms' ? 'active' : ''}`}>
+                <div className="faq-question" onClick={() => setActiveFaq(activeFaq === 'rental-terms' ? null : 'rental-terms')}>
+                  <span>Where can I find the full rental terms?</span>
+                  <span className="faq-icon">{activeFaq === 'rental-terms' ? '−' : '+'}</span>
+                </div>
+                <div className="faq-answer">
+                  The full rental terms and conditions are available during the booking process and in your confirmation email.
+                </div>
+              </div>
             </div>
           </div>
         </div>
