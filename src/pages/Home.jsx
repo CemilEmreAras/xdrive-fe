@@ -675,7 +675,13 @@ function Home() {
 
                 <div className="form-group date-time-group">
                   <label>Drop-off time</label>
-                  <div className="input-with-icon">
+                  <div className="input-with-icon" onClick={(e) => {
+                    const input = e.currentTarget.querySelector('input[type="time"]')
+                    if (input) {
+                      input.focus()
+                      input.showPicker?.()
+                    }
+                  }}>
                     <input
                       type="time"
                       value={searchData.dropoffTime}
@@ -685,6 +691,11 @@ function Home() {
                         localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                       }}
                       className="form-input time-input"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        e.target.focus()
+                        e.target.showPicker?.()
+                      }}
                       required
                     />
                   </div>
