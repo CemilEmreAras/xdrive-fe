@@ -626,3 +626,153 @@
     padding: 40px 20px;
   }
 }
+
+/* Airports Section */
+.airports-section {
+  padding: 80px 20px;
+  background: #F9F9F9;
+}
+
+.airports-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.airports-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.airports-description {
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.airports-loading,
+.airports-empty {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.airports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.airport-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+}
+
+.airport-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-color: #EF4444;
+}
+
+.airport-flag {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.airport-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.airport-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.airport-address {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.airport-arrow {
+  font-size: 24px;
+  color: #EF4444;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.airport-card:hover .airport-arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .airports-title {
+    font-size: 32px;
+  }
+
+  .airports-description {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .airports-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .airport-card {
+    padding: 20px;
+  }
+
+  .airport-flag {
+    font-size: 40px;
+  }
+
+  .airport-name {
+    font-size: 16px;
+  }
+
+  .airports-section {
+    padding: 60px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .airports-title {
+    font-size: 28px;
+  }
+
+  .airport-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .airport-flag {
+    font-size: 36px;
+  }
+
+  .airports-section {
+    padding: 40px 20px;
+  }
+}

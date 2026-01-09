@@ -23,6 +23,7 @@ function Home() {
   const [showPickupSuggestions, setShowPickupSuggestions] = useState(false)
   const [showDropoffSuggestions, setShowDropoffSuggestions] = useState(false)
   const [activeFaq, setActiveFaq] = useState(null)
+  const [airports, setAirports] = useState([])
   const pickupInputRef = useRef(null)
   const dropoffInputRef = useRef(null)
   const pickupSuggestionsRef = useRef(null)
@@ -814,6 +815,46 @@ function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Airports Section */}
+      <section id="airports" className="airports-section">
+        <div className="container">
+          <h2 className="airports-title">Airports</h2>
+          <p className="airports-description">
+            Select an airport location to view available vehicles
+          </p>
+          
+          {loading ? (
+            <div className="airports-loading">Loading airports...</div>
+          ) : airports.length === 0 ? (
+            <div className="airports-empty">No airport locations found</div>
+          ) : (
+            <div className="airports-grid">
+              {airports.map((airport, index) => {
+                const locationId = airport.location_id || airport.Location_ID
+                const locationName = airport.location_name || airport.Location_Name || 'Unknown Airport'
+                const address = airport.address || airport.Address || ''
+                const flag = getCountryFlag(airport)
+                
+                return (
+                  <div 
+                    key={locationId || index} 
+                    className="airport-card"
+                    onClick={() => handleAirportClick(airport)}
+                  >
+                    <div className="airport-flag">{flag}</div>
+                    <div className="airport-info">
+                      <h3 className="airport-name">{locationName}</h3>
+                      {address && <p className="airport-address">{address}</p>}
+                    </div>
+                    <div className="airport-arrow">→</div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       </section>
 
