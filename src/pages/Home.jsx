@@ -530,10 +530,10 @@ function Home() {
               <div className="feature-icon">
                 <div className="icon-circle">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="1" y="4" width="22" height="16" rx="2" stroke="#FCD34D" strokeWidth="2" fill="none"/>
-                    <path d="M1 10H23" stroke="#FCD34D" strokeWidth="2"/>
-                    <path d="M7 2V6M17 2V6" stroke="#FCD34D" strokeWidth="2"/>
-                    <path d="M12 14L14 16L18 12" stroke="#3B82F6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <rect x="1" y="4" width="22" height="16" rx="2" stroke="#EF4444" strokeWidth="2" fill="none"/>
+                    <path d="M1 10H23" stroke="#EF4444" strokeWidth="2"/>
+                    <path d="M7 2V6M17 2V6" stroke="#EF4444" strokeWidth="2"/>
+                    <path d="M12 14L14 16L18 12" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </div>
@@ -547,9 +547,9 @@ function Home() {
               <div className="feature-icon">
                 <div className="icon-circle">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#3B82F6"/>
-                    <path d="M2 17L12 22L22 17" stroke="#3B82F6" strokeWidth="2" fill="none"/>
-                    <path d="M2 12L12 17L22 12" stroke="#3B82F6" strokeWidth="2" fill="none"/>
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#EF4444"/>
+                    <path d="M2 17L12 22L22 17" stroke="#EF4444" strokeWidth="2" fill="none"/>
+                    <path d="M2 12L12 17L22 12" stroke="#EF4444" strokeWidth="2" fill="none"/>
                     <circle cx="12" cy="7" r="1" fill="#EF4444"/>
                   </svg>
                 </div>
