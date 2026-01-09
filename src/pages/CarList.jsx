@@ -249,23 +249,15 @@ function CarList() {
                 <div key={car._id || car.externalId || index} className="car-card">
                   <img 
                     src={(() => {
-                      // Backend'den gelen image field'ını öncelikle kullan
+                      // Backend'den gelen image field'ını direkt kullan (artık direkt https://t1.trvcar.com/XDriveDzn/ formatında)
                       if (car.image && car.image.trim() !== '' && !car.image.includes('data:image/svg+xml')) {
-                        let imageUrl = car.image;
-                        
-                        // Eğer relative path ise (proxy URL), API base URL ekle
-                        if (imageUrl.startsWith('/api/images/proxy')) {
-                          const apiBaseUrl = import.meta.env.PROD 
-                            ? 'https://xdrive-be.vercel.app'
-                            : import.meta.env.VITE_API_URL || 'http://localhost:5001';
-                          imageUrl = `${apiBaseUrl}${imageUrl}`;
-                        }
+                        // Backend artık direkt https://t1.trvcar.com/XDriveDzn/{image_path} formatında URL döndürüyor
+                        const imageUrl = car.image;
                         
                         // İlk birkaç araç için resim URL'ini logla
                         if (index < 3) {
                           console.log(`🖼️ CarList [${index}]: ${car.brand || car.Brand} ${car.model || car.Car_Name}`);
-                          console.log(`  📋 Backend image:`, car.image);
-                          console.log(`  🔗 Final image URL:`, imageUrl);
+                          console.log(`  🔗 Image URL:`, imageUrl);
                         }
                         
                         return imageUrl;
