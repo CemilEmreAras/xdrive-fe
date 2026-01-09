@@ -270,9 +270,9 @@ function Home() {
   const handleAirportClick = (airport) => {
     const locationId = airport.location_id || airport.Location_ID
     const today = new Date()
-    // Bugünden itibaren araçları göster (pickup bugün, dropoff bugün + 1 gün)
+    // Bugünden itibaren araçları göster (pickup bugün, dropoff bugün + 7 gün - minimum kiralama süresi için)
     const dropoffDateObj = new Date(today)
-    dropoffDateObj.setDate(dropoffDateObj.getDate() + 1)
+    dropoffDateObj.setDate(dropoffDateObj.getDate() + 7)
     
     const pickupDate = today.toISOString().split('T')[0]
     const dropoffDate = dropoffDateObj.toISOString().split('T')[0]
