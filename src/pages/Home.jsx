@@ -139,71 +139,50 @@ function Home() {
   // Ülke kısaltmasına göre bayrak emoji döndür (ISO 3166-1 alpha-2)
   const getCountryFlag = (location) => {
     // Önce country alanından kısaltmayı al
-    const countryCode = (location.country || location.Country || '').toUpperCase().trim()
+    let countryCode = (location.country || location.Country || '').toUpperCase().trim()
+    
+    // Debug: country alanını logla
+    if (airports.indexOf(location) === 0) {
+      console.log('🔍 İlk airport country alanı:', {
+        country: location.country,
+        Country: location.Country,
+        countryCode: countryCode,
+        locationName: location.location_name || location.Location_Name
+      })
+    }
     
     // Eğer country alanı varsa, direkt kullan
-    if (countryCode && countryCode.length === 2) {
-      // ISO 3166-1 alpha-2 kodlarına göre bayrak eşleştirmesi
+    if (countryCode && (countryCode.length === 2 || countryCode.length === 3)) {
+      // ISO 3166-1 alpha-2 kodlarına göre bayrak eşleştirmesi (genişletilmiş liste)
       const countryFlags = {
-        'US': '🇺🇸', 'USA': '🇺🇸', // USA -> US
-        'TR': '🇹🇷', 'TUR': '🇹🇷', // Turkey
-        'DE': '🇩🇪', 'DEU': '🇩🇪', // Germany
-        'FR': '🇫🇷', 'FRA': '🇫🇷', // France
-        'ES': '🇪🇸', 'ESP': '🇪🇸', // Spain
-        'IT': '🇮🇹', 'ITA': '🇮🇹', // Italy
-        'GB': '🇬🇧', 'UK': '🇬🇧', 'GBR': '🇬🇧', // United Kingdom
-        'NL': '🇳🇱', 'NLD': '🇳🇱', // Netherlands
-        'GR': '🇬🇷', 'GRC': '🇬🇷', // Greece
-        'PT': '🇵🇹', 'PRT': '🇵🇹', // Portugal
-        'BE': '🇧🇪', 'BEL': '🇧🇪', // Belgium
-        'CH': '🇨🇭', 'CHE': '🇨🇭', // Switzerland
-        'AT': '🇦🇹', 'AUT': '🇦🇹', // Austria
-        'ZM': '🇿🇲', // Zambia
-        'AG': '🇦🇬', // Antigua and Barbuda
-        'CY': '🇨🇾', // Cyprus
-        'AE': '🇦🇪', // UAE
-        'SA': '🇸🇦', // Saudi Arabia
-        'EG': '🇪🇬', // Egypt
-        'MA': '🇲🇦', // Morocco
-        'ZA': '🇿🇦', // South Africa
-        'KE': '🇰🇪', // Kenya
-        'NG': '🇳🇬', // Nigeria
-        'BR': '🇧🇷', // Brazil
-        'AR': '🇦🇷', // Argentina
-        'MX': '🇲🇽', // Mexico
-        'CA': '🇨🇦', // Canada
-        'AU': '🇦🇺', // Australia
-        'NZ': '🇳🇿', // New Zealand
-        'JP': '🇯🇵', // Japan
-        'CN': '🇨🇳', // China
-        'IN': '🇮🇳', // India
-        'KR': '🇰🇷', // South Korea
-        'TH': '🇹🇭', // Thailand
-        'SG': '🇸🇬', // Singapore
-        'MY': '🇲🇾', // Malaysia
-        'ID': '🇮🇩', // Indonesia
-        'PH': '🇵🇭', // Philippines
-        'VN': '🇻🇳', // Vietnam
-        'RU': '🇷🇺', // Russia
-        'PL': '🇵🇱', // Poland
-        'CZ': '🇨🇿', // Czech Republic
-        'HU': '🇭🇺', // Hungary
-        'RO': '🇷🇴', // Romania
-        'BG': '🇧🇬', // Bulgaria
-        'HR': '🇭🇷', // Croatia
-        'SI': '🇸🇮', // Slovenia
-        'SK': '🇸🇰', // Slovakia
-        'SE': '🇸🇪', // Sweden
-        'NO': '🇳🇴', // Norway
-        'DK': '🇩🇰', // Denmark
-        'FI': '🇫🇮', // Finland
-        'IE': '🇮🇪', // Ireland
-        'IS': '🇮🇸', // Iceland
-        'LU': '🇱🇺', // Luxembourg
-        'MT': '🇲🇹', // Malta
-        'EE': '🇪🇪', // Estonia
-        'LV': '🇱🇻', // Latvia
-        'LT': '🇱🇹', // Lithuania
+        // 2 harfli kodlar
+        'US': '🇺🇸', 'TR': '🇹🇷', 'DE': '🇩🇪', 'FR': '🇫🇷', 'ES': '🇪🇸',
+        'IT': '🇮🇹', 'GB': '🇬🇧', 'NL': '🇳🇱', 'GR': '🇬🇷', 'PT': '🇵🇹',
+        'BE': '🇧🇪', 'CH': '🇨🇭', 'AT': '🇦🇹', 'ZM': '🇿🇲', 'AG': '🇦🇬',
+        'CY': '🇨🇾', 'AE': '🇦🇪', 'SA': '🇸🇦', 'EG': '🇪🇬', 'MA': '🇲🇦',
+        'ZA': '🇿🇦', 'KE': '🇰🇪', 'NG': '🇳🇬', 'BR': '🇧🇷', 'AR': '🇦🇷',
+        'MX': '🇲🇽', 'CA': '🇨🇦', 'AU': '🇦🇺', 'NZ': '🇳🇿', 'JP': '🇯🇵',
+        'CN': '🇨🇳', 'IN': '🇮🇳', 'KR': '🇰🇷', 'TH': '🇹🇭', 'SG': '🇸🇬',
+        'MY': '🇲🇾', 'ID': '🇮🇩', 'PH': '🇵🇭', 'VN': '🇻🇳', 'RU': '🇷🇺',
+        'PL': '🇵🇱', 'CZ': '🇨🇿', 'HU': '🇭🇺', 'RO': '🇷🇴', 'BG': '🇧🇬',
+        'HR': '🇭🇷', 'SI': '🇸🇮', 'SK': '🇸🇰', 'SE': '🇸🇪', 'NO': '🇳🇴',
+        'DK': '🇩🇰', 'FI': '🇫🇮', 'IE': '🇮🇪', 'IS': '🇮🇸', 'LU': '🇱🇺',
+        'MT': '🇲🇹', 'EE': '🇪🇪', 'LV': '🇱🇻', 'LT': '🇱🇹',
+        // 3 harfli kodlar (ISO 3166-1 alpha-3)
+        'USA': '🇺🇸', 'TUR': '🇹🇷', 'DEU': '🇩🇪', 'FRA': '🇫🇷', 'ESP': '🇪🇸',
+        'ITA': '🇮🇹', 'GBR': '🇬🇧', 'NLD': '🇳🇱', 'GRC': '🇬🇷', 'PRT': '🇵🇹',
+        'BEL': '🇧🇪', 'CHE': '🇨🇭', 'AUT': '🇦🇹', 'ZMB': '🇿🇲', 'ATG': '🇦🇬',
+        'CYP': '🇨🇾', 'ARE': '🇦🇪', 'SAU': '🇸🇦', 'EGY': '🇪🇬', 'MAR': '🇲🇦',
+        'ZAF': '🇿🇦', 'KEN': '🇰🇪', 'NGA': '🇳🇬', 'BRA': '🇧🇷', 'ARG': '🇦🇷',
+        'MEX': '🇲🇽', 'CAN': '🇨🇦', 'AUS': '🇦🇺', 'NZL': '🇳🇿', 'JPN': '🇯🇵',
+        'CHN': '🇨🇳', 'IND': '🇮🇳', 'KOR': '🇰🇷', 'THA': '🇹🇭', 'SGP': '🇸🇬',
+        'MYS': '🇲🇾', 'IDN': '🇮🇩', 'PHL': '🇵🇭', 'VNM': '🇻🇳', 'RUS': '🇷🇺',
+        'POL': '🇵🇱', 'CZE': '🇨🇿', 'HUN': '🇭🇺', 'ROU': '🇷🇴', 'BGR': '🇧🇬',
+        'HRV': '🇭🇷', 'SVN': '🇸🇮', 'SVK': '🇸🇰', 'SWE': '🇸🇪', 'NOR': '🇳🇴',
+        'DNK': '🇩🇰', 'FIN': '🇫🇮', 'IRL': '🇮🇪', 'ISL': '🇮🇸', 'LUX': '🇱🇺',
+        'MLT': '🇲🇹', 'EST': '🇪🇪', 'LVA': '🇱🇻', 'LTU': '🇱🇹',
+        // Alternatif kodlar
+        'UK': '🇬🇧', // UK -> GB
       }
       
       // Eğer direkt eşleşme varsa döndür
@@ -216,7 +195,16 @@ function Home() {
         const twoLetterMap = {
           'USA': 'US', 'TUR': 'TR', 'DEU': 'DE', 'FRA': 'FR', 'ESP': 'ES',
           'ITA': 'IT', 'GBR': 'GB', 'NLD': 'NL', 'GRC': 'GR', 'PRT': 'PT',
-          'BEL': 'BE', 'CHE': 'CH', 'AUT': 'AT'
+          'BEL': 'BE', 'CHE': 'CH', 'AUT': 'AT', 'ZMB': 'ZM', 'ATG': 'AG',
+          'CYP': 'CY', 'ARE': 'AE', 'SAU': 'SA', 'EGY': 'EG', 'MAR': 'MA',
+          'ZAF': 'ZA', 'KEN': 'KE', 'NGA': 'NG', 'BRA': 'BR', 'ARG': 'AR',
+          'MEX': 'MX', 'CAN': 'CA', 'AUS': 'AU', 'NZL': 'NZ', 'JPN': 'JP',
+          'CHN': 'CN', 'IND': 'IN', 'KOR': 'KR', 'THA': 'TH', 'SGP': 'SG',
+          'MYS': 'MY', 'IDN': 'ID', 'PHL': 'PH', 'VNM': 'VN', 'RUS': 'RU',
+          'POL': 'PL', 'CZE': 'CZ', 'HUN': 'HU', 'ROU': 'RO', 'BGR': 'BG',
+          'HRV': 'HR', 'SVN': 'SI', 'SVK': 'SK', 'SWE': 'SE', 'NOR': 'NO',
+          'DNK': 'DK', 'FIN': 'FI', 'IRL': 'IE', 'ISL': 'IS', 'LUX': 'LU',
+          'MLT': 'MT', 'EST': 'EE', 'LVA': 'LV', 'LTU': 'LT'
         }
         const twoLetter = twoLetterMap[countryCode]
         if (twoLetter && countryFlags[twoLetter]) {
