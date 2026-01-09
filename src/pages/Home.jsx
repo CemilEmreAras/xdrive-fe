@@ -596,7 +596,14 @@ function Home() {
                       type="date"
                       value={searchData.pickupDate}
                       onChange={(e) => {
-                        const newData = { ...searchData, pickupDate: e.target.value }
+                        const newPickupDate = e.target.value
+                        // Pickup date değiştiğinde dropoff date'i de güncelle (pickup + 3 gün)
+                        const newDropoffDate = getDropoffDate(newPickupDate)
+                        const newData = { 
+                          ...searchData, 
+                          pickupDate: newPickupDate,
+                          dropoffDate: newDropoffDate
+                        }
                         setSearchData(newData)
                       }}
                       min={new Date().toISOString().split('T')[0]}
