@@ -331,14 +331,14 @@ function CarList() {
               <div className="price-range">
                 <input
                   type="number"
-                  placeholder="Min"
+                  placeholder="Tümü"
                   value={filters.minPrice}
                   onChange={(e) => handleFilterChange('minPrice', e.target.value)}
                 />
                 <span>-</span>
                 <input
                   type="number"
-                  placeholder="Max"
+                  placeholder="Tümü"
                   value={filters.maxPrice}
                   onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
                 />
