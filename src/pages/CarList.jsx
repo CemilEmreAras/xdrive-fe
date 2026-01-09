@@ -349,7 +349,13 @@ function CarList() {
                 value={`${filters.sortBy}-${filters.order}`}
                 onChange={(e) => {
                   const [sortBy, order] = e.target.value.split('-')
-                  setFilters({ ...filters, sortBy, order })
+                  console.log('🔄 Sıralama değişti:', { sortBy, order })
+                  // Functional update kullan
+                  setFilters(prevFilters => {
+                    const newFilters = { ...prevFilters, sortBy, order }
+                    console.log('✅ Yeni filtreler:', newFilters)
+                    return newFilters
+                  })
                 }}
               >
                 <option value="price-asc">Fiyat: Düşükten Yükseğe</option>
