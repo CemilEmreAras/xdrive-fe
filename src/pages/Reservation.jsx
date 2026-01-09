@@ -43,7 +43,7 @@ function Reservation() {
   useEffect(() => {
     fetchCar()
     loadLocationData()
-  }, [carId])
+  }, [carId, urlPickupDate, urlDropoffDate])
 
   const loadLocationData = async () => {
     try {

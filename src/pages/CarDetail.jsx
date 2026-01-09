@@ -311,7 +311,7 @@ function CarDetail() {
             </div>
 
             <Link 
-              to={`/reservation/${car._id || car.externalId || car.rezId || car.carsParkId || car.id || 'unknown'}`}
+              to={`/reservation/${car._id || car.externalId || car.rezId || car.carsParkId || car.id || 'unknown'}?${searchParams.toString()}`}
               state={{ 
                 car: {
                   ...car,
