@@ -10,36 +10,14 @@ function CarList() {
   const [cars, setCars] = useState([]) // Filtrelenmiş araçlar
   const [loading, setLoading] = useState(true)
   
-  // localStorage'dan filtreleri yükle
-  const loadFiltersFromStorage = () => {
-    try {
-      const savedFilters = localStorage.getItem('xdrive_filters')
-      if (savedFilters) {
-        return JSON.parse(savedFilters)
-      }
-    } catch (error) {
-      console.error('Error loading filters from localStorage:', error)
-    }
-    return {
-      category: '',
-      transmission: '',
-      minPrice: '',
-      maxPrice: '',
-      sortBy: 'price',
-      order: 'asc'
-    }
-  }
-  
-  const [filters, setFilters] = useState(loadFiltersFromStorage())
-  
-  // Filtreleri localStorage'a kaydet
-  useEffect(() => {
-    try {
-      localStorage.setItem('xdrive_filters', JSON.stringify(filters))
-    } catch (error) {
-      console.error('Error saving filters to localStorage:', error)
-    }
-  }, [filters])
+  const [filters, setFilters] = useState({
+    category: '',
+    transmission: '',
+    minPrice: '',
+    maxPrice: '',
+    sortBy: 'price',
+    order: 'asc'
+  })
 
   // Filtreleri uygula
   useEffect(() => {
@@ -65,9 +43,33 @@ function CarList() {
     // Kategori filtresi
     if (filters.category) {
       filtered = filtered.filter(car => {
-        const carCategory = car.category || car.group_str || car.Car_Name || ''
-        return carCategory.toLowerCase().includes(filters.category.toLowerCase())
+        // Backend'den gelen category aslında groupName (örn: "AUDİ-A3-OTOMATİK-DİZEL")
+        // group_str alanını kontrol et (Ekonomik, Orta, Üst, Lüks, Suv, Minibüs, vb.)
+        const carCategory = car.group_str || car.category || ''
+        const filterCategory = filters.category.toLowerCase()
+        
+        // Kategori eşleştirmesi
+        const categoryMap = {
+          'economy': ['ekonomik'],
+          'compact': ['ekonomik', 'orta'],
+          'intermediate': ['orta'],
+          'standard': ['orta', 'üst'],
+          'full size': ['üst'],
+          'premium': ['lüks', 'üst'],
+          'luxury': ['lüks'],
+          'suv': ['suv'],
+          'van': ['minibüs', 'transfer']
+        }
+        
+        const matchingCategories = categoryMap[filterCategory] || []
+        if (matchingCategories.length > 0) {
+          return matchingCategories.some(cat => carCategory.toLowerCase().includes(cat))
+        }
+        
+        // Fallback: direkt içerik kontrolü
+        return carCategory.toLowerCase().includes(filterCategory)
       })
+      console.log('🔍 Kategori filtresi uygulandı:', filters.category, '->', filtered.length, 'araç')
     }
 
     // Vites filtresi
@@ -75,20 +77,22 @@ function CarList() {
       filtered = filtered.filter(car => {
         const carTransmission = (car.transmission || car.Transmission || '').toLowerCase()
         if (filters.transmission === 'Manual') {
-          // Manuel vites: "manuel", "manual", "man" içeren değerler
-          return carTransmission.includes('manuel') || 
-                 carTransmission.includes('manual') || 
-                 carTransmission.includes('man') ||
-                 carTransmission === 'm'
+          // Manuel vites: "manuel" içeren değerler
+          const isManual = carTransmission.includes('manuel') || 
+                          carTransmission.includes('manual') ||
+                          carTransmission === 'm'
+          return isManual
         } else if (filters.transmission === 'Automatic') {
-          // Otomatik vites: "otomatik", "automatic", "auto" içeren değerler
-          return carTransmission.includes('otomatik') || 
-                 carTransmission.includes('automatic') || 
-                 carTransmission.includes('auto') ||
-                 carTransmission === 'o'
+          // Otomatik vites: "otomatik" içeren değerler
+          const isAutomatic = carTransmission.includes('otomatik') || 
+                             carTransmission.includes('automatic') || 
+                             carTransmission.includes('auto') ||
+                             carTransmission === 'o'
+          return isAutomatic
         }
         return true
       })
+      console.log('🔍 Vites filtresi uygulandı:', filters.transmission, '->', filtered.length, 'araç')
     }
 
     // Fiyat filtresi
@@ -271,11 +275,9 @@ function CarList() {
   }, [searchParams]) // filters dependency'sini kaldırdık, çünkü filtreleme ayrı bir useEffect'te yapılıyor
 
   const handleFilterChange = (key, value) => {
-    console.log('🔄 Filtre değişti:', { key, value, currentFilters: filters })
     // Functional update kullan - React'in state güncellemesi asenkron olduğu için
     setFilters(prevFilters => {
       const newFilters = { ...prevFilters, [key]: value }
-      console.log('✅ Yeni filtreler:', newFilters)
       return newFilters
     })
   }
