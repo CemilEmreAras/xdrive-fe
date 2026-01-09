@@ -141,13 +141,15 @@ function Home() {
     // Önce country alanından kısaltmayı al
     let countryCode = (location.country || location.Country || '').toUpperCase().trim()
     
-    // Debug: country alanını logla
-    if (airports.indexOf(location) === 0) {
-      console.log('🔍 İlk airport country alanı:', {
+    // Debug: country alanını logla (ilk 5 airport için)
+    const airportIndex = airports.indexOf(location)
+    if (airportIndex < 5) {
+      console.log(`🔍 Airport ${airportIndex + 1} country alanı:`, {
         country: location.country,
         Country: location.Country,
         countryCode: countryCode,
-        locationName: location.location_name || location.Location_Name
+        locationName: location.location_name || location.Location_Name,
+        address: location.address || location.Address
       })
     }
     
