@@ -252,6 +252,27 @@ function Home() {
     if (name.includes('zambia') || address.includes('zambia')) {
       return '🇿🇲'
     }
+    if (name.includes('antigua') || name.includes('barbuda') || address.includes('antigua') || address.includes('barbuda')) {
+      return '🇦🇬'
+    }
+    if (name.includes('cyprus') || name.includes('cypres') || name.includes('larnaca') || name.includes('pafos') || 
+        address.includes('cyprus') || address.includes('cypres')) {
+      return '🇨🇾'
+    }
+    
+    // Eğer country alanı boşsa ve name/address'ten de çıkaramadıysak, varsayılan bayrak
+    if (!countryCode || countryCode === '') {
+      const airportIndex = airports.indexOf(location)
+      if (airportIndex < 10) {
+        console.warn('⚠️ Ülke kodu bulunamadı:', {
+          index: airportIndex,
+          locationName: location.location_name || location.Location_Name,
+          address: location.address || location.Address,
+          country: location.country,
+          Country: location.Country
+        })
+      }
+    }
     
     // Varsayılan bayrak
     return '🌍'
