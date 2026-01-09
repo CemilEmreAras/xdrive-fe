@@ -43,7 +43,16 @@ function CarList() {
 
   // Filtreleri uygula
   useEffect(() => {
-    console.log('🔍 Filtreleme tetiklendi:', { filters, allCarsCount: allCars.length })
+    console.log('🔍 Filtreleme tetiklendi:', { 
+      filters, 
+      allCarsCount: allCars.length,
+      category: filters.category,
+      transmission: filters.transmission,
+      minPrice: filters.minPrice,
+      maxPrice: filters.maxPrice,
+      sortBy: filters.sortBy,
+      order: filters.order
+    })
     
     if (allCars.length === 0) {
       setCars([])
@@ -262,7 +271,13 @@ function CarList() {
   }, [searchParams]) // filters dependency'sini kaldırdık, çünkü filtreleme ayrı bir useEffect'te yapılıyor
 
   const handleFilterChange = (key, value) => {
-    setFilters({ ...filters, [key]: value })
+    console.log('🔄 Filtre değişti:', { key, value, currentFilters: filters })
+    // Functional update kullan - React'in state güncellemesi asenkron olduğu için
+    setFilters(prevFilters => {
+      const newFilters = { ...prevFilters, [key]: value }
+      console.log('✅ Yeni filtreler:', newFilters)
+      return newFilters
+    })
   }
 
   if (loading) {
