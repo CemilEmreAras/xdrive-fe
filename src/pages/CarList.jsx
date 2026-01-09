@@ -6,7 +6,8 @@ import './CarList.css'
 function CarList() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const [cars, setCars] = useState([])
+  const [allCars, setAllCars] = useState([]) // Tüm araçlar (API'den gelen)
+  const [cars, setCars] = useState([]) // Filtrelenmiş araçlar
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
     category: '',
@@ -17,17 +18,95 @@ function CarList() {
     order: 'asc'
   })
 
+  // Filtreleri uygula
+  useEffect(() => {
+    if (allCars.length === 0) {
+      setCars([])
+      return
+    }
+
+    let filtered = [...allCars]
+
+    // Kategori filtresi
+    if (filters.category) {
+      filtered = filtered.filter(car => {
+        const carCategory = car.category || car.group_str || car.Car_Name || ''
+        return carCategory.toLowerCase().includes(filters.category.toLowerCase())
+      })
+    }
+
+    // Vites filtresi
+    if (filters.transmission) {
+      filtered = filtered.filter(car => {
+        const carTransmission = car.transmission || car.Transmission || ''
+        if (filters.transmission === 'Manual') {
+          return carTransmission.toLowerCase().includes('manuel') || carTransmission.toLowerCase().includes('manual')
+        } else if (filters.transmission === 'Automatic') {
+          return carTransmission.toLowerCase().includes('otomatik') || carTransmission.toLowerCase().includes('automatic')
+        }
+        return true
+      })
+    }
+
+    // Fiyat filtresi
+    if (filters.minPrice) {
+      const minPrice = parseFloat(filters.minPrice)
+      if (!isNaN(minPrice)) {
+        filtered = filtered.filter(car => {
+          const totalPrice = car.totalPrice || car.Total_Rental || car.total_Rental || 0
+          const pricePerDay = car.pricePerDay || car.Daily_Rental || car.daily_Rental || 0
+          const price = totalPrice > 0 ? totalPrice : pricePerDay
+          return price >= minPrice
+        })
+      }
+    }
+
+    if (filters.maxPrice) {
+      const maxPrice = parseFloat(filters.maxPrice)
+      if (!isNaN(maxPrice)) {
+        filtered = filtered.filter(car => {
+          const totalPrice = car.totalPrice || car.Total_Rental || car.total_Rental || 0
+          const pricePerDay = car.pricePerDay || car.Daily_Rental || car.daily_Rental || 0
+          const price = totalPrice > 0 ? totalPrice : pricePerDay
+          return price <= maxPrice
+        })
+      }
+    }
+
+    // Sıralama
+    filtered.sort((a, b) => {
+      let aValue = 0
+      let bValue = 0
+
+      if (filters.sortBy === 'price') {
+        aValue = a.totalPrice || a.Total_Rental || a.total_Rental || a.pricePerDay || a.Daily_Rental || a.daily_Rental || 0
+        bValue = b.totalPrice || b.Total_Rental || b.total_Rental || b.pricePerDay || b.Daily_Rental || b.daily_Rental || 0
+      } else if (filters.sortBy === 'rating') {
+        aValue = a.rating || 0
+        bValue = b.rating || 0
+      }
+
+      if (filters.order === 'asc') {
+        return aValue - bValue
+      } else {
+        return bValue - aValue
+      }
+    })
+
+    setCars(filtered)
+  }, [allCars, filters])
+
   useEffect(() => {
     const fetchCars = async () => {
       try {
         setLoading(true)
+        // API'ye sadece temel parametreleri gönder (filtreler frontend'de uygulanacak)
         const params = {
           pickupId: searchParams.get('pickupId') || '',
           dropoffId: searchParams.get('dropoffId') || '',
           pickupDate: searchParams.get('pickupDate') || '',
           dropoffDate: searchParams.get('dropoffDate') || '',
-          currency: 'EURO',
-          ...filters
+          currency: 'EURO'
         }
         
         // API service'i kullan (production'da doğru URL'i kullanır)
@@ -59,7 +138,7 @@ function CarList() {
       }
       
       const carsArray = carsData || []
-      setCars(carsArray)
+      setAllCars(carsArray) // Tüm araçları allCars'a kaydet (filtreleme useEffect'i otomatik uygulayacak)
       // localStorage'a kaydet
       localStorage.setItem('xdrive_cars', JSON.stringify(carsArray))
       localStorage.setItem('xdrive_searchParams', searchParams.toString())
@@ -129,7 +208,7 @@ function CarList() {
       if (savedCars && savedSearchParams === currentParams) {
         try {
           const parsed = JSON.parse(savedCars)
-          setCars(parsed)
+          setAllCars(parsed) // localStorage'dan allCars'a yükle (filtreleme useEffect'i otomatik uygulayacak)
           setLoading(false)
           console.log('✅ CarList: localStorage\'dan cars yüklendi:', parsed.length, 'araç')
           // Yine de arka planda güncel veriyi çek
@@ -144,7 +223,7 @@ function CarList() {
     }
     
     fetchCarsWithCache()
-  }, [searchParams, filters])
+  }, [searchParams]) // filters dependency'sini kaldırdık, çünkü filtreleme ayrı bir useEffect'te yapılıyor
 
   const handleFilterChange = (key, value) => {
     setFilters({ ...filters, [key]: value })
