@@ -270,11 +270,14 @@ function Home() {
   const handleAirportClick = (airport) => {
     const locationId = airport.location_id || airport.Location_ID
     const today = new Date()
-    // Bugünden itibaren tüm araçları görmek için geniş tarih aralığı (bugün + 30 gün)
-    const dropoffDateObj = new Date(today)
-    dropoffDateObj.setDate(dropoffDateObj.getDate() + 30)
+    // Ertesi günden başlayarak filtrele (pickup: yarın, dropoff: yarın + 7 gün)
+    const pickupDateObj = new Date(today)
+    pickupDateObj.setDate(pickupDateObj.getDate() + 1) // Yarın
     
-    const pickupDate = today.toISOString().split('T')[0]
+    const dropoffDateObj = new Date(pickupDateObj)
+    dropoffDateObj.setDate(dropoffDateObj.getDate() + 7) // Yarın + 7 gün
+    
+    const pickupDate = pickupDateObj.toISOString().split('T')[0]
     const dropoffDate = dropoffDateObj.toISOString().split('T')[0]
     
     // CarList sayfasına yönlendir
