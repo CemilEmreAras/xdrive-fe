@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { createReservation, getCar } from '../services/api'
+import { createReservation, getCar, getLocations } from '../services/api'
 import './Reservation.css'
 
 function Reservation() {
@@ -34,7 +34,85 @@ function Reservation() {
 
   useEffect(() => {
     fetchCar()
+    loadLocationData()
   }, [carId])
+
+  const loadLocationData = async () => {
+    try {
+      // searchParams'tan pickupId ve dropoffId al
+      const pickupId = searchParams.pickupId || location.state?.searchParams?.pickupId
+      const dropoffId = searchParams.dropoffId || location.state?.searchParams?.dropoffId
+      const pickupDate = searchParams.pickupDate || location.state?.searchParams?.pickupDate
+      const dropoffDate = searchParams.dropoffDate || location.state?.searchParams?.dropoffDate
+
+      // Tarihleri set et
+      if (pickupDate || dropoffDate) {
+        setFormData(prev => ({
+          ...prev,
+          pickupDate: pickupDate || prev.pickupDate,
+          dropoffDate: dropoffDate || prev.dropoffDate
+        }))
+      }
+
+      // Eğer pickupId varsa, location bilgilerini çek
+      if (pickupId) {
+        const locations = await getLocations()
+        const pickupLocation = locations.find(loc => 
+          loc.Location_ID === pickupId || 
+          loc.location_id === pickupId || 
+          loc.id === pickupId ||
+          String(loc.Location_ID) === String(pickupId) ||
+          String(loc.location_id) === String(pickupId) ||
+          String(loc.id) === String(pickupId)
+        )
+
+        if (pickupLocation) {
+          const city = pickupLocation.Location_Name || pickupLocation.location_name || pickupLocation.name || ''
+          const address = pickupLocation.Address || pickupLocation.address || ''
+
+          setFormData(prev => ({
+            ...prev,
+            pickupLocation: {
+              city: city,
+              address: address
+            },
+            // Eğer sameLocation true ise, dropoff location'ı da aynı yap
+            dropoffLocation: prev.sameLocation ? {
+              city: city,
+              address: address
+            } : prev.dropoffLocation
+          }))
+        }
+
+        // Eğer dropoffId varsa ve sameLocation false ise, dropoff location'ı da çek
+        if (dropoffId && !searchParams.sameLocation) {
+          const dropoffLocation = locations.find(loc => 
+            loc.Location_ID === dropoffId || 
+            loc.location_id === dropoffId || 
+            loc.id === dropoffId ||
+            String(loc.Location_ID) === String(dropoffId) ||
+            String(loc.location_id) === String(dropoffId) ||
+            String(loc.id) === String(dropoffId)
+          )
+
+          if (dropoffLocation) {
+            const dropoffCity = dropoffLocation.Location_Name || dropoffLocation.location_name || dropoffLocation.name || ''
+            const dropoffAddress = dropoffLocation.Address || dropoffLocation.address || ''
+
+            setFormData(prev => ({
+              ...prev,
+              dropoffLocation: {
+                city: dropoffCity,
+                address: dropoffAddress
+              }
+            }))
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Lokasyon bilgileri yüklenirken hata:', error)
+    }
+  }
 
   const fetchCar = async () => {
     try {
