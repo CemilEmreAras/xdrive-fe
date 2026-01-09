@@ -53,6 +53,28 @@ function Home() {
         console.error('Error loading saved search data:', error)
       }
     }
+
+    // Hash kontrolü - FAQ bölümüne scroll et
+    const handleHashChange = () => {
+      if (window.location.hash === '#faq') {
+        setTimeout(() => {
+          const faqElement = document.getElementById('faq')
+          if (faqElement) {
+            faqElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }, 100)
+      }
+    }
+
+    // Sayfa yüklendiğinde hash kontrolü
+    handleHashChange()
+
+    // Hash değişikliklerini dinle
+    window.addEventListener('hashchange', handleHashChange)
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange)
+    }
   }, [])
 
   // Dışarı tıklandığında dropdown'ları kapat
