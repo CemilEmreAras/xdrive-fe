@@ -426,8 +426,6 @@ function Home() {
     setPickupSearch(locationName)
     const newSearchData = { ...searchData, pickupId: locationId }
     setSearchData(newSearchData)
-    // localStorage'a kaydet
-    localStorage.setItem('xdrive_searchData', JSON.stringify(newSearchData))
     setShowPickupSuggestions(false)
   }
 
@@ -473,9 +471,6 @@ function Home() {
     setDropoffSearch(locationName)
     const newSearchData = { ...searchData, dropoffId: locationId }
     setSearchData(newSearchData)
-    // localStorage'a kaydet
-    localStorage.setItem('xdrive_searchData', JSON.stringify(newSearchData))
-    localStorage.setItem('xdrive_dropoffSearch', locationName)
     setShowDropoffSuggestions(false)
   }
 
