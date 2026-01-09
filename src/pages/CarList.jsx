@@ -251,33 +251,45 @@ function CarList() {
                     src={(() => {
                       // Backend'den gelen image field'ını öncelikle kullan
                       if (car.image && car.image.trim() !== '' && !car.image.includes('data:image/svg+xml')) {
-                        // Backend proxy URL döndürüyor, direkt kullan
+                        let imageUrl = car.image;
+                        
                         // Eğer relative path ise (proxy URL), API base URL ekle
-                        if (car.image.startsWith('/api/images/proxy')) {
+                        if (imageUrl.startsWith('/api/images/proxy')) {
                           const apiBaseUrl = import.meta.env.PROD 
                             ? 'https://xdrive-be.vercel.app'
                             : import.meta.env.VITE_API_URL || 'http://localhost:5001';
-                          return `${apiBaseUrl}${car.image}`;
+                          imageUrl = `${apiBaseUrl}${imageUrl}`;
                         }
-                        return car.image;
+                        
+                        // İlk birkaç araç için resim URL'ini logla
+                        if (index < 3) {
+                          console.log(`🖼️ CarList [${index}]: ${car.brand || car.Brand} ${car.model || car.Car_Name}`);
+                          console.log(`  📋 Backend image:`, car.image);
+                          console.log(`  🔗 Final image URL:`, imageUrl);
+                        }
+                        
+                        return imageUrl;
                       }
                       
                       // Hiç resim yoksa placeholder
+                      if (index < 3) {
+                        console.log(`⚠️ CarList [${index}]: ${car.brand || car.Brand} ${car.model || car.Car_Name} - Resim yok, placeholder kullanılıyor`);
+                      }
                       return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BcmHDpyBSZXNtaTwvdGV4dD48L3N2Zz4=';
                     })()}
                     alt={`${car.brand || car.Brand} ${car.model || car.Car_Name}`} 
                     onError={(e) => {
                       // Resim yüklenemezse placeholder göster
-                      console.warn('🖼️ CarList: Resim yüklenemedi:', e.target.src);
+                      console.warn(`🖼️ CarList [${index}]: Resim yüklenemedi - ${car.brand || car.Brand} ${car.model || car.Car_Name}`);
+                      console.warn(`  ❌ Hatalı URL:`, e.target.src);
                       if (!e.target.src.includes('data:image/svg+xml')) {
                         e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BcmHDpyBSZXNtaTwvdGV4dD48L3N2Zz4=';
                       }
                     }}
                     onLoad={() => {
-                      // Resim başarıyla yüklendiğinde logla (debug için)
-                      if (index === 0) {
-                        console.log('✅ İlk araç resmi yüklendi:', car.image || car.Image_Path);
-                      }
+                      // Resim başarıyla yüklendiğinde logla
+                      console.log(`✅ CarList [${index}]: Resim yüklendi - ${car.brand || car.Brand} ${car.model || car.Car_Name}`);
+                      console.log(`  🔗 URL:`, e.target.src);
                     }}
                     loading="lazy"
                   />
