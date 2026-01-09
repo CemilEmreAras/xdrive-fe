@@ -95,15 +95,10 @@ function CarList() {
                 'Hata: ' + errorMsg)
         }
         // 400 Bad Request veya diğer hatalar
+        // Minimum kiralama süresi hatası artık alert göstermiyor, sadece console'a log ediyor
         else if (typeof errorMsg === 'string' && errorMsg.includes('Man Süresi')) {
-          alert('⚠️ Minimum Kiralama Süresi Hatası\n\n' +
-                'Seçtiğiniz tarih aralığı için araç bulunamadı.\n\n' +
-                'Bu durumun nedenleri:\n' +
-                '• Minimum kiralama süresi gereksinimi\n' +
-                '• API sisteminde tarife ayarları eksik\n\n' +
-                'Lütfen:\n' +
-                '• Farklı tarih aralığı deneyin\n' +
-                '• API sağlayıcısı ile iletişime geçin: 0312 870 10 35')
+          console.warn('⚠️ Minimum Kiralama Süresi Hatası (sessizce yok sayılıyor):', errorMsg)
+          // Alert kaldırıldı, araçlar gösterilmeye devam edecek
         } else {
           alert(errorMsg + (details ? '\n\n' + details : ''))
         }

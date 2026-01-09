@@ -203,11 +203,12 @@ function Home() {
   const handleAirportClick = (airport) => {
     const locationId = airport.location_id || airport.Location_ID
     const today = new Date()
-    const tomorrow = new Date(today)
-    tomorrow.setDate(tomorrow.getDate() + 1)
+    // Minimum 3 gün kiralama süresi (bugün + 3 gün sonra)
+    const dropoffDateObj = new Date(today)
+    dropoffDateObj.setDate(dropoffDateObj.getDate() + 3)
     
     const pickupDate = today.toISOString().split('T')[0]
-    const dropoffDate = tomorrow.toISOString().split('T')[0]
+    const dropoffDate = dropoffDateObj.toISOString().split('T')[0]
     
     // CarList sayfasına yönlendir
     navigate(`/cars?pickupId=${locationId}&dropoffId=${locationId}&pickupDate=${pickupDate}&dropoffDate=${dropoffDate}&currency=EURO`)
