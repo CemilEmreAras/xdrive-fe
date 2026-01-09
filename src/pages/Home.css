@@ -116,9 +116,7 @@
   z-index: 3;
 }
 
-.search-card {
-  /* Background ve box-shadow kaldırıldı */
-}
+/* search-card background ve box-shadow kaldırıldı */
 
 .search-form {
   display: flex;
