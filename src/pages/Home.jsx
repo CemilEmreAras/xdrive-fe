@@ -122,11 +122,15 @@ function Home() {
 
   const loadAirports = async () => {
     try {
+      console.log('🛫 Airport lokasyonları yükleniyor...')
       const data = await getLocations()
+      console.log('🛫 Airport lokasyonları yüklendi:', data?.length || 0, 'lokasyon')
+      console.log('🛫 İlk 3 lokasyon:', data?.slice(0, 3))
       // Tüm lokasyonları göster (filtreleme yok)
       setAirports(data || [])
     } catch (error) {
-      console.error('Airport lokasyonları yüklenirken hata:', error)
+      console.error('❌ Airport lokasyonları yüklenirken hata:', error)
+      console.error('❌ Hata detayları:', error.response?.data || error.message)
       setAirports([])
     }
   }
