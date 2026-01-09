@@ -8,35 +8,39 @@ function Header() {
 
   // FAQ bölümüne scroll et
   const scrollToFaq = () => {
-    setTimeout(() => {
-      const faqElement = document.getElementById('faq')
-      if (faqElement) {
-        const headerHeight = 80
-        const elementPosition = faqElement.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight
+    const faqElement = document.getElementById('faq')
+    if (faqElement) {
+      const headerHeight = 80
+      const elementPosition = faqElement.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        })
-      }
-    }, 100)
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
   }
 
   // Hash değişikliğini dinle ve scroll et
   useEffect(() => {
     if (location.hash === '#faq') {
-      scrollToFaq()
+      setTimeout(() => {
+        scrollToFaq()
+      }, 100)
     }
   }, [location.hash])
 
   // FAQ linkine tıklandığında
   const handleFaqClick = (e) => {
-    // Eğer zaten home sayfasındaysak, sadece scroll et
+    // Eğer zaten home sayfasındaysak, her zaman scroll et
     if (location.pathname === '/') {
       e.preventDefault()
+      // Hash'i güncelle
       window.location.hash = '#faq'
-      scrollToFaq()
+      // Scroll et (hash değişikliği useEffect'i tetikleyecek ama direkt de scroll edelim)
+      setTimeout(() => {
+        scrollToFaq()
+      }, 50)
     }
     // Değilse, normal link davranışı (Home'a gidip sonra scroll edecek)
   }
