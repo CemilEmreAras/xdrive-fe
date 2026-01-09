@@ -396,8 +396,30 @@ function Home() {
     }
   }
 
-  const handlePickupInputClick = () => {
+  const handlePickupInputClick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
     setShowPickupSuggestions(true)
+    // Input'a focus ver
+    if (pickupInputRef.current) {
+      const input = pickupInputRef.current.querySelector('input')
+      if (input) {
+        input.focus()
+      }
+    }
+  }
+
+  const handleDropoffInputClick = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setShowDropoffSuggestions(true)
+    // Input'a focus ver
+    if (dropoffInputRef.current) {
+      const input = dropoffInputRef.current.querySelector('input')
+      if (input) {
+        input.focus()
+      }
+    }
   }
 
   const handlePickupSelect = (location) => {
@@ -495,7 +517,7 @@ function Home() {
             <form onSubmit={handleSubmit} className="search-form">
               <div className="form-group">
                 <label>Pick-up Location</label>
-                <div className="autocomplete-wrapper" ref={pickupInputRef}>
+                <div className="autocomplete-wrapper" ref={pickupInputRef} onClick={handlePickupInputClick}>
                   <div className="input-with-icon">
                     {loading ? (
                       <input
@@ -562,7 +584,13 @@ function Home() {
               <div className="form-row dates-row-single">
                 <div className="form-group date-time-group">
                   <label>Pick-up date</label>
-                  <div className="date-input-wrapper">
+                  <div className="date-input-wrapper" onClick={(e) => {
+                    const input = e.currentTarget.querySelector('input[type="date"]')
+                    if (input) {
+                      input.focus()
+                      input.showPicker?.()
+                    }
+                  }}>
                     <input
                       type="date"
                       value={searchData.pickupDate}
@@ -585,7 +613,13 @@ function Home() {
 
                 <div className="form-group date-time-group">
                   <label>Pick-up time</label>
-                  <div className="input-with-icon">
+                  <div className="input-with-icon" onClick={(e) => {
+                    const input = e.currentTarget.querySelector('input[type="time"]')
+                    if (input) {
+                      input.focus()
+                      input.showPicker?.()
+                    }
+                  }}>
                     <input
                       type="time"
                       value={searchData.pickupTime}
@@ -595,6 +629,11 @@ function Home() {
                         localStorage.setItem('xdrive_searchData', JSON.stringify(newData))
                       }}
                       className="form-input time-input"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        e.target.focus()
+                        e.target.showPicker?.()
+                      }}
                       required
                     />
                   </div>
@@ -602,7 +641,13 @@ function Home() {
 
                 <div className="form-group date-time-group">
                   <label>Drop-off date</label>
-                  <div className="date-input-wrapper">
+                  <div className="date-input-wrapper" onClick={(e) => {
+                    const input = e.currentTarget.querySelector('input[type="date"]')
+                    if (input) {
+                      input.focus()
+                      input.showPicker?.()
+                    }
+                  }}>
                     <input
                       type="date"
                       value={searchData.dropoffDate}
@@ -613,6 +658,11 @@ function Home() {
                       }}
                       min={searchData.pickupDate || new Date().toISOString().split('T')[0]}
                       className="form-input date-input"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        e.target.focus()
+                        e.target.showPicker?.()
+                      }}
                       required
                     />
                     {searchData.dropoffDate ? (
