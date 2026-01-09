@@ -601,6 +601,11 @@ function Home() {
                       }}
                       min={new Date().toISOString().split('T')[0]}
                       className="form-input date-input"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        e.target.focus()
+                        e.target.showPicker?.()
+                      }}
                       required
                     />
                     {searchData.pickupDate ? (
