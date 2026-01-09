@@ -38,19 +38,6 @@ function Home() {
       try {
         const parsed = JSON.parse(savedSearchData)
         setSearchData(parsed)
-        // Lokasyon isimlerini de yükle
-        if (parsed.pickupId) {
-          const savedPickupSearch = localStorage.getItem('xdrive_pickupSearch')
-          if (savedPickupSearch) {
-            setPickupSearch(savedPickupSearch)
-          }
-        }
-        if (parsed.dropoffId) {
-          const savedDropoffSearch = localStorage.getItem('xdrive_dropoffSearch')
-          if (savedDropoffSearch) {
-            setDropoffSearch(savedDropoffSearch)
-          }
-        }
       } catch (error) {
         console.error('Error loading saved search data:', error)
       }
@@ -430,7 +417,6 @@ function Home() {
     setSearchData(newSearchData)
     // localStorage'a kaydet
     localStorage.setItem('xdrive_searchData', JSON.stringify(newSearchData))
-    localStorage.setItem('xdrive_pickupSearch', locationName)
     setShowPickupSuggestions(false)
   }
 
