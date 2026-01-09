@@ -120,6 +120,100 @@ function Home() {
     }
   }
 
+  const loadAirports = async () => {
+    try {
+      const data = await getLocations()
+      // Airport içeren lokasyonları filtrele
+      const airportLocations = (data || []).filter(loc => {
+        const name = (loc.location_name || loc.Location_Name || '').toLowerCase()
+        const address = (loc.address || loc.Address || '').toLowerCase()
+        return name.includes('airport') || name.includes('havaalanı') || 
+               address.includes('airport') || address.includes('havaalanı')
+      })
+      setAirports(airportLocations)
+    } catch (error) {
+      console.error('Airport lokasyonları yüklenirken hata:', error)
+      setAirports([])
+    }
+  }
+
+  // Ülke adına göre bayrak emoji döndür
+  const getCountryFlag = (location) => {
+    const name = (location.location_name || location.Location_Name || '').toLowerCase()
+    const address = (location.address || location.Address || '').toLowerCase()
+    
+    // Ülke eşleştirmeleri
+    if (name.includes('turkey') || name.includes('türkiye') || name.includes('istanbul') || 
+        name.includes('ankara') || name.includes('izmir') || address.includes('turkey') || 
+        address.includes('türkiye')) {
+      return '🇹🇷'
+    }
+    if (name.includes('germany') || name.includes('almanya') || name.includes('berlin') || 
+        name.includes('munich') || address.includes('germany') || address.includes('almanya')) {
+      return '🇩🇪'
+    }
+    if (name.includes('france') || name.includes('fransa') || name.includes('paris') || 
+        address.includes('france') || address.includes('fransa')) {
+      return '🇫🇷'
+    }
+    if (name.includes('spain') || name.includes('ispanya') || name.includes('madrid') || 
+        name.includes('barcelona') || address.includes('spain') || address.includes('ispanya')) {
+      return '🇪🇸'
+    }
+    if (name.includes('italy') || name.includes('italya') || name.includes('rome') || 
+        name.includes('milan') || address.includes('italy') || address.includes('italya')) {
+      return '🇮🇹'
+    }
+    if (name.includes('uk') || name.includes('united kingdom') || name.includes('london') || 
+        address.includes('uk') || address.includes('united kingdom')) {
+      return '🇬🇧'
+    }
+    if (name.includes('usa') || name.includes('united states') || name.includes('new york') || 
+        name.includes('los angeles') || address.includes('usa') || address.includes('united states')) {
+      return '🇺🇸'
+    }
+    if (name.includes('netherlands') || name.includes('hollanda') || name.includes('amsterdam') || 
+        address.includes('netherlands') || address.includes('hollanda')) {
+      return '🇳🇱'
+    }
+    if (name.includes('greece') || name.includes('yunanistan') || name.includes('athens') || 
+        address.includes('greece') || address.includes('yunanistan')) {
+      return '🇬🇷'
+    }
+    if (name.includes('portugal') || name.includes('portekiz') || name.includes('lisbon') || 
+        address.includes('portugal') || address.includes('portekiz')) {
+      return '🇵🇹'
+    }
+    if (name.includes('belgium') || name.includes('belçika') || name.includes('brussels') || 
+        address.includes('belgium') || address.includes('belçika')) {
+      return '🇧🇪'
+    }
+    if (name.includes('switzerland') || name.includes('isviçre') || name.includes('zurich') || 
+        address.includes('switzerland') || address.includes('isviçre')) {
+      return '🇨🇭'
+    }
+    if (name.includes('austria') || name.includes('avusturya') || name.includes('vienna') || 
+        address.includes('austria') || address.includes('avusturya')) {
+      return '🇦🇹'
+    }
+    
+    // Varsayılan bayrak
+    return '🌍'
+  }
+
+  const handleAirportClick = (airport) => {
+    const locationId = airport.location_id || airport.Location_ID
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    
+    const pickupDate = today.toISOString().split('T')[0]
+    const dropoffDate = tomorrow.toISOString().split('T')[0]
+    
+    // CarList sayfasına yönlendir
+    navigate(`/cars?pickupId=${locationId}&dropoffId=${locationId}&pickupDate=${pickupDate}&dropoffDate=${dropoffDate}&currency=EURO`)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!searchData.pickupId || !searchData.pickupDate || !searchData.dropoffDate) {
