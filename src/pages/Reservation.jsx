@@ -11,6 +11,9 @@ function Reservation() {
   const [searchParams] = useState(location.state?.searchParams || {})
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
+  
+  // Initial state'i searchParams'tan al
+  const initialSearchParams = location.state?.searchParams || {}
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -19,8 +22,8 @@ function Reservation() {
     licenseNumber: '',
     age: '',
     country: '',
-    pickupDate: '',
-    dropoffDate: '',
+    pickupDate: initialSearchParams.pickupDate || '',
+    dropoffDate: initialSearchParams.dropoffDate || '',
     pickupLocation: {
       city: '',
       address: ''
@@ -204,8 +207,9 @@ function Reservation() {
         
         setFormData(prev => ({
           ...prev,
-          pickupDate: searchParams.pickupDate || prev.pickupDate,
-          dropoffDate: searchParams.dropoffDate || prev.dropoffDate,
+          // searchParams'tan gelen tarihler öncelikli, yoksa mevcut değerleri koru
+          pickupDate: searchParams.pickupDate || prev.pickupDate || initialSearchParams.pickupDate || '',
+          dropoffDate: searchParams.dropoffDate || prev.dropoffDate || initialSearchParams.dropoffDate || '',
           pickupLocation: {
             city: normalizedCar.location?.city || '',
             address: normalizedCar.location?.address || ''
@@ -256,8 +260,9 @@ function Reservation() {
       if (car) {
         setFormData(prev => ({
           ...prev,
-          pickupDate: searchParams.pickupDate || prev.pickupDate,
-          dropoffDate: searchParams.dropoffDate || prev.dropoffDate,
+          // searchParams'tan gelen tarihler öncelikli, yoksa mevcut değerleri koru
+          pickupDate: searchParams.pickupDate || prev.pickupDate || initialSearchParams.pickupDate || '',
+          dropoffDate: searchParams.dropoffDate || prev.dropoffDate || initialSearchParams.dropoffDate || '',
           pickupLocation: {
             city: car.location?.city || '',
             address: car.location?.address || ''
