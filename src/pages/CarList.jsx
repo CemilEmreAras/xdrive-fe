@@ -43,12 +43,15 @@ function CarList() {
 
   // Filtreleri uygula
   useEffect(() => {
+    console.log('🔍 Filtreleme tetiklendi:', { filters, allCarsCount: allCars.length })
+    
     if (allCars.length === 0) {
       setCars([])
       return
     }
 
     let filtered = [...allCars]
+    console.log('📊 Filtreleme öncesi araç sayısı:', filtered.length)
 
     // Kategori filtresi
     if (filters.category) {
@@ -124,6 +127,7 @@ function CarList() {
       }
     })
 
+    console.log('📊 Filtreleme sonrası araç sayısı:', filtered.length)
     setCars(filtered)
   }, [allCars, filters])
 
