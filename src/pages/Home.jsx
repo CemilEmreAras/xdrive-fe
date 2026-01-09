@@ -14,12 +14,21 @@ function Home() {
     return tomorrow.toISOString().split('T')[0]
   }
 
+  // Pickup date'in 3 gün sonrasını hesapla
+  const getDropoffDate = (pickupDate) => {
+    if (!pickupDate) return ''
+    const dropoff = new Date(pickupDate)
+    dropoff.setDate(dropoff.getDate() + 3)
+    return dropoff.toISOString().split('T')[0]
+  }
+
+  const tomorrowDate = getTomorrowDate()
   const [searchData, setSearchData] = useState({
     pickupId: '',
     dropoffId: '',
-    pickupDate: getTomorrowDate(), // Yarın
+    pickupDate: tomorrowDate, // Yarın
     pickupTime: '11:00',
-    dropoffDate: '',
+    dropoffDate: getDropoffDate(tomorrowDate), // Pickup date + 3 gün
     dropoffTime: '11:00',
     sameLocation: true,
     driverCountry: 'Turkey',
@@ -40,12 +49,13 @@ function Home() {
     loadLocations()
     loadAirports()
     // Sayfa her yüklendiğinde default değerlere dön
+    const tomorrow = getTomorrowDate()
     setSearchData({
       pickupId: '',
       dropoffId: '',
-      pickupDate: getTomorrowDate(), // Yarın
+      pickupDate: tomorrow, // Yarın
       pickupTime: '11:00',
-      dropoffDate: '',
+      dropoffDate: getDropoffDate(tomorrow), // Pickup date + 3 gün
       dropoffTime: '11:00',
       sameLocation: true,
       driverCountry: 'Turkey',
@@ -658,10 +668,8 @@ function Home() {
                       }}
                       required
                     />
-                    {searchData.dropoffDate ? (
+                    {searchData.dropoffDate && (
                       <span className="date-display">{formatDateShort(searchData.dropoffDate)}</span>
-                    ) : (
-                      <span className="date-placeholder">Select date</span>
                     )}
                   </div>
                 </div>
