@@ -55,21 +55,32 @@ function Home() {
     }
 
     // Hash kontrolü - FAQ bölümüne scroll et
-    const handleHashChange = () => {
+    const scrollToFaq = () => {
       if (window.location.hash === '#faq') {
         setTimeout(() => {
           const faqElement = document.getElementById('faq')
           if (faqElement) {
-            faqElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            const headerHeight = 80 // Header yüksekliği
+            const elementPosition = faqElement.getBoundingClientRect().top
+            const offsetPosition = elementPosition + window.pageYOffset - headerHeight
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            })
           }
-        }, 100)
+        }, 300) // Biraz daha uzun timeout
       }
     }
 
     // Sayfa yüklendiğinde hash kontrolü
-    handleHashChange()
+    scrollToFaq()
 
     // Hash değişikliklerini dinle
+    const handleHashChange = () => {
+      scrollToFaq()
+    }
+
     window.addEventListener('hashchange', handleHashChange)
 
     return () => {

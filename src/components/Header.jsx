@@ -1,9 +1,29 @@
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import './Header.css'
 
 function Header() {
   const [showLanguageMenu, setShowLanguageMenu] = useState(false)
+  const location = useLocation()
+
+  // Hash değişikliğini dinle ve scroll et
+  useEffect(() => {
+    if (location.hash === '#faq') {
+      setTimeout(() => {
+        const faqElement = document.getElementById('faq')
+        if (faqElement) {
+          const headerHeight = 80
+          const elementPosition = faqElement.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - headerHeight
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          })
+        }
+      }, 300)
+    }
+  }, [location.hash])
 
   return (
     <header className="header">
