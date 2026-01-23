@@ -1,18 +1,18 @@
 import axios from 'axios'
 
-// Production'da Vercel backend URL'i, development'ta localhost
-const API_BASE_URL = import.meta.env.PROD
-  ? 'https://xdrive-be.vercel.app/api'
-  : import.meta.env.VITE_API_URL || '/api'
+// Production'da Vercel backend URL'i
+// API_BASE_URL doğrudan 'https://xdrive-be.vercel.app/api' olarak tanımlanır.
+// Çift slash veya /api tekrarını önlemek için defensive coding.
+const PROD_API_URL = 'https://xdrive-be.vercel.app/api';
+const LOCAL_API_URL = import.meta.env.VITE_API_URL || '/api';
 
-const isDev = import.meta.env.DEV
+const API_BASE_URL = import.meta.env.PROD ? PROD_API_URL : LOCAL_API_URL;
 
-// Debug: API base URL'i logla (sadece development)
-if (isDev) {
-  console.log('🔗 API Base URL:', API_BASE_URL)
-  console.log('🔗 Environment:', import.meta.env.MODE)
-  console.log('🔗 Is Production:', import.meta.env.PROD)
-}
+const isDev = import.meta.env.DEV;
+
+// Debug: API base URL'i logla (Production'da da görünsün - geçici)
+console.log('🔗 API Base URL:', API_BASE_URL);
+console.log('🔗 Is Production:', import.meta.env.PROD);
 
 // Lokasyonları getir
 export const getLocations = async () => {
@@ -177,6 +177,7 @@ export const getReservation = async (reservationNumber) => {
 export const sendContactForm = async (formData) => {
   try {
     const url = `${API_BASE_URL}/contact`;
+    console.log('📧 Contact URL:', url); // Production debug
     if (isDev) {
       console.log('📧 İletişim formu gönderiliyor:', url, formData)
     }
@@ -197,6 +198,7 @@ export const sendContactForm = async (formData) => {
 export const sendFranchiseApplication = async (formData) => {
   try {
     const url = `${API_BASE_URL}/contact/franchise`;
+    console.log('🏢 Franchise URL:', url); // Production debug
     if (isDev) {
       console.log('🏢 Bayilik başvurusu gönderiliyor:', url, formData)
     }
