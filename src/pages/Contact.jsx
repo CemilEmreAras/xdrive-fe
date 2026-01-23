@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
+import { sendContactForm } from '../services/api'
 
 const isDev = import.meta.env.DEV
 
@@ -48,18 +49,12 @@ function Contact() {
     setSubmitError(null)
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'
-      const response = await fetch(`${API_URL}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...formData, language: i18n.language }),
+      const response = await sendContactForm({
+        ...formData,
+        language: i18n.language
       })
 
-      const data = await response.json()
-
-      if (response.ok) {
+      if (response && response.success) {
         setSubmitSuccess(true)
         setFormData({
           name: '',
@@ -69,8 +64,10 @@ function Contact() {
           privacyAccepted: false
         })
       } else {
-        setSubmitError(data.error || 'Bir hata oluştu.')
+        setSubmitError(response?.message || 'Bir hata oluştu.')
       }
+
+
     } catch (error) {
       console.error('Error:', error)
       setSubmitError('Bir bağlantı hatası oluştu. Lütfen tekrar deneyin.')

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import SEO from '../components/SEO'
+import { sendFranchiseApplication } from '../services/api'
 
 const isDev = import.meta.env.DEV
 
@@ -49,18 +50,13 @@ function Franchise() {
     setSubmitError(null)
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001'
-      const response = await fetch(`${API_URL}/api/contact/franchise`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...formData, language: i18n.language }),
+      const response = await sendFranchiseApplication({
+        ...formData,
+        language: i18n.language
       })
 
-      const data = await response.json()
-
-      if (response.ok) {
+      // sendFranchiseApplication returns data directly, not a Response object
+      if (response && response.success) {
         setSubmitSuccess(true)
         setFormData({
           fullName: '',
@@ -71,8 +67,10 @@ function Franchise() {
           privacyAccepted: false
         })
       } else {
-        setSubmitError(data.error || 'Bir hata oluştu.')
+        setSubmitError(response?.message || 'Bir hata oluştu.')
       }
+
+
     } catch (error) {
       console.error('Error:', error)
       setSubmitError('Bir bağlantı hatası oluştu. Lütfen tekrar deneyin.')
