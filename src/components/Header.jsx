@@ -1,3 +1,4 @@
+import Flag from 'react-world-flags'
 import { Link, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -51,9 +52,21 @@ function Header() {
     }
   }, [showLanguageMenu, showCurrencyMenu, showMobileLanguageMenu, showMobileCurrencyMenu])
 
-  // Logo ve header stili: tüm sayfalarda aynı, scroll ile hareket etmiyor
-  const logoSource = '/images/logo-footer.svg'
+  const languageOptions = {
+    en: { label: 'English', code: 'GB' },
+    de: { label: 'Deutsch', code: 'DE' },
+    tr: { label: 'Türkçe', code: 'TR' },
+    it: { label: 'Italiano', code: 'IT' },
+    es: { label: 'Español', code: 'ES' },
+    pt: { label: 'Português', code: 'PT' },
+    ar: { label: 'العربية', code: 'SA' }
+  }
 
+  const currentLanguage = languageOptions[language] || languageOptions['en']
+  const languageLabel = currentLanguage.label
+
+  // Logo ve header stili
+  const logoSource = '/images/logo-footer.svg'
   const isHome = location.pathname === '/'
   const baseHeaderClasses = `top-0 left-0 right-0 transition-all duration-300 z-[10010]`
   const variantClasses = isHome
@@ -73,19 +86,6 @@ function Header() {
     closeMobileMenu()
     scrollHomeTop()
   }
-
-  const languageOptions = {
-    en: { label: 'English', flag: '🇬🇧' },
-    de: { label: 'Deutsch', flag: '🇩🇪' },
-    tr: { label: 'Türkçe', flag: '🇹🇷' },
-    it: { label: 'Italiano', flag: '🇮🇹' },
-    es: { label: 'Español', flag: '🇪🇸' },
-    pt: { label: 'Português', flag: '🇵🇹' },
-    ar: { label: 'العربية', flag: '🇸🇦' }
-  }
-
-  const currentLanguage = languageOptions[language] || languageOptions['en']
-  const languageLabel = currentLanguage.label
 
   const isActive = (path) => location.pathname === path
 
@@ -192,18 +192,18 @@ function Header() {
           <div className="relative" data-language-menu>
             <button
               type="button"
-              className="flex items-center justify-center gap-1 rounded-lg border border-white/20 bg-white/5 px-1.5 py-1 text-[10px] tablet:px-2 tablet:py-1 tablet:text-xs mid:px-2.5 mid:py-1.5 mid:text-xs md:px-3 md:py-1.5 md:text-sm lg:px-3 lg:py-2 lg:text-sm xl:px-3.5 xl:py-2 xl:text-sm 2xl:px-4 2xl:py-2 2xl:text-sm text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10 w-10 tablet:w-11 mid:w-12 md:w-14 lg:w-16 xl:w-20 2xl:w-20"
+              className="flex items-center justify-center gap-1 rounded-lg border border-white/20 bg-white/5 text-[10px] tablet:text-xs mid:text-xs md:text-sm lg:text-sm xl:text-sm 2xl:text-sm text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10 w-7 h-7 tablet:w-7 tablet:h-7 mid:w-8 mid:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 xl:w-11 xl:h-11 2xl:w-11 2xl:h-11"
               onClick={() => setShowLanguageMenu(!showLanguageMenu)}
             >
-              <span className="text-xs tablet:text-sm mid:text-base md:text-lg lg:text-xl xl:text-xl 2xl:text-2xl">
-                {currentLanguage.flag}
-              </span>
+              <div className="w-3.5 h-3.5 tablet:w-4 tablet:h-4 mid:w-4 mid:h-4 md:w-5 md:h-5 lg:w-5 lg:h-5 xl:w-6 xl:h-6 2xl:w-6 2xl:h-6 flex items-center justify-center overflow-hidden rounded-full">
+                <Flag code={currentLanguage.code} className="w-full h-full object-cover" />
+              </div>
             </button>
             {showLanguageMenu && (
               <div
                 className="absolute right-0 z-[10002] mt-2 w-44 rounded-xl bg-white py-2 text-sm text-slate-900 shadow-2xl ring-1 ring-black/5"
               >
-                {Object.entries(languageOptions).map(([langCode, { label, flag }]) => (
+                {Object.entries(languageOptions).map(([langCode, { label, code }]) => (
                   <button
                     key={langCode}
                     type="button"
@@ -214,7 +214,9 @@ function Header() {
                     className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${language === langCode ? 'bg-red-50 font-semibold text-red-600' : ''
                       }`}
                   >
-                    <span className="text-lg">{flag}</span>
+                    <div className="w-5 h-5 flex-shrink-0 overflow-hidden rounded-full border border-gray-100">
+                      <Flag code={code} className="w-full h-full object-cover" />
+                    </div>
                     <span>{label}</span>
                   </button>
                 ))}
@@ -225,10 +227,10 @@ function Header() {
           <div className="relative" data-currency-menu>
             <button
               type="button"
-              className="flex items-center justify-center gap-1 rounded-lg border border-white/20 bg-white/5 px-1.5 py-1 text-[10px] tablet:px-2 tablet:py-1 tablet:text-xs mid:px-2.5 mid:py-1.5 mid:text-xs md:px-3 md:py-1.5 md:text-sm lg:px-3 lg:py-2 lg:text-sm xl:px-3.5 xl:py-2 xl:text-sm 2xl:px-4 2xl:py-2 2xl:text-sm text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10 w-10 tablet:w-11 mid:w-12 md:w-14 lg:w-16 xl:w-20 2xl:w-20"
+              className="flex items-center justify-center gap-1 rounded-lg border border-white/20 bg-white/5 text-[10px] tablet:text-xs mid:text-xs md:text-sm lg:text-sm xl:text-sm 2xl:text-sm text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10 w-7 h-7 tablet:w-7 tablet:h-7 mid:w-8 mid:h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 xl:w-11 xl:h-11 2xl:w-11 2xl:h-11"
               onClick={() => setShowCurrencyMenu(!showCurrencyMenu)}
             >
-              <span className="text-xs tablet:text-sm mid:text-base md:text-lg lg:text-xl xl:text-xl 2xl:text-2xl font-semibold">
+              <span className="text-sm tablet:text-base mid:text-base md:text-lg lg:text-xl xl:text-2xl 2xl:text-2xl font-semibold leading-none flex items-center justify-center">
                 {currency === 'EURO' ? '€' : currency === 'USD' ? '$' : '£'}
               </span>
             </button>
@@ -301,179 +303,183 @@ function Header() {
             />
           </button>
         </div>
-      </div>
+      </div >
 
 
       {/* Mobile slide menu */}
-      {isMobileMenuOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-[10002] bg-black/60 tablet:hidden"
-            onClick={closeMobileMenu}
-          />
-          <div className="fixed top-0 bottom-0 left-0 z-[10003] w-80 max-w-[85vw] h-screen bg-gradient-to-b from-black via-black to-slate-900 px-6 py-24 text-white shadow-2xl tablet:hidden">
-            <nav className="flex flex-col gap-1">
-              <Link
-                to="/"
-                onClick={handleHomeClick}
-                className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/')
-                  ? 'bg-red-500/20 text-red-400'
-                  : 'text-white/90 hover:bg-white/10 hover:text-white'
-                  }`}
-              >
-                {t('nav.home')}
-              </Link>
-              <Link
-                to="/about"
-                onClick={closeMobileMenu}
-                className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/about')
-                  ? 'bg-red-500/20 text-red-400'
-                  : 'text-white/90 hover:bg-white/10 hover:text-white'
-                  }`}
-              >
-                {t('nav.about')}
-              </Link>
-              <Link
-                to="/locations"
-                onClick={closeMobileMenu}
-                className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/locations')
-                  ? 'bg-red-500/20 text-red-400'
-                  : 'text-white/90 hover:bg-white/10 hover:text-white'
-                  }`}
-              >
-                {t('nav.locations')}
-              </Link>
-              <Link
-                to="/faq"
-                onClick={closeMobileMenu}
-                className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/faq')
-                  ? 'bg-red-500/20 text-red-400'
-                  : 'text-white/90 hover:bg-white/10 hover:text-white'
-                  }`}
-              >
-                {t('nav.faq')}
-              </Link>
-              <Link
-                to="/franchise"
-                onClick={closeMobileMenu}
-                className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/franchise')
-                  ? 'bg-red-500/20 text-red-400'
-                  : 'text-white/90 hover:bg-white/10 hover:text-white'
-                  }`}
-              >
-                {t('nav.franchise')}
-              </Link>
-              <Link
-                to="/contact"
-                onClick={closeMobileMenu}
-                className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/contact')
-                  ? 'bg-red-500/20 text-red-400'
-                  : 'text-white/90 hover:bg-white/10 hover:text-white'
-                  }`}
-              >
-                {t('nav.contact')}
-              </Link>
-            </nav>
+      {
+        isMobileMenuOpen && (
+          <>
+            <div
+              className="fixed inset-0 z-[10002] bg-black/60 tablet:hidden"
+              onClick={closeMobileMenu}
+            />
+            <div className="fixed top-0 bottom-0 left-0 z-[10003] w-80 max-w-[85vw] h-screen bg-gradient-to-b from-black via-black to-slate-900 px-6 py-24 text-white shadow-2xl tablet:hidden overflow-y-auto">
+              <nav className="flex flex-col gap-1">
+                <Link
+                  to="/"
+                  onClick={handleHomeClick}
+                  className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/')
+                    ? 'bg-red-500/20 text-red-400'
+                    : 'text-white/90 hover:bg-white/10 hover:text-white'
+                    }`}
+                >
+                  {t('nav.home')}
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={closeMobileMenu}
+                  className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/about')
+                    ? 'bg-red-500/20 text-red-400'
+                    : 'text-white/90 hover:bg-white/10 hover:text-white'
+                    }`}
+                >
+                  {t('nav.about')}
+                </Link>
+                <Link
+                  to="/locations"
+                  onClick={closeMobileMenu}
+                  className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/locations')
+                    ? 'bg-red-500/20 text-red-400'
+                    : 'text-white/90 hover:bg-white/10 hover:text-white'
+                    }`}
+                >
+                  {t('nav.locations')}
+                </Link>
+                <Link
+                  to="/faq"
+                  onClick={closeMobileMenu}
+                  className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/faq')
+                    ? 'bg-red-500/20 text-red-400'
+                    : 'text-white/90 hover:bg-white/10 hover:text-white'
+                    }`}
+                >
+                  {t('nav.faq')}
+                </Link>
+                <Link
+                  to="/franchise"
+                  onClick={closeMobileMenu}
+                  className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/franchise')
+                    ? 'bg-red-500/20 text-red-400'
+                    : 'text-white/90 hover:bg-white/10 hover:text-white'
+                    }`}
+                >
+                  {t('nav.franchise')}
+                </Link>
+                <Link
+                  to="/contact"
+                  onClick={closeMobileMenu}
+                  className={`rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive('/contact')
+                    ? 'bg-red-500/20 text-red-400'
+                    : 'text-white/90 hover:bg-white/10 hover:text-white'
+                    }`}
+                >
+                  {t('nav.contact')}
+                </Link>
+              </nav>
 
-            {/* Mobile language and currency selectors */}
-            <div className="mt-8 border-t border-white/10 pt-6">
-              <div className="flex flex-col gap-4">
-                {/* Language selector */}
-                <div className="relative" data-mobile-language-menu>
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-sm text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10"
-                    onClick={() => setShowMobileLanguageMenu(!showMobileLanguageMenu)}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg">
-                        {currentLanguage.flag}
-                      </span>
-                      <span>{languageLabel}</span>
-                    </div>
-                  </button>
-                  {showMobileLanguageMenu && (
-                    <div className="absolute left-0 right-0 z-[10002] mt-2 rounded-xl bg-white py-2 text-sm text-slate-900 shadow-2xl ring-1 ring-black/5">
-                      {Object.entries(languageOptions).map(([langCode, { label, flag }]) => (
+              {/* Mobile language and currency selectors */}
+              <div className="mt-8 border-t border-white/10 pt-6">
+                <div className="flex flex-col gap-4">
+                  {/* Language selector */}
+                  <div className="relative" data-mobile-language-menu>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-sm text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10"
+                      onClick={() => setShowMobileLanguageMenu(!showMobileLanguageMenu)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="w-6 h-6 flex-shrink-0 overflow-hidden rounded-full border border-white/20">
+                          <Flag code={currentLanguage.code} className="w-full h-full object-cover" />
+                        </div>
+                        <span>{languageLabel}</span>
+                      </div>
+                    </button>
+                    {showMobileLanguageMenu && (
+                      <div className="absolute left-0 right-0 z-[10002] mt-2 rounded-xl bg-white py-2 text-sm text-slate-900 shadow-2xl ring-1 ring-black/5">
+                        {Object.entries(languageOptions).map(([langCode, { label, code }]) => (
+                          <button
+                            key={langCode}
+                            type="button"
+                            onClick={() => {
+                              changeLanguage(langCode)
+                              setShowMobileLanguageMenu(false)
+                            }}
+                            className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${language === langCode ? 'bg-red-50 font-semibold text-red-600' : ''
+                              }`}
+                          >
+                            <div className="w-5 h-5 flex-shrink-0 overflow-hidden rounded-full border border-gray-100">
+                              <Flag code={code} className="w-full h-full object-cover" />
+                            </div>
+                            <span>{label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Currency selector */}
+                  <div className="relative" data-mobile-currency-menu>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-sm text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10"
+                      onClick={() => setShowMobileCurrencyMenu(!showMobileCurrencyMenu)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-semibold">
+                          {currency === 'EURO' ? '€' : currency === 'USD' ? '$' : '£'}
+                        </span>
+                        <span>{currency === 'EURO' ? 'EUR' : currency === 'USD' ? 'USD' : 'GBP'}</span>
+                      </div>
+                    </button>
+                    {showMobileCurrencyMenu && (
+                      <div className="absolute left-0 right-0 z-[10002] mt-2 rounded-xl bg-white py-2 text-sm text-slate-900 shadow-2xl ring-1 ring-black/5">
                         <button
-                          key={langCode}
                           type="button"
                           onClick={() => {
-                            changeLanguage(langCode)
-                            setShowMobileLanguageMenu(false)
+                            changeCurrency('EURO')
+                            setShowMobileCurrencyMenu(false)
                           }}
-                          className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${language === langCode ? 'bg-red-50 font-semibold text-red-600' : ''
+                          className={`flex w-full items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${currency === 'EURO' ? 'bg-red-50 font-semibold text-red-600' : ''
                             }`}
                         >
-                          <span className="text-lg">{flag}</span>
-                          <span>{label}</span>
+                          <span className="text-base">€</span>
+                          <span>EUR</span>
                         </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Currency selector */}
-                <div className="relative" data-mobile-currency-menu>
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-sm text-white backdrop-blur-sm transition-all hover:border-white/40 hover:bg-white/10"
-                    onClick={() => setShowMobileCurrencyMenu(!showMobileCurrencyMenu)}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-semibold">
-                        {currency === 'EURO' ? '€' : currency === 'USD' ? '$' : '£'}
-                      </span>
-                      <span>{currency === 'EURO' ? 'EUR' : currency === 'USD' ? 'USD' : 'GBP'}</span>
-                    </div>
-                  </button>
-                  {showMobileCurrencyMenu && (
-                    <div className="absolute left-0 right-0 z-[10002] mt-2 rounded-xl bg-white py-2 text-sm text-slate-900 shadow-2xl ring-1 ring-black/5">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          changeCurrency('EURO')
-                          setShowMobileCurrencyMenu(false)
-                        }}
-                        className={`flex w-full items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${currency === 'EURO' ? 'bg-red-50 font-semibold text-red-600' : ''
-                          }`}
-                      >
-                        <span className="text-base">€</span>
-                        <span>EUR</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          changeCurrency('USD')
-                          setShowMobileCurrencyMenu(false)
-                        }}
-                        className={`flex w-full items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${currency === 'USD' ? 'bg-red-50 font-semibold text-red-600' : ''
-                          }`}
-                      >
-                        <span className="text-base">$</span>
-                        <span>USD</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          changeCurrency('GBP')
-                          setShowMobileCurrencyMenu(false)
-                        }}
-                        className={`flex w-full items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${currency === 'GBP' ? 'bg-red-50 font-semibold text-red-600' : ''
-                          }`}
-                      >
-                        <span className="text-base">£</span>
-                        <span>GBP</span>
-                      </button>
-                    </div>
-                  )}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            changeCurrency('USD')
+                            setShowMobileCurrencyMenu(false)
+                          }}
+                          className={`flex w-full items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${currency === 'USD' ? 'bg-red-50 font-semibold text-red-600' : ''
+                            }`}
+                        >
+                          <span className="text-base">$</span>
+                          <span>USD</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            changeCurrency('GBP')
+                            setShowMobileCurrencyMenu(false)
+                          }}
+                          className={`flex w-full items-center gap-2 px-4 py-2.5 text-left transition-colors hover:bg-slate-50 ${currency === 'GBP' ? 'bg-red-50 font-semibold text-red-600' : ''
+                            }`}
+                        >
+                          <span className="text-base">£</span>
+                          <span>GBP</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
-    </header>
+          </>
+        )
+      }
+    </header >
   )
 }
 

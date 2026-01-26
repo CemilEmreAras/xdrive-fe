@@ -626,7 +626,7 @@ function Home() {
           </div>
           {/* Mobile/Tablet: Centered overlay layout */}
           <div className="w-full max-w-[1800px] mx-auto px-3 sm:px-4 md:px-6 lg:hidden box-border relative h-screen z-[2] flex flex-col justify-start items-center pt-[20vh] sm:pt-[22vh] md:pt-[25vh]">
-            <div className="w-full mx-auto p-3 sm:p-4 md:p-5 relative z-[3] flex justify-center items-center">
+            <div className="w-full mx-auto p-3 sm:p-4 md:p-5 relative z-[20] flex justify-center items-center">
               <div className="bg-slate-900/50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-5 shadow-[0_10px_40px_rgba(0,0,0,0.3)] w-full mx-auto">
                 <form onSubmit={handleSubmit} className="flex flex-col search:flex-row search:items-end gap-2 sm:gap-3 md:gap-4 lg:gap-4 search:flex-wrap">
                   {/* Location Field - Full width on mobile, flex on larger screens */}
@@ -836,7 +836,7 @@ function Home() {
             </div>
 
             {/* Middle: Search Bar Section */}
-            <div className="flex-none w-full mx-auto p-5 xl:p-7 2xl:p-8 relative z-[3] flex justify-center items-center -mt-40 xl:-mt-44 2xl:-mt-48">
+            <div className="flex-none w-full mx-auto p-5 xl:p-7 2xl:p-8 relative z-[20] flex justify-center items-center -mt-40 xl:-mt-44 2xl:-mt-48">
               <div className="bg-slate-900/50 rounded-xl p-5 xl:p-7 2xl:p-8 shadow-[0_10px_40px_rgba(0,0,0,0.3)] w-full max-w-[1800px] mx-auto">
                 <form onSubmit={handleSubmit} className="flex flex-row items-end gap-4 xl:gap-4 2xl:gap-4 flex-wrap">
                   {/* Location Field */}
@@ -980,7 +980,7 @@ function Home() {
             </div>
 
             {/* Bottom: Cars Section */}
-            <div className="flex-1 flex items-end justify-center pb-8 xl:pb-12 2xl:pb-16">
+            <div className="flex-1 flex items-end justify-center pb-0 sm:pb-0.5 md:pb-1 xl:pb-1 2xl:pb-2">
               {/* Cars area - with new Features Bar overlay */}
               <div className="w-full max-w-[1200px] mx-auto bg-slate-900/60 backdrop-blur-sm rounded-full py-4 px-8 border border-white/10">
                 <div className="flex items-center justify-center gap-6 sm:gap-8 lg:gap-12 text-white">
