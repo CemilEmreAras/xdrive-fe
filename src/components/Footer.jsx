@@ -150,10 +150,7 @@ function Footer() {
             <p className="footer-copyright">
               {t('footer.copyright', { year: currentYear })}
             </p>
-            <div className="footer-payment-logo">
-              <img src="/images/iyzico_logo.png" alt="Pay with iyzico" height="32" />
-              <img src="/images/payment_methods_logo.png" alt="Payment Cards" height="32" />
-            </div>
+
             <p className="footer-developed">
               {t('footer.developedBy')}{' '}
               <a

@@ -223,5 +223,3 @@
     gap: 12px;
   }
 }
-.footer-payment-logo img { height: 32px; width: auto; max-width: 100%; }
-.footer-payment-logo { display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap; }

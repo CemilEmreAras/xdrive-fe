@@ -85,7 +85,7 @@ function Contact() {
       />
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
-        <section className="relative min-h-[400px] w-full flex items-center justify-center bg-black bg-[url('/images/contact-hero-mobile.jpg')] md:bg-[url('/images/contact-hero-desktop.jpg')] bg-center bg-cover bg-no-repeat text-white overflow-hidden">
+        <section className="relative min-h-[400px] w-full flex items-center justify-center bg-black bg-[url('/images/contact-hero-mobile-new.jpg')] md:bg-[url('/images/contact-hero-desktop-new.jpg')] bg-center bg-cover bg-no-repeat text-white overflow-hidden">
           <div className="absolute top-0 left-0 right-0 bottom-0 bg-black/30 z-[1]"></div>
           <div className="relative z-[2] w-full max-w-[1200px] mx-auto px-5 sm:px-6 md:px-8 lg:px-10">
             <div className="text-center max-w-[800px] mx-auto">
