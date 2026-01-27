@@ -24,6 +24,7 @@ function Reservation() {
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [showPayment, setShowPayment] = useState(false);
+  const [error, setError] = useState(null);
 
   // URL'den direkt tarihleri al (öncelikli)
   const urlPickupDate = urlSearchParams.get('pickupDate')
@@ -950,25 +951,24 @@ function Reservation() {
           console.error('❌ Backend hata data:', errorData)
         }
 
-        if (errorData && typeof errorData === 'object') {
-          if (errorData.details) {
-            errorMessage = `${errorData.error || 'Hata'}\n\n${errorData.details}`;
-          } else if (errorData.error) {
-            errorMessage = String(errorData.error);
-          } else if (errorData.message) {
-            errorMessage = String(errorData.message);
+        if (error.response.status === 400 || error.response.status === 409) {
+          // Eğer hata mesajı "API: False" veya benzeri ise, çakışma uyarısı göster
+          // Veya direkt 409 Conflict döndüyse
+          if (error.response.status === 409 || errorMessage.includes('API: False') || errorMessage.includes('no longer available') || errorMessage.includes('kiralandı')) {
+            const conflictMsg = `${t('reservation.carNoLongerAvailable') || 'This car is no longer available.'}\n${t('reservation.pleaseSelectAnotherCar') || 'Please select another car.'}`;
+            setError(conflictMsg);
+            setSubmitting(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
           }
-        } else if (errorData && typeof errorData === 'string') {
-          errorMessage = errorData;
-        }
 
-        // Eksik parametreler varsa detaylı bilgi göster
-        if (error.response.status === 400 && errorData.received) {
-          const missing = Object.entries(errorData.received)
-            .filter(([key, value]) => !value)
-            .map(([key]) => key);
-          if (missing.length > 0) {
-            errorMessage += `\n\nEksik parametreler: ${missing.join(', ')}`;
+          if (errorData.received) {
+            const missing = Object.entries(errorData.received)
+              .filter(([key, value]) => !value)
+              .map(([key]) => key);
+            if (missing.length > 0) {
+              errorMessage += `\n\nEksik parametreler: ${missing.join(', ')}`;
+            }
           }
         }
       } else if (error.request) {
@@ -977,8 +977,11 @@ function Reservation() {
         errorMessage = error.message || errorMessage;
       }
 
-      // alert(errorMessage);
-      console.warn('⚠️ Reservation error suppressed (User Request):', errorMessage);
+      setError(errorMessage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (isDev) {
+        console.warn('⚠️ Reservation error:', errorMessage);
+      }
     } finally {
       setSubmitting(false)
     }
@@ -1029,6 +1032,25 @@ function Reservation() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-10">
           <div className="bg-white p-6 sm:p-8 md:p-10 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
+
+            {/* Error Message UI */}
+            {error && (
+              <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+                <svg className="w-6 h-6 text-red-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div className="flex-1">
+                  <h3 className="text-red-800 font-semibold mb-1">{error.includes(t('reservation.carNoLongerAvailable')) ? (t('common.warning') || 'Warning') : (t('common.error') || 'Error')}</h3>
+                  <p className="text-red-600 text-sm whitespace-pre-line">{error}</p>
+                </div>
+                <button onClick={() => setError(null)} className="text-red-400 hover:text-red-600">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit}>
               <section className="mb-10 pb-8 border-b-2 border-[#f0f0f0] last:border-b-0">
                 <h2 className="text-xl sm:text-2xl md:text-2xl mb-6 text-[#333]">{t('reservation.carInformation')}</h2>

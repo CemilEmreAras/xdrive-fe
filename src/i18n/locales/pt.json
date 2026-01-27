@@ -262,6 +262,8 @@
     "heroSubtitle": "Descubra nossos locais de aluguel de carros ao redor do mundo"
   },
   "reservation": {
+    "carNoLongerAvailable": "Este carro não está mais disponível",
+    "pleaseSelectAnotherCar": "Por favor, selecione outro carro",
     "carNotFound": "Carro não encontrado",
     "pageTitle": "Fazer Reserva",
     "carInformation": "Informações do Carro",
@@ -402,6 +404,8 @@
     "cdwDesc": "Cobertura de Isenção de Danos por Colisão",
     "scdw": "Seguro Completo",
     "scdwDesc": "Cobertura estendida com franquia reduzida",
+    "warning": "Aviso",
+    "error": "Erro",
     "extendedCancellation": "Cancelamento Gratuito Estendido",
     "extendedCancellationDesc": "Ao adicionar esta opção, você pode cancelar sua reserva gratuitamente mesmo durante as últimas 72 horas antes do horário de retirada do veículo."
   },

@@ -262,6 +262,8 @@
     "heroSubtitle": "Scopri le nostre sedi di autonoleggio in tutto il mondo"
   },
   "reservation": {
+    "carNoLongerAvailable": "Questa auto non è più disponibile",
+    "pleaseSelectAnotherCar": "Si prega di selezionare un'altra auto",
     "carNotFound": "Auto non trovata",
     "pageTitle": "Effettua Prenotazione",
     "carInformation": "Informazioni Auto",
@@ -402,6 +404,8 @@
     "cdwDesc": "Copertura danni da collisione",
     "scdw": "Assicurazione Completa",
     "scdwDesc": "Copertura estesa con franchigia ridotta",
+    "warning": "Attenzione",
+    "error": "Errore",
     "extendedCancellation": "Cancellazione Gratuita Estesa",
     "extendedCancellationDesc": "Aggiungendo questa opzione, puoi cancellare gratuitamente anche nelle ultime 72 ore prima del ritiro."
   },

@@ -262,6 +262,8 @@
     "heroSubtitle": "Entdecken Sie unsere Autovermietungsstandorte auf der ganzen Welt"
   },
   "reservation": {
+    "carNoLongerAvailable": "Dieses Auto ist nicht mehr verfügbar",
+    "pleaseSelectAnotherCar": "Bitte wählen Sie ein anderes Auto",
     "carNotFound": "Auto nicht gefunden",
     "pageTitle": "Reservierung vornehmen",
     "carInformation": "Fahrzeuginformationen",
@@ -403,6 +405,8 @@
     "cdwDesc": "Kollisionsschaden-Waiver-Abdeckung",
     "scdw": "Vollversicherung",
     "scdwDesc": "Erweiterte Abdeckung mit reduziertem Selbstbehalt",
+    "warning": "Warnung",
+    "error": "Fehler",
     "extendedCancellation": "Erweiterte kostenlose Stornierung",
     "extendedCancellationDesc": "Durch Hinzufügen dieser Option können Sie Ihre Reservierung auch während der letzten 72 Stunden vor der Fahrzeugabholung kostenlos stornieren."
   },

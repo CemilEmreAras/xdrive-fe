@@ -262,6 +262,8 @@
     "heroSubtitle": "اكتشف مواقع تأجير السيارات لدينا حول العالم"
   },
   "reservation": {
+    "carNoLongerAvailable": "هذه السيارة لم تعد متاحة",
+    "pleaseSelectAnotherCar": "يرجى اختيار سيارة أخرى",
     "carNotFound": "لم يتم العثور على السيارة",
     "pageTitle": "إجراء حجز",
     "carInformation": "معلومات السيارة",
@@ -402,6 +404,8 @@
     "cdwDesc": "تغطية الإعفاء من أضرار التصادم",
     "scdw": "تأمين شامل",
     "scdwDesc": "تغطية ممتدة مع فائض مخفض",
+    "warning": "تحذير",
+    "error": "خطأ",
     "extendedCancellation": "تمديد الإلغاء المجاني",
     "extendedCancellationDesc": "بإضافة هذا الخيار، يمكنك إلغاء حجزك مجانًا حتى خلال الـ 72 ساعة الأخيرة قبل وقت استلام المركبة."
   },
