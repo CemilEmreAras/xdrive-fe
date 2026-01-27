@@ -104,7 +104,7 @@ function ReservationConfirmation() {
           <div className="w-16 sm:w-20 h-16 sm:h-20 bg-[#28a745] text-white rounded-full flex items-center justify-center text-3xl sm:text-4xl md:text-[48px] mx-auto mb-8">✓</div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl text-[#333] mb-4">{t('reservationConfirmation.title')}</h1>
           <p className="text-base sm:text-lg md:text-lg text-[#666] mb-10">
-            {t('reservationConfirmation.reservationNo')}: <strong className="text-[#ef4444] text-lg sm:text-xl md:text-xl">{reservation.reservationNumber}</strong>
+            {t('reservationConfirmation.reservationNo')}: <strong className="text-[#ef4444] text-lg sm:text-xl md:text-xl">{reservation.externalRezId || reservation.reservationNumber}</strong>
           </p>
 
           <div className="text-left mb-10">
@@ -219,9 +219,9 @@ function ReservationConfirmation() {
                 <div className="flex justify-between items-center py-3 border-b border-[#ddd] last:border-b-0">
                   <span>{t('reservationConfirmation.status')}:</span>
                   <span className={`px-3 py-1.5 rounded-md text-sm font-semibold ${reservation.status === 'pending' ? 'bg-[#fff3cd] text-[#856404]' :
-                      reservation.status === 'confirmed' ? 'bg-[#d4edda] text-[#155724]' :
-                        reservation.status === 'cancelled' ? 'bg-[#f8d7da] text-[#721c24]' :
-                          'bg-[#d1ecf1] text-[#0c5460]'
+                    reservation.status === 'confirmed' ? 'bg-[#d4edda] text-[#155724]' :
+                      reservation.status === 'cancelled' ? 'bg-[#f8d7da] text-[#721c24]' :
+                        'bg-[#d1ecf1] text-[#0c5460]'
                     }`}>
                     {reservation.status === 'pending' && t('reservationConfirmation.statusPending')}
                     {reservation.status === 'confirmed' && t('reservationConfirmation.statusConfirmed')}
@@ -257,7 +257,7 @@ function ReservationConfirmation() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
